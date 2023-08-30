@@ -49,6 +49,7 @@ const register = async (req, res, next) => {
 };
 
  
+ 
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;
@@ -64,13 +65,16 @@ const login = async (req, res, next) => {
       throw new Unauthenticated("User does not exist");
     }
 
+    if (user.isSuspended) {
+      throw new BadRequest("User suspended, contact admin for support");
+    }
+
     const isPasswordCorrect = await user.comparePasswords(password);
 
     if (!isPasswordCorrect) {
       throw new Unauthenticated("Invalid password");
     }
 
-     
     // Create payload for JWT
     const payload = {
       userId: user._id,
@@ -108,6 +112,9 @@ const login = async (req, res, next) => {
     next(error);
   }
 };
+
+ 
+
 
 const logout = async (req, res, next) => {
   try {
@@ -174,7 +181,8 @@ const logout = async (req, res, next) => {
 //   }
 // };
 
-const forgotPassword = async (req, res) => {
+const forgotPassword = async (req, res, next) => {
+try {
   const { email } = req.body;
   if (!email) {
     throw new BadRequest("no email provided");
@@ -201,11 +209,15 @@ const forgotPassword = async (req, res) => {
       `http://localhost:3000/password/reset?token=${randomBytes}&id=${user._id}`,
       user.name
     ),
+    
      
   };
   mailTransport.sendMail(mail_configs);
-
+console.log("randombytes",randomBytes,"user", user._id,process.env.MY_PASSWORD, process.env.MY_EMAIL,email, user.email,user.name)
   res.json({ success: true, msg: "Reset link has been successfully sent to your email account" });
+} catch (error) {
+  next(error)
+}
 };
 // const resetPassword = async (req, res) => {
 //   const { password } = req.body;

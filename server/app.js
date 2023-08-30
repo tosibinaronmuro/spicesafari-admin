@@ -4,6 +4,7 @@ import express from "express";
 import cors from "cors";
 import connectDB from "./connectdb/connectdb.js";
 import Authrouter from "./routes/auth.js"
+import AdminAuthrouter from "./routes/adminAuth.js"
 import notFoundHandler from './middleware/not-found.js'; 
 import errorHandler from './middleware/errors-handler.js'
 
@@ -12,6 +13,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use("/api/v1/auth", Authrouter);
+app.use("/api/v1/auth/admin", AdminAuthrouter);
 
 app.get("/", (req, res) => {
   res.send("Welcome to clemDish ");
