@@ -42,21 +42,17 @@ userSchema.pre('save', async function () {
   this.password = await bcrypt.hash(this.password, salt);
 });
 
-userSchema.methods.createJWT = function () {
+userSchema.methods.createJWT = function (publicKey ) {
   return jwt.sign(
-    { userId: this._id, name: this.name, email:this.email, publicKey:this.publicKey,role:this.role },
+    { userId: this._id, name: this.name, email:this.email, publicKey:publicKey, role:this.role,},  
     process.env.JWT_SECRET,
     { expiresIn: '2d' }
   );
 };
 
+
 userSchema.methods.comparePasswords = async function (candidatePassword) {
-  console.log('Candidate Password:', candidatePassword);
-  console.log('Stored Hashed Password:', this.password);
-
   const isMatch = await bcrypt.compare(candidatePassword, this.password);
-  console.log('Is Password Match:', isMatch);
-
   return isMatch;
 };
 

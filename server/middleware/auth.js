@@ -18,10 +18,11 @@ const authMiddleware = async (req, res, next) => {
       token = req.cookies.token;
     }
 
-    const payload = jwt.verify(token, process.env.JWT_SECRET);
-    console.log(payload)
-
+    const payload = await jwt.verify(token, process.env.JWT_SECRET);
+    console.log("Payload    ", payload)
+    
     const user = await User.findById(payload.userId);
+    console.log("user   ",user)
     if (!user) {
       throw new Unauthenticated("User not found");
     }
@@ -31,12 +32,12 @@ const authMiddleware = async (req, res, next) => {
     }
 
     // Check and verify public key
-    // if (payload.publicKey !== user.publicKey) {
-    //   // console.log("payload",payload.publicKey, "user", user.publicKey)
-    //   throw new Unauthenticated("Invalid public key, retry login");
-    // }
+    if (payload.publicKey !== user.publicKey) {
+      console.log("payload   ", payload.publicKey,  "user    ", user.publicKey)
+      throw new Unauthenticated("Invalid public key, retry login");
+    }
 
-    req.user = { userId: payload.userId, name: payload.name };
+    req.user = { userId: payload.userId, name: payload.name, role:payload.role};
     next();
   } catch (error) {
     next(new Unauthenticated(error));

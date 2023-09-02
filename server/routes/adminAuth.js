@@ -9,6 +9,7 @@ import {
   // resetPassword,
   suspendUser,
   unsuspendUser,
+  viewAllUsers
 } from "../controllers/adminAuth.js";
 import adminauthMiddleware from "../middleware/adminauth.js";
 
@@ -21,5 +22,6 @@ router.post("/forgot-password", forgotPassword);
 // to be moved to admin functionalities router
 router.put("/unsuspend-user/:userId", adminauthMiddleware, unsuspendUser);
 router.put("/suspend-user/:userId", adminauthMiddleware, suspendUser);
+router.get("/view-users", adminauthMiddleware, viewAllUsers);
 
 export default router;

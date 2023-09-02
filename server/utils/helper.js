@@ -1,10 +1,9 @@
-const crypto = require("crypto");
-  exports.createRandomBytes=()=>
-    new Promise((resolve,reject)=>{
-      crypto.randomBytes(30,(err,buff)=>{
-        if(err) reject(err);
+import crypto from "crypto";
 
-        const token=buff.toString('hex')
-        resolve(token)
-      })
-    })
+const generatePublicKey = () => {
+  const publicKeyLength = 32; // Desired length of the public key in bytes
+  const publicKey = crypto.randomBytes(publicKeyLength).toString("hex");
+  return publicKey;
+};
+
+export { generatePublicKey };
