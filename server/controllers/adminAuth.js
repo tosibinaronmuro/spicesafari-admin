@@ -1,5 +1,6 @@
 import Admin from "../model/adminAuth.js";
 import User from "../model/user.js";
+import { generatePublicKey } from "../utils/helper.js";
 // import ResetToken from "../model/reset-token";
 import jwt from "jsonwebtoken";
 import { StatusCodes } from "http-status-codes";
@@ -68,36 +69,18 @@ const login = async (req, res, next) => {
       throw new Unauthenticated("Invalid password");
     }
 
-    // Create payload for JWT
-    const payload = {
-      adminId: admin._id,
-      name: admin.name,
-      email: admin.email,
-      role: admin.role,
-      // publicKey: publicKey,
-    };
+   // Generate a random 32-bit public key using the crypto library
+   const publicKey = generatePublicKey();
 
-    // Generate JWT token
-    const token = admin.createJWT(payload);
+   //  update publicKey in db
+   await admin.updateOne({ $set: { publicKey: publicKey } });
 
-    // Generate and set access and refresh tokens
-    const accessToken = await jwt.sign({ admin }, process.env.JWT_SECRET, {
-      expiresIn: "1hr",
-    });
-    const refreshToken = await jwt.sign({ admin }, process.env.JWT_SECRET, {
-      expiresIn: "1d",
-    });
-
-    // Set refresh token as an HttpOnly cookie
-    res.cookie("jwt", refreshToken, {
-      httpOnly: true,
-      maxAge: 24 * 60 * 60 * 1000,
-    });
+   // Generate JWT token with the updated publicKey
+   const token = await admin.createJWT(publicKey);
 
     res.status(StatusCodes.OK).json({
       admin: { name: admin.name, email: admin.email, role: admin.role },
-      token: token,
-      accessToken: accessToken,
+      token: token
     });
   } catch (error) {
     next(error);
@@ -106,15 +89,21 @@ const login = async (req, res, next) => {
 
 const logout = async (req, res, next) => {
   try {
-    // Clear the refresh token cookie by setting an expired cookie
-    res.cookie("jwt", "", {
-      httpOnly: true,
-      expires: new Date(0),
-    });
+    if (!req.user) {
+      throw new CustomError("User not authenticated", StatusCodes.UNAUTHORIZED);
+    }
+console.log(req.user)
+    // Update the user's public key to null
+    await Admin.updateOne(
+      { _id: req.user.userId },
+      { $set: { publicKey: null } }
+    );
 
-    res
-      .status(StatusCodes.OK)
-      .json({ success: true, msg: "Logged out successfully" });
+    // Clear session and JWT cookie
+    // req.session.destroy();
+    // res.clearCookie("jwt");
+
+    res.status(StatusCodes.OK).send("Logged out successfully");
   } catch (error) {
     next(error);
   }
@@ -246,6 +235,21 @@ const forgotPassword = async (req, res, next) => {
 
 //   res.json({ success: true, msg: "Password reset successfully" });
 // };
+const viewAllUsers = async (req, res, next) => {
+  try {
+    // Check if the requester is an admin
+    if (req.user.role !== "admin") {
+      throw new BadRequest("Only admins can view all users");
+    }
+
+    // Fetch all users
+    const users = await User.find({}, "-password"); // Exclude password from the response
+
+    res.status(StatusCodes.OK).json({ success: true, users });
+  } catch (error) {
+    next(error);
+  }
+};
 
 const suspendUser = async (req, res, next) => {
   const { userId } = req.params;
@@ -299,5 +303,5 @@ const unsuspendUser = async (req, res, next) => {
   }
 };
 
-export { register, login, logout, forgotPassword, suspendUser, unsuspendUser };
+export { register, login, logout, forgotPassword, suspendUser, unsuspendUser, viewAllUsers};
 // resetPassword

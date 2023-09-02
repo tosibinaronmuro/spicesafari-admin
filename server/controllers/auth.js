@@ -1,21 +1,23 @@
 import User from "../model/user.js";
 // import ResetToken from "../model/reset-token";
 import jwt from "jsonwebtoken";
- 
+import { generatePublicKey } from "../utils/helper.js";
 import { StatusCodes } from "http-status-codes";
-import crypto from 'crypto';
-import ResetToken from '../model/ResetToken.js' 
- 
- 
-import { CustomError, BadRequest, Unauthenticated, NotFound } from "../errors/index.js";
- 
- 
+import crypto from "crypto";
+import ResetToken from "../model/ResetToken.js";
+
+import {
+  CustomError,
+  BadRequest,
+  Unauthenticated,
+  NotFound,
+} from "../errors/index.js";
+
 import {
   mailTransport,
   gmailTemplate,
   gmailPlainTemplate,
 } from "../utils/mail.js";
- 
 
 const register = async (req, res, next) => {
   const { name, email, password } = req.body;
@@ -29,27 +31,21 @@ const register = async (req, res, next) => {
       throw new BadRequest("Email already exists");
     }
     const user = await User.create({
-     name:name,
-     email:email,
-     password:password,
+      name: name,
+      email: email,
+      password: password,
       role: "user",
-      // publicKey: "12345",
     });
     const token = user.createJWT();
-   
-    res
-      .status(StatusCodes.OK)
-      .json({
-        user: { name: user.name, email: user.email,   role: user.role },
-        token: token,
-      });
+
+    res.status(StatusCodes.OK).json({
+      user: { name: user.name, email: user.email, role: user.role },
+      token: token,
+    });
   } catch (error) {
-    next(error)
+    next(error);
   }
 };
-
- 
- 
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;
@@ -65,73 +61,55 @@ const login = async (req, res, next) => {
       throw new Unauthenticated("User does not exist");
     }
 
-    if (user.isSuspended) {
-      throw new BadRequest("User suspended, contact admin for support");
-    }
-
     const isPasswordCorrect = await user.comparePasswords(password);
 
     if (!isPasswordCorrect) {
       throw new Unauthenticated("Invalid password");
     }
 
-    // Create payload for JWT
-    const payload = {
-      userId: user._id,
-      name: user.name,
-      email: user.email,
-      role: user.role,
-      // publicKey: publicKey,
-    };
+    // Generate a random 32-bit public key using the crypto library
+    const publicKey = generatePublicKey();
 
-    // Generate JWT token
-    const token = user.createJWT(payload);
+    //  update publicKey in db
+    await user.updateOne({ $set: { publicKey: publicKey } });
 
-    // Generate and set access and refresh tokens
-    const accessToken = await jwt.sign({ user }, process.env.JWT_SECRET, {
-      expiresIn: "1hr",
+    // Generate JWT token with the updated publicKey
+    const token = await user.createJWT(publicKey);
+
+    res.status(StatusCodes.OK).json({
+      user: {
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
+      token,
     });
-    const refreshToken = await jwt.sign({ user }, process.env.JWT_SECRET, {
-      expiresIn: "1d",
-    });
-
-    // Set refresh token as an HttpOnly cookie
-    res.cookie("jwt", refreshToken, {
-      httpOnly: true,
-      maxAge: 24 * 60 * 60 * 1000,
-    });
-
-    res
-      .status(StatusCodes.OK)
-      .json({
-        user: { name: user.name, email: user.email, role: user.role },
-        token: token,
-        accessToken: accessToken,
-      });
   } catch (error) {
     next(error);
   }
 };
-
- 
-
 
 const logout = async (req, res, next) => {
   try {
-    // Clear the refresh token cookie by setting an expired cookie
-    res.cookie("jwt", "", {
-      httpOnly: true,
-      expires: new Date(0),
-    });
+    if (!req.user) {
+      throw new CustomError("User not authenticated", StatusCodes.UNAUTHORIZED);
+    }
+console.log(req.user)
+    // Update the user's public key to null
+    await User.updateOne(
+      { _id: req.user.userId },
+      { $set: { publicKey: null } }
+    );
 
-    res.status(StatusCodes.OK).json({ success: true, msg: "Logged out successfully" });
+    // Clear session and JWT cookie
+    // req.session.destroy();
+    // res.clearCookie("jwt");
+
+    res.status(StatusCodes.OK).send("Logged out successfully");
   } catch (error) {
     next(error);
   }
 };
-
-
- 
 
 // const forgotPassword = async (req, res, next) => {
 //   try {
@@ -149,7 +127,7 @@ const logout = async (req, res, next) => {
 //   }
 
 //   const resetToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-//     expiresIn: "5m",  
+//     expiresIn: "5m",
 //   });
 
 //   await ResetToken.create({ owner: user._id, token: resetToken });
@@ -169,10 +147,10 @@ const logout = async (req, res, next) => {
 //   //         `http://localhost:3000/password/reset?token=${resetToken}&id=${user._id}`,
 //   //         user.name
 //   //       ),
-         
+
 //   //     };
 //   //   await mailTransport.sendMail(mail_configs);
-    
+
 //   mailTransport.sendMail(mailConfigs);
 
 //   res.json({ success: true, msg: "Reset link has been successfully sent to your email account" });
@@ -182,42 +160,53 @@ const logout = async (req, res, next) => {
 // };
 
 const forgotPassword = async (req, res, next) => {
-try {
-  const { email } = req.body;
-  if (!email) {
-    throw new BadRequest("no email provided");
-  }
-  const user = await User.findOne({ email });
-  if (!user) {
-    throw new BadRequest("Email not found");
-  }
-  const token = await ResetToken.findOne({ owner: user._id });
+  try {
+    const { email } = req.body;
+    if (!email) {
+      throw new BadRequest("no email provided");
+    }
+    const user = await User.findOne({ email });
+    if (!user) {
+      throw new BadRequest("Email not found");
+    }
+    const token = await ResetToken.findOne({ owner: user._id });
 
-  if (token) {
-    throw new BadRequest("retry after an hour");
-  }
- 
-  const randomBytes = 'await createRandomBytes();'
+    if (token) {
+      throw new BadRequest("retry after an hour");
+    }
 
-  await ResetToken.create({ owner: user._id, token: randomBytes });
-  
-  const mail_configs = {
-    from: process.env.MY_EMAIL,
-    to: user.email,
-    subject: "Reset Password for I.S.E.E.A",
-    html: gmailTemplate(
-      `http://localhost:3000/password/reset?token=${randomBytes}&id=${user._id}`,
+    const randomBytes = "await createRandomBytes();";
+
+    await ResetToken.create({ owner: user._id, token: randomBytes });
+
+    const mail_configs = {
+      from: process.env.MY_EMAIL,
+      to: user.email,
+      subject: "Reset Password for I.S.E.E.A",
+      html: gmailTemplate(
+        `http://localhost:3000/password/reset?token=${randomBytes}&id=${user._id}`,
+        user.name
+      ),
+    };
+    mailTransport.sendMail(mail_configs);
+    console.log(
+      "randombytes",
+      randomBytes,
+      "user",
+      user._id,
+      process.env.MY_PASSWORD,
+      process.env.MY_EMAIL,
+      email,
+      user.email,
       user.name
-    ),
-    
-     
-  };
-  mailTransport.sendMail(mail_configs);
-console.log("randombytes",randomBytes,"user", user._id,process.env.MY_PASSWORD, process.env.MY_EMAIL,email, user.email,user.name)
-  res.json({ success: true, msg: "Reset link has been successfully sent to your email account" });
-} catch (error) {
-  next(error)
-}
+    );
+    res.json({
+      success: true,
+      msg: "Reset link has been successfully sent to your email account",
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 // const resetPassword = async (req, res) => {
 //   const { password } = req.body;
@@ -249,5 +238,5 @@ console.log("randombytes",randomBytes,"user", user._id,process.env.MY_PASSWORD, 
 //   res.json({ success: true, msg: "Password reset successfully" });
 // };
 
-export { register, login, logout,forgotPassword,  };
-// resetPassword 
+export { register, login, logout, forgotPassword };
+// resetPassword

@@ -1,0 +1,64 @@
+User Frontend
+
+View the menu
+Add items to cart
+Checkout
+Track order status
+Favorites
+Reviews
+Contact restaurant
+Push notifications
+Social media integration
+
+
+
+Admin Frontend
+
+Manage menu
+View orders
+Process orders
+Manage users
+View reports
+Store data
+Generate reports
+Send notifications
+
+
+
+Backend
+
+Secure payment processing
+Real-time order tracking
+Geolocation
+Push notifications
+API integration
+Scalability
+Security
+
+
+User stories for the user frontend:
+
+As a user, I should be able to view the menu.
+As a user, I should be able to login and logout /
+As a user, I should be able to add items to my cart.
+As a user, I should be able to checkout and place an order.
+<!-- As a user, I should be able to track the status of my order. -->
+As a user, I should be able to add items to my favorites list.
+<!-- As a user, I should be able to leave reviews for the food and service I have received. -->
+As a user, I should be able to contact the restaurant directly if I have any questions or concerns.
+As a user, I should be able to receive push notifications about my orders.
+<!-- As a user, I should be able to share my orders on social media. -->
+
+
+User stories for the admin frontend:
+
+As an admin, I should be able to manage the menu.
+As an admin, I should be able to login and logout /
+As an admin, I should be able to view orders.
+As an admin, I should be able to process orders.
+As an admin, I should be able to manage users./
+As an admin, I should be able to have a dashboard.
+<!-- As an admin, I should be able to view reports. -->
+As an admin, I should be able to store data.
+<!-- As an admin, I should be able to generate reports. -->
+As an admin, I should be able to send notifications.
