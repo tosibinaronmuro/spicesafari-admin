@@ -23,7 +23,7 @@ export default function Navbar({ fixed }) {
                 priority
               />
             </a> */}
-            <p><span className="text-4xl font-logoFont text-primary">SpiceSafari</span> <span className="font-logoFont">Kitchen</span></p>
+            <p><span className="lg:text-4xl text-2xl font-logoFont text-primary">SpiceSafari</span> <span className="font-logoFont">Kitchen</span></p>
 
             <button
               type="button"
@@ -55,7 +55,7 @@ export default function Navbar({ fixed }) {
             <ul className="flex  mt-3 lg:mt-none md:mt-none w-full lg:w-auto md:w-auto   flex-col lg:flex-row md:flex-row list-none lg:ml-auto md:ml-auto ">
               <li className=" w-full lg:w-auto transition ease-in-out delay-150 text-tertiary hover:-translate-y-1 hover:scale-105 hover:text-tertiary  duration-300">
                 <a
-                  className=" lg:inline-flex lg:w-auto w-full   rounded items-center   text-tertiary transition hover:text-tertiary/75 px-7 py-2 flex"
+                  className=" lg:inline-flex lg:w-auto w-full   rounded items-center   text-tertiary transition hover:text-tertiary/75 px-7 py-2 md:px-2 md:py-2 lg:px-7 flex"
                   href="/"
                 >
                   Menu
@@ -64,7 +64,7 @@ export default function Navbar({ fixed }) {
               {/* logic with teneary operator to check isloggedin before displaying favorites */}
               <li className=" w-full lg:w-auto transition ease-in-out delay-150 text-tertiary hover:-translate-y-1 hover:scale-105 hover:text-tertiary  duration-300">
                 <a
-                  className=" lg:inline-flex lg:w-auto w-full   rounded items-center   text-tertiary transition hover:text-tertiary/75 px-7 py-2 flex"
+                  className=" lg:inline-flex lg:w-auto w-full   rounded items-center   text-tertiary transition hover:text-tertiary/75 px-7 py-2 md:px-2 md:py-2 lg:px-7 flex"
                   href="/favorites"
                 >
                   Favorites
@@ -72,7 +72,7 @@ export default function Navbar({ fixed }) {
               </li>
               <li className=" w-full lg:w-auto transition ease-in-out delay-150 text-tertiary hover:-translate-y-1 hover:scale-105 hover:text-tertiary  duration-300">
                 <a
-                  className=" lg:inline-flex lg:w-auto w-full   rounded items-center   text-tertiary transition hover:text-tertiary/75 px-7 py-2 flex"
+                  className=" lg:inline-flex lg:w-auto w-full   rounded items-center   text-tertiary transition hover:text-tertiary/75 px-7 py-2 md:px-2 md:py-2 lg:px-7 flex"
                   href="/cart"
                 >
                   Cart
@@ -80,22 +80,76 @@ export default function Navbar({ fixed }) {
               </li>
                 <li className=" w-full lg:w-auto transition ease-in-out delay-150 text-tertiary hover:-translate-y-1 hover:scale-105 hover:text-tertiary  duration-300">
                   <a
-                    className=" lg:inline-flex lg:w-auto w-full   rounded items-center   text-tertiary transition hover:text-tertiary/75 px-7 py-2 flex"
+                    className=" lg:inline-flex lg:w-auto w-full   rounded items-center   text-tertiary transition hover:text-tertiary/75 px-7 py-2 md:px-2 md:py-2 lg:px-7 flex"
                     href="/history"
                   >
                     History
                   </a>
                 </li>
-              <li className=" w-full lg:w-auto transition ease-in-out delay-150 text-tertiary hover:-translate-y-1 hover:scale-105 hover:text-tertiary  duration-300">
+              {/* <li className=" w-full lg:w-auto transition ease-in-out delay-150 text-tertiary hover:-translate-y-1 hover:scale-105 hover:text-tertiary  duration-300">
                 <a
-                  className=" lg:inline-flex lg:w-auto w-full   rounded items-center   text-tertiary transition hover:text-tertiary/75 px-7 py-2 flex"
+                  className=" lg:inline-flex lg:w-auto w-full   rounded items-center   text-tertiary transition hover:text-tertiary/75 px-7 py-2 md:px-2 md:py-2 lg:px-7 flex"
                   href="/signin"
                 >
                   Sign in
                   <svg xmlns="http://www.w3.org/2000/svg" height="1em" className="mx-1 flex justify-center items-center" viewBox="0 0 512 512"> <path d="M352 96l64 0c17.7 0 32 14.3 32 32l0 256c0 17.7-14.3 32-32 32l-64 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l64 0c53 0 96-43 96-96l0-256c0-53-43-96-96-96l-64 0c-17.7 0-32 14.3-32 32s14.3 32 32 32zm-9.4 182.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L242.7 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l210.7 0-73.4 73.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l128-128z"/></svg>
                 </a>
-              </li>
+              </li> */}
+              <li>
+    <details className="group [&_summary::-webkit-details-marker]:hidden">
+      <summary
+        className="flex cursor-pointer items-center justify-between rounded-lg px-7 py-2 md:px-3 lg:px-7  hover:bg-gray-100   w-full lg:w-auto transition ease-in-out delay-150 text-tertiary hover:-translate-y-1 hover:scale-105 hover:text-tertiary  duration-300"
+      >
+        <span className=" lg:inline-flex lg:w-auto w-full   rounded items-center   text-tertiary transition hover:text-tertiary/75  flex"> Account </span>
 
+        <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fillRule="evenodd"
+              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+              clipRule="evenodd"
+            />
+          </svg>
+        </span>
+      </summary>
+
+      <ul className="mt-2 space-y-1 px-4 lg:absolute bg-secondary lg:z-40">
+        <li>
+          <a
+            href="/signin"
+            className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+          >
+            Sign in
+          </a>
+        </li>
+{/* teneary operator for the sign in and logout i.e, if user is signed in,  sign in link shouldnt show and if user is logged out,logout shouldnt show */}
+        <li>
+          <a
+            href="/profile"
+            className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+          >
+            Profile
+          </a>
+        </li>
+
+        <li>
+          <form action="/logout">
+            <button
+              type="submit"
+              className="w-full rounded-lg px-4 py-2 text-sm font-medium text-gray-500 [text-align:_inherit] hover:bg-gray-100 hover:text-gray-700"
+            >
+              Logout
+            </button>
+          </form>
+        </li>
+      </ul>
+    </details>
+  </li>
             
               <li>
                 <button>
