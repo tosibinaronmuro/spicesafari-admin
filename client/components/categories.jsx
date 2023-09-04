@@ -3,8 +3,8 @@ import React from "react";
 const Categories = () => {
   return (
     <div className="flex justify-center">
-      <div className="flex justify-between px-14 h-[100px] w-fit  m-5  relative top-50 z-60 items-center rounded-lg bg-white text-center shadow-md shadow-gray/90  ">
-        <div className=" flex flex-col hover:text-primary">
+      <div className="flex flex-wrap justify-between px-14 h-auto py-3 w-fit  m-5  relative top-50 z-60 items-center rounded-lg bg-white text-center shadow-md shadow-gray/90  ">
+        <div className=" flex flex-col p-2 hover:text-primary">
           <div className=" flex flex-col rounded-full bg-secondary justify-center items-center w-14 h-14 mx-10  ">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -18,7 +18,7 @@ const Categories = () => {
           <p>Burgers</p>
         </div>
 
-        <div className=" flex flex-col hover:text-primary">
+        <div className=" flex flex-col p-2 hover:text-primary">
           <div className=" flex flex-col rounded-full bg-secondary justify-center items-center w-14 h-14 mx-10  ">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -30,7 +30,7 @@ const Categories = () => {
           </div>
           <p>Rice</p>
         </div>
-        <div className=" flex flex-col hover:text-primary">
+        <div className=" flex flex-col p-2 hover:text-primary">
           <div className=" flex flex-col rounded-full bg-secondary justify-center items-center w-14 h-14 mx-10  ">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -42,7 +42,7 @@ const Categories = () => {
           </div>
           <p>Pizza</p>
         </div>
-        <div className=" flex flex-col hover:text-primary">
+        <div className=" flex flex-col p-2 hover:text-primary">
           <div className=" flex flex-col rounded-full bg-secondary justify-center items-center w-14 h-14 mx-10  ">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -55,7 +55,7 @@ const Categories = () => {
           </div>
           <p>Drinks</p>
         </div>
-        <div className=" flex flex-col hover:text-primary">
+        <div className=" flex flex-col p-2 hover:text-primary">
           <div className=" flex flex-col rounded-full bg-secondary justify-center items-center w-14 h-14 mx-10  ">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -67,7 +67,7 @@ const Categories = () => {
           </div>
           <p>Dessert</p>
         </div>
-        <div className=" flex flex-col hover:text-primary">
+        <div className=" flex flex-col p-2 hover:text-primary">
           <div className=" flex flex-col rounded-full bg-secondary justify-center items-center w-14 h-14 mx-10  ">
             <svg
               xmlns="http://www.w3.org/2000/svg"

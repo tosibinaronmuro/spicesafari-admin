@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Search from "../../components/search-component";
 import Categories from "../../components/categories";
+import Featured from "../../components/menu-components/featured";
+import Card from "../../components/menu-components/card";
 
 export default function Home() {
   return (
@@ -47,7 +49,16 @@ export default function Home() {
 
       {/* main section */}
       <div>
+      <div>
+        <Featured/>
+      </div>
       <Categories/>
+      <div>
+        <p className="flex justify-center items-center">Our Menu</p>
+      <div className="flex flex-wrap w-full mx-[5%]">
+        <Card/>
+      </div>
+      </div>
 
       <div>
       </div>
