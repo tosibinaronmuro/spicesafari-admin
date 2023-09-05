@@ -54,8 +54,19 @@ export default function Home() {
       </div>
       <Categories/>
       <div>
-        <p className="flex justify-center items-center">Our Menu</p>
-      <div className="flex flex-wrap w-full mx-[5%]">
+        <p className="flex justify-center text-primary text-2xl items-center">Our Menu</p>
+      <div className="flex flex-wrap justify-center w-full px-[5%]">
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
         <Card/>
       </div>
       </div>

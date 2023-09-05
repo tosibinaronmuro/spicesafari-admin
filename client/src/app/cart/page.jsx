@@ -21,15 +21,15 @@ const page = () => {
         </svg>
         <span>Back</span>
       </div>
-      <div className="flex justify-center items-center bg-secondary  py-14">
+      <p className="flex justify-center text-primary text-2xl  my-5 items-center">
+          Your Cart
+        </p>
+      <div className="flex flex-col justify-center items-center bg-secondary  py-14">
+     
         <section className="bg-white rounded-xl shadow-md shadow-gray/90   mx-[2%] md:mx-[5%]    lg:mx-[5%]">
           <div className="mx-auto max-w-screen-xl  py-8   sm:py-12 md:px-8 lg:px-8">
             <div className="mx-auto max-w-3xl">
-              <header className="text-center">
-                <h1 className="text-xl font-bold text-gray-900 sm:text-3xl">
-                  Your Cart
-                </h1>
-              </header>
+              
 
               <div className="mt-8">
                 {/* <ul className="space-y-4">

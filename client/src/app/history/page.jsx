@@ -38,7 +38,7 @@ const page = () => {
         </svg>
         <span>Back</span>
       </div>
-      <div className="flex justify-center items-center text-xl my-5">
+      <div className="flex justify-center items-center text-2xl text-primary my-5">
         
         Order History
       </div>
