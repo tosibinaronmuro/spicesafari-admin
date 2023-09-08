@@ -25,19 +25,19 @@ const page = () => {
           Your Favorites
         </p>
         <div className="flex flex-wrap justify-center w-full px-[5%]">
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
+          <Card button1={'remove'} button2={'order'} />
+          <Card button1={'remove'} button2={'order'} />
+          <Card button1={'remove'} button2={'order'} />
+          <Card button1={'remove'} button2={'order'} />
+          <Card button1={'remove'} button2={'order'} />
+          <Card button1={'remove'} button2={'order'} />
+          <Card button1={'remove'} button2={'order'} />
+          <Card button1={'remove'} button2={'order'} />
+          <Card button1={'remove'} button2={'order'} />
+          <Card button1={'remove'} button2={'order'} />
+          <Card button1={'remove'} button2={'order'} />
+          <Card button1={'remove'} button2={'order'} />
+          <Card button1={'remove'} button2={'order'} />
         </div>
       </div>
     </div>

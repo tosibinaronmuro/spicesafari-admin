@@ -4,35 +4,25 @@ const Search = () => {
   return (
 
 <div className="relative">
-  <label for="Search" className="sr-only"> Search </label>
+<form className="mt-6">
+            <div className="relative max-w-lg">
+              <label className="sr-only" for="food">
+                 
+                search 
+              </label>
 
-  <input
-    type="text"
-    id="Search"
-    placeholder="   Search for..."
-    className="w-full rounded-md border-gray-200 py-2.5 pe-10 shadow-sm sm:text-sm"
-  />
+              <input
+                className="w-full rounded-full border-gray-200 bg-white p-4 pe-32 text-sm font-medium"
+                id="food"
+                type="text"
+                placeholder="e.g jollof rice"
+              />
 
-  <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
-    <button type="button" className="text-gray-600 hover:text-gray-700">
-      <span className="sr-only">Search</span>
-
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        strokeWidth="1.5"
-        stroke="currentColor"
-        className="h-4 w-4"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-        />
-      </svg>
-    </button>
-  </span>
+              <button className="absolute end-1 top-1/2 -translate-y-1/2 rounded-full bg-primary hover:bg-secondary px-5 py-3 text-sm font-medium text-white hover:text-primary hover:border-2 hover:border-gray-800 transition  ">
+                Search
+              </button>
+            </div>
+          </form>
 </div>
   )
 }

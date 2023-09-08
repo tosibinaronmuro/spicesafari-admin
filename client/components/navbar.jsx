@@ -55,8 +55,16 @@ export default function Navbar({ fixed }) {
             <ul className="flex  mt-3 lg:mt-none md:mt-none w-full lg:w-auto md:w-auto   flex-col lg:flex-row md:flex-row list-none lg:ml-auto md:ml-auto ">
               <li className=" w-full lg:w-auto transition ease-in-out delay-150 text-tertiary hover:-translate-y-1 hover:scale-105 hover:text-tertiary  duration-300">
                 <a
-                  className=" lg:inline-flex lg:w-auto w-full   rounded items-center   text-tertiary transition hover:text-tertiary/75 px-7 py-2 md:px-2 md:py-2 lg:px-7 flex"
+                  className=" lg:inline-flex lg:w-auto w-full   rounded items-center   text-tertiary transition hover:text-tertiary/75 px-7 text-sm md:text-sm lg:text-base py-2 md:px-2 md:py-2 lg:px-5 flex"
                   href="/"
+                >
+                  Home
+                </a>
+              </li>
+              <li className=" w-full lg:w-auto transition ease-in-out delay-150 text-tertiary hover:-translate-y-1 hover:scale-105 hover:text-tertiary  duration-300">
+                <a
+                  className=" lg:inline-flex lg:w-auto w-full   rounded items-center   text-tertiary transition hover:text-tertiary/75 px-7 text-sm md:text-sm lg:text-base py-2 md:px-2 md:py-2 lg:px-5 flex"
+                  href="/menu"
                 >
                   Menu
                 </a>
@@ -64,7 +72,7 @@ export default function Navbar({ fixed }) {
               {/* logic with teneary operator to check isloggedin before displaying favorites */}
               <li className=" w-full lg:w-auto transition ease-in-out delay-150 text-tertiary hover:-translate-y-1 hover:scale-105 hover:text-tertiary  duration-300">
                 <a
-                  className=" lg:inline-flex lg:w-auto w-full   rounded items-center   text-tertiary transition hover:text-tertiary/75 px-7 py-2 md:px-2 md:py-2 lg:px-7 flex"
+                  className=" lg:inline-flex lg:w-auto w-full   rounded items-center   text-tertiary transition hover:text-tertiary/75 px-7 text-sm md:text-sm lg:text-base py-2 md:px-2 md:py-2 lg:px-5 flex"
                   href="/favorites"
                 >
                   Favorites
@@ -72,7 +80,7 @@ export default function Navbar({ fixed }) {
               </li>
               <li className=" w-full lg:w-auto transition ease-in-out delay-150 text-tertiary hover:-translate-y-1 hover:scale-105 hover:text-tertiary  duration-300">
                 <a
-                  className=" lg:inline-flex lg:w-auto w-full   rounded items-center   text-tertiary transition hover:text-tertiary/75 px-7 py-2 md:px-2 md:py-2 lg:px-7 flex"
+                  className=" lg:inline-flex lg:w-auto w-full   rounded items-center   text-tertiary transition hover:text-tertiary/75 px-7 text-sm md:text-sm lg:text-base py-2 md:px-2 md:py-2 lg:px-5 flex"
                   href="/cart"
                 >
                   Cart
@@ -80,7 +88,7 @@ export default function Navbar({ fixed }) {
               </li>
                 <li className=" w-full lg:w-auto transition ease-in-out delay-150 text-tertiary hover:-translate-y-1 hover:scale-105 hover:text-tertiary  duration-300">
                   <a
-                    className=" lg:inline-flex lg:w-auto w-full   rounded items-center   text-tertiary transition hover:text-tertiary/75 px-7 py-2 md:px-2 md:py-2 lg:px-7 flex"
+                    className=" lg:inline-flex lg:w-auto w-full   rounded items-center   text-tertiary transition hover:text-tertiary/75 px-7 text-sm md:text-sm lg:text-base py-2 md:px-2 md:py-2 lg:px-5 flex"
                     href="/history"
                   >
                     History
@@ -88,7 +96,7 @@ export default function Navbar({ fixed }) {
                 </li>
               {/* <li className=" w-full lg:w-auto transition ease-in-out delay-150 text-tertiary hover:-translate-y-1 hover:scale-105 hover:text-tertiary  duration-300">
                 <a
-                  className=" lg:inline-flex lg:w-auto w-full   rounded items-center   text-tertiary transition hover:text-tertiary/75 px-7 py-2 md:px-2 md:py-2 lg:px-7 flex"
+                  className=" lg:inline-flex lg:w-auto w-full   rounded items-center   text-tertiary transition hover:text-tertiary/75 px-7 text-sm md:text-sm lg:text-base py-2 md:px-2 md:py-2 lg:px-5 flex"
                   href="/signin"
                 >
                   Sign in
@@ -100,7 +108,7 @@ export default function Navbar({ fixed }) {
       <summary
         className="flex cursor-pointer items-center justify-between rounded-lg px-7 py-2 md:px-3 lg:px-7  hover:bg-gray-100   w-full lg:w-auto transition ease-in-out delay-150 text-tertiary hover:-translate-y-1 hover:scale-105 hover:text-tertiary  duration-300"
       >
-        <span className=" lg:inline-flex lg:w-auto w-full   rounded items-center   text-tertiary transition hover:text-tertiary/75  flex"> Account </span>
+        <span className=" lg:inline-flex lg:w-auto w-full text-sm md:text-sm lg:text-base   rounded items-center   te5t-tertiary transition hover:text-tertiary/75  flex"> Account </span>
 
         <span className="shrink-0 transition duration-300 group-open:-rotate-180">
           <svg
@@ -122,7 +130,7 @@ export default function Navbar({ fixed }) {
         <li>
           <a
             href="/signin"
-            className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+            className="block rounded-lg  px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
           >
             Sign in
           </a>
@@ -159,7 +167,7 @@ export default function Navbar({ fixed }) {
                   >
                     <span className="absolute inset-0 translate-x-1.5 translate-y-1.5 bg-primary transition-transform group-hover:translate-y-0 group-hover:translate-x-0"></span>
 
-                    <span className="relative inline-block border-2 border-current font-Poiret font-semibold px-4 py-2 text-sm   uppercase tracking-widest text-tertiary group-active:text-opacity-75">
+                    <span className="relative  inline-block border-2 border-current font-Poiret font-semibold px-4 py-2 text-sm   uppercase tracking-widest text-tertiary group-active:text-opacity-75">
                     Reservations
                     </span>
                   </a>

@@ -3,6 +3,7 @@ import Search from "../../components/search-component";
 import Categories from "../../components/categories";
 import Featured from "../../components/menu-components/featured";
 import Card from "../../components/menu-components/card";
+import Delivery from "../../components/menu-components/delivery";
 
 export default function Home() {
   return (
@@ -41,7 +42,7 @@ export default function Home() {
               Get the best deals at the same price
             </p>
           </div>
-          <div className="mt-3 w-[40%] ml-10 ">
+          <div className="mt-3 lg:w-[40%] ml-10 ">
             <Search />
           </div>
         </div>
@@ -52,23 +53,20 @@ export default function Home() {
       <div>
         <Featured/>
       </div>
-      <Categories/>
+      {/* <Categories/> */}
+      <Delivery/>
       <div>
         <p className="flex justify-center text-primary text-2xl items-center">Our Menu</p>
       <div className="flex flex-wrap justify-center w-full px-[5%]">
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
+        <Card button1={'favorite'} button2={"order"}/>
+        <Card button1={'favorite'} button2={"order"}/>
+        <Card button1={'favorite'} button2={"order"}/>
+        <Card button1={'favorite'} button2={"order"}/>
+        <Card button1={'favorite'} button2={"order"}/>
+        <Card button1={'favorite'} button2={"order"}/>
+         
       </div>
+      <a href="/menu" className="flex justify-center items-center mb-9 cursor-pointer  h-10 bg-primary lg:mx-[10%] md:mx-[10%]"><p className="text-white">see more</p></a>
       </div>
 
       <div>
