@@ -1,3 +1,6 @@
+import User from "../model/user";
+import Orders from "../model/orderModel";
+
 // Function to recommend products for a user
 export const recommendProducts = async (userId) => {
   // Find the user by ID
@@ -7,10 +10,10 @@ export const recommendProducts = async (userId) => {
   const wishlistProductIds = user.wishlist.map((product) => product._id);
 
   // Find orders for the user
-  const userOrders = await Order.find({ user: userId });
+  const userOrders = await Orders.find({ user: userId });
 
   // Extract product IDs from the user's orders
-  const orderedProductIds = userOrders.map((order) => order.product);
+  const orderedProductIds = userOrders.map((order) => order.products);
 
   // Find products that other users have ordered and the user hasn't
   const recommendedProducts = await Product.find({
