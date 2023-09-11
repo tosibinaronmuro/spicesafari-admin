@@ -16,6 +16,11 @@ const orderSchema = new Schema(
       type: Number,
       required: true,
     },
+    status: {
+      type: String,
+      enum: ["Pending", "On-Delivery", "Delivered"],
+      default: "Pending",
+    },
   },
   {
     timestamps: true,
