@@ -24,7 +24,7 @@ const page = () => {
         <p className="flex justify-center text-primary text-2xl  my-5 items-center">
           Your Favorites
         </p>
-        <div className="flex flex-wrap justify-center w-full px-[5%]">
+        <div className="flex flex-wrap justify-center w-full  ">
           <Card button1={'remove'} button2={'order'} />
           <Card button1={'remove'} button2={'order'} />
           <Card button1={'remove'} button2={'order'} />
