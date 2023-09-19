@@ -1,5 +1,5 @@
-import User from "../model/user";
-import Orders from "../model/orderModel";
+import User from "../model/user.js";
+import Orders from "../model/orderModel.js";
 
 // Function to recommend products for a user
 export const recommendProducts = async (userId) => {

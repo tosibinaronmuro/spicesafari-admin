@@ -1,5 +1,6 @@
-import { recommendProducts } from "../middleware/collaborationFiltering";
-import products from "../model/productModel";
+import { recommendProducts } from "../middleware/collaborationFiltering.js";
+import products from "../model/productModel.js";
+import User from "../model/user.js";
 
 //View all products
 export const viewProduct = async (req, res) => {
@@ -77,9 +78,30 @@ export const recommendProduct = async (req, res) => {
   }
 };
 
-//bookmark products
+//Adding products to wishlist
 export const wishlistProduct = async (req, res) => {
+  const { userId } = req.params;
+  const { productId } = req.params;
   try {
+    const product = await products.findById(productId);
+    const currentUser = await User.findById(userId);
+    if (!product) {
+      return res.status(404).json("No user or product found");
+    }
+    // If the product already exists in the wishlist and you fire the enpoint it will be remove
+    // But if the product doesnt exists it will be added to the wishlist.
+    const isWishlistProduct = currentUser.wishlist.includes(productId);
+    if (isWishlistProduct) {
+      await User.findByIdAndUpdate(userId, {
+        $pull: { wishlist: productId },
+      });
+      res.status(200).json("Product removed from wishlist");
+    } else {
+      await User.findByIdAndUpdate(userId, {
+        $push: { wishlist: productId },
+      });
+      res.status(200).json("Product added to wishlist");
+    }
   } catch (err) {
     res.status(500).jsson(err.message);
   }

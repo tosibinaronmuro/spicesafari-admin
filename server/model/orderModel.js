@@ -12,13 +12,17 @@ const orderSchema = new Schema(
         ref: "product",
       },
     ],
+    quantity: {
+      type: Number,
+      required: true,
+    },
     price: {
       type: Number,
       required: true,
     },
     status: {
       type: String,
-      enum: ["Pending", "On-Delivery", "Delivered"],
+      enum: ["Pending", "On-Delivery", "Delivered", "Cancelled"],
       default: "Pending",
     },
   },
