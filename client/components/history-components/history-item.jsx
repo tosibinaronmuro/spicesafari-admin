@@ -1,29 +1,61 @@
-import React from 'react'
+import React from 'react';
 
-const HistoryItem = ({name,price , date}) => {
+const HistoryItem = ({ name, price, date, status, handleCancel }) => {
+  let statusColor = '';
+  let actionText = '';
+
+  switch (status) {
+    case 'Pending':
+        statusColor = 'blue-600';
+        actionText='Cancel-Order';
+        break;
+      case 'On-Delivery':
+        statusColor = 'purple-600';
+        actionText='Cancel-Order';
+        break;
+      case 'Delivered':
+        statusColor = 'green-600';
+        actionText='Remove';
+        break;
+      case 'Cancelled':
+        statusColor = 'red-600';
+        actionText='Remove';
+        break;
+      default:
+        statusColor = 'blue-600';
+        actionText='Remove';
+        break;
+  }
+
+  const handleAction = () => {
+    if (status === 'Pending' || status === 'On-Delivery') {
+      handleCancel(
+        
+      ); // Call the cancel order API handler
+    } else {
+      
+    }
+  };
+
   return (
-    <tr className="bg-white border-b   hover:bg-gray-50  ">
-                    <td className="w-4 p-4">
-                        <div className="flex items-center">
-                            <input id="checkbox-table-search-1" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 "></input>
-                            <label for="checkbox-table-search-1" className="sr-only">checkbox</label>
-                        </div>
-                    </td>
-                    <th scope="row" className="px-2 py-3 md:px-6 lg:px-6  font-medium text-gray-900 whitespace-nowrap  ">
-                       {name}
-                    </th>
-                    <td className="px-2 py-3 md:px-6 lg:px-6 ">
-                        ${price}
-                    </td>
-                    <th scope="row" className="px-2 py-3 md:px-6 lg:px-6  font-medium text-gray-900 whitespace-nowrap  ">
-                       {date}
-                    </th>
-                    <td className="px-2 py-3 md:px-6 lg:px-6 ">
-                        {/* shoots a delete request */}
-                    <a href="#" className="font-medium text-red-600   hover:underline">Remove</a>
-                    </td>
-                </tr>
-  )
-}
+    <tr className="bg-white border-b text-xs md:text-sm lg:text-sm hover:bg-gray-50">
+      <th scope="row" className="px-2 py-3 md:px-6 lg:px-6 font-medium text-gray-900 whitespace-nowrap">
+        {name}
+      </th>
+      <td className="px-2 py-3 md:px-6 lg:px-6">${price}</td>
+      <th scope="row" className="px-2 py-3 md:px-6 lg:px-6 font-medium text-gray-900 whitespace-nowrap">
+        {date}
+      </th>
+      <td className="px-2 py-3 md:px-6 lg:px-6">
+        <span className={`font-medium text-${statusColor}`}>{status}</span>
+      </td>
+      <td className="px-2 py-3 md:px-6 lg:px-6">
+        <button onClick={handleAction} className={`font-medium text-red-600 hover:underline`}>
+          {actionText}
+        </button>
+      </td>
+    </tr>
+  );
+};
 
-export default HistoryItem
+export default HistoryItem;

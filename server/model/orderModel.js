@@ -4,12 +4,12 @@ const orderSchema = new Schema(
   {
     userId: {
       type: Schema.Types.ObjectId,
-      ref: "user",
+      ref: "users",
     },
     products: [
       {
         type: Schema.Types.ObjectId,
-        ref: "product",
+        ref: "products",
       },
     ],
     quantity: {

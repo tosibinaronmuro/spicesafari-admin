@@ -22,6 +22,44 @@ const page = () => {
     margin: "0px",
     transform: "translate3d(522.5px, 3847.5px, 0px)",
   };
+
+  const productOrder=[
+    {
+    id:1,
+    name:'Burger',
+    price:"2,600",
+    date:"28/09/2023",
+    status:"On-Delivery"
+  },
+    {
+    id:2,
+    name:'Pizza',
+    price:"1,500",
+    date:"28/09/2023",
+    status:"Pending"
+  },
+    {
+    id:3,
+    name:'Rice',
+    price:"2,300",
+    date:"28/09/2023",
+    status:"Delivered"
+  },
+    {
+    id:4,
+    name:'Sandwich',
+    price:"4,500",
+    date:"28/09/2023",
+    status:"Cancelled"
+  },
+    {
+    id:5,
+    name:'burger',
+    price:"23",
+    date:"28/09/2023",
+    status:"Delivered"
+  },
+]
   return (
     <div className=" min-h-[70vh] p-3 md:p-10 lg:p-10">
       <div
@@ -40,7 +78,7 @@ const page = () => {
       </div>
       <div className="flex justify-center items-center text-2xl text-primary my-5">
         
-        Order History
+        Orders
       </div>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         <div className="flex items-center justify-between pb-4">
@@ -189,7 +227,7 @@ const page = () => {
         <table className="w-full text-sm text-left text-gray-500  ">
           <thead className="text-xs text-gray-700 uppercase bg-gray-200  ">
             <tr>
-              <th scope="col" className="p-2 lg:p-4 md:p-4">
+              {/* <th scope="col" className="p-2 lg:p-4 md:p-4">
                 <div className="flex items-center">
                   <input
                     id="checkbox-all-search"
@@ -200,7 +238,7 @@ const page = () => {
                     checkbox
                   </label>
                 </div>
-              </th>
+              </th> */}
               <th scope="col" className="px-2 py-3 md:px-6 lg:px-6 ">
                 Product name
               </th>
@@ -211,16 +249,18 @@ const page = () => {
                 Date
               </th>
               <th scope="col" className="px-2 py-3 md:px-6 lg:px-6 ">
+                Status
+              </th>
+              <th scope="col" className="px-2 py-3 md:px-6 lg:px-6 ">
                 Action
               </th>
             </tr>
           </thead>
           <tbody>
-            <HistoryItem name={"Burger"} price={20} date={"28/09/2023"} />
-            <HistoryItem name={"Burger"} price={20} date={"28/09/2023"} />
-            <HistoryItem name={"Burger"} price={20} date={"28/09/2023"} />
-            <HistoryItem name={"Burger"} price={20} date={"28/09/2023"} />
-            <HistoryItem name={"Burger"} price={20} date={"28/09/2023"} />
+           {productOrder.map((order, index)=>{
+            return  <HistoryItem name={order.name} price={order.price} date={order.date} status={order.status} />
+          
+           })}
           </tbody>
         </table>
       </div>

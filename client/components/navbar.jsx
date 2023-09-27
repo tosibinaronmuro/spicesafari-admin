@@ -53,8 +53,8 @@ export default function Navbar({ fixed }) {
           </div>
           <div
             className={
-              "lg:flex md:flex flex-grow items-center   " +
-              (navbarOpen ? " flex  " : " hidden")
+              "lg:flex md:flex flex-grow items-center max-h-0  overflow-hidden md:overflow-visible lg:overflow-visible transition-max-h ease-in-out duration-1000 " +
+          (navbarOpen ? "max-h-screen" : "max-h-0")
             }
           >
             <ul className="flex  mt-3 lg:mt-none md:mt-none w-full lg:w-auto md:w-auto   flex-col lg:flex-row md:flex-row list-none lg:ml-auto md:ml-auto ">
@@ -94,9 +94,9 @@ export default function Navbar({ fixed }) {
               <li className=" w-full lg:w-auto transition ease-in-out delay-150 text-tertiary hover:-translate-y-1 hover:scale-105 hover:text-tertiary  duration-300">
                 <a
                   className=" lg:inline-flex lg:w-auto w-full   rounded items-center   text-tertiary transition hover:text-tertiary/75 px-7 text-sm md:text-sm lg:text-base py-2 md:px-2 md:py-2 lg:px-5 flex"
-                  href="/history"
+                  href="/orders"
                 >
-                  History
+                  Orders
                 </a>
               </li>
               {/* <li className=" w-full lg:w-auto transition ease-in-out delay-150 text-tertiary hover:-translate-y-1 hover:scale-105 hover:text-tertiary  duration-300">
@@ -110,7 +110,7 @@ export default function Navbar({ fixed }) {
               </li> */}
               <li>
                 <details className="group [&_summary::-webkit-details-marker]:hidden">
-                  <summary className="flex cursor-pointer items-center justify-between rounded-lg px-7 py-2 md:px-3 lg:px-7  hover:bg-gray-100   w-full lg:w-auto transition ease-in-out delay-150 text-tertiary hover:-translate-y-1 hover:scale-105 hover:text-tertiary  duration-300">
+                  <summary className="flex cursor-pointer items-center justify-between rounded-lg px-7 py-2 md:px-3 lg:px-7  hover:bg-gray-100   w-full lg:w-auto transition ease-in-out delay-150  text-tertiary hover:-translate-y-1 hover:scale-105 hover:text-tertiary  duration-300">
                     <span className=" lg:inline-flex lg:w-auto w-full text-sm md:text-sm lg:text-base   rounded items-center   text-tertiary transition hover:text-tertiary/75  flex">
                       {" "}
                       Account{" "}
@@ -132,7 +132,7 @@ export default function Navbar({ fixed }) {
                     </span>
                   </summary>
 
-                  <ul className="mt-2 space-y-1 px-4 lg:absolute bg-secondary lg:z-40">
+                  <ul className="mt-2 space-y-1 px-4 lg:absolute transition-max-h ease-in-out duration-1000 bg-secondary lg:z-40">
                     <li>
                       <a
                         href="/signin"

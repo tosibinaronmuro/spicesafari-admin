@@ -18,13 +18,14 @@ export const viewAllOrders = async (req, res) => {
 
 // View users orders
 export const userOrders = async (req, res) => {
-  const { id } = req.params;
+  const { userId } = req.params;
+  console.log(req.params)
   try {
-    const currenUser = await User.findById(id);
-    if (!currenUser) {
+    const currentUser = await User.findById(userId);
+    if (!currentUser) {
       return res.status(404).json("User not found");
     }
-    const viewUserOrder = await Orders.find({ userId: currenUser._id });
+    const viewUserOrder = await Orders.find({ userId: currentUser._id });
     res.status(200).json(viewUserOrder);
   } catch (err) {
     res.status(500).json(err.message);
@@ -48,6 +49,9 @@ export const singleOrder = async (req, res) => {
 // creating new order
 export const createOrder = async (req, res) => {
   try {
+    req.body.userId = req.user.userId;
+    // req.body.products = req.products;
+    // console.log(req.products)
     const order = new Orders(req.body);
     const createdOrder = await order.save();
     res.status(201).json(createdOrder);

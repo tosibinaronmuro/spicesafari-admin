@@ -22,8 +22,9 @@ const productSchema = new Schema(
       type: String,
     },
     category: {
-      type: Schema.Types.ObjectId,
-      ref: "category",
+      type: String,
+      // type: Schema.Types.ObjectId,
+      // ref: "category",
     },
     rating: [
       {

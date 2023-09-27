@@ -28,9 +28,9 @@ export const viewProduct = async (req, res) => {
         rating: averageRating,
       };
     });
-    res.status(200).jsson(refreshedProducts);
+    res.status(200).json(refreshedProducts);
   } catch (err) {
-    res.status(500).jsson(err.message);
+    res.status(500).json(err.message);
   }
 };
 
@@ -38,33 +38,13 @@ export const viewProduct = async (req, res) => {
 export const singleProduct = async (req, res) => {
   const { id } = req.params;
   try {
+     
     const viewSingleProduct = await products.findById(id);
-    const refreshedProducts = allProducts.map((newProduct) => {
-      //
-      const ratingLenght = newProduct.rating.length;
-      let averageRating = 0;
-      if (ratingLenght > 0) {
-        const totalRating = newProduct.rating.reduce(
-          (rating, total) => rating + total,
-          0,
-        );
-        averageRating = totalRating / ratingLenght;
-      }
-      return {
-        _id: newProduct._id,
-        title: newProduct.title,
-        price: newProduct.price,
-        description: newProduct.description,
-        category: newProduct.category,
-        image: newProduct.image,
-        otherImages: newProduct.otherImages,
-        rating: averageRating,
-      };
-    });
-    res.status(200).jsson(refreshedProducts);
+    
+  
     res.status(200).json(viewSingleProduct);
   } catch (err) {
-    res.status(500).jsson(err.message);
+    res.status(500).json(err.message);
   }
 };
 //View recommended products
@@ -74,7 +54,7 @@ export const recommendProduct = async (req, res) => {
     const recommendation = await recommendProducts(userId);
     res.status(200).json(recommendation);
   } catch (err) {
-    res.status(500).jsson(err.message);
+    res.status(500).json(err.message);
   }
 };
 
@@ -103,7 +83,7 @@ export const wishlistProduct = async (req, res) => {
       res.status(200).json("Product added to wishlist");
     }
   } catch (err) {
-    res.status(500).jsson(err.message);
+    res.status(500).json(err.message);
   }
 };
 
@@ -126,7 +106,7 @@ export const createProduct = async (req, res) => {
     const newProduct = await createdProduct.save();
     res.status(200).json(newProduct);
   } catch (err) {
-    res.status(500).jsson(err.message);
+    res.status(500).json(err.message);
   }
 };
 
@@ -145,7 +125,7 @@ export const updateProductRatings = async (req, res) => {
     res.status(200).json(product);
     res.status(200).json(updatedProduct);
   } catch (err) {
-    res.status(500).jsson(err.message);
+    res.status(500).json(err.message);
   }
 };
 //Update existing products details
@@ -161,13 +141,13 @@ export const updateProduct = async (req, res) => {
     );
     res.status(200).json(updatedProduct);
   } catch (err) {
-    res.status(500).jsson(err.message);
+    res.status(500).json(err.message);
   }
 };
 //Delete a  products
 export const deleteProduct = async (req, res) => {
   try {
   } catch (err) {
-    res.status(500).jsson(err.message);
+    res.status(500).json(err.message);
   }
 };

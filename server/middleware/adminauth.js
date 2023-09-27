@@ -19,7 +19,7 @@ const adminauthMiddleware = async (req, res, next) => {
     }
 
     const payload = jwt.verify(token, process.env.JWT_SECRET);
-    console.log(payload)
+    
 
     const user = await Admin.findById(payload.adminId);
     if (!user) {
