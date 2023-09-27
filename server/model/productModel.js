@@ -23,6 +23,21 @@ const productSchema = new Schema(
     },
     category: {
       type: String,
+      enum: [
+        "Drinks",
+        "Snacks",
+        "Burgers",
+        "Pizza",
+        "Pasta",
+        "Rice",
+        "Salads",
+        "Sandwiches",
+        "Desserts",
+        "Beverages",
+        "Coffee",
+        "Appetizers",
+      ],
+      default: "Pending",
       // type: Schema.Types.ObjectId,
       // ref: "category",
     },
@@ -36,7 +51,7 @@ const productSchema = new Schema(
   },
   {
     timestamps: true,
-  },
+  }
 );
 
 const products = model("products", productSchema);
