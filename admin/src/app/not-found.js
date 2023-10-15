@@ -1,6 +1,9 @@
+"use client";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 const Error404 = () => {
+  const router=useRouter()
   return (
     <div className="grid h-screen px-4 bg-white place-content-center">
       <svg
@@ -27,12 +30,12 @@ const Error404 = () => {
       <button>
         <a
           className="group relative inline-block focus:outline-none focus:ring"
-          href="/"
+         onClick={()=>{router.back()}}
         >
           <span className="absolute inset-0 translate-x-1.5 translate-y-1.5 bg-primary transition-transform group-hover:translate-y-0 group-hover:translate-x-0"></span>
 
           <span className="relative inline-block border-2 border-current font-Poiret font-semibold px-8 py-3 text-sm   uppercase tracking-widest text-tertiary group-active:text-opacity-75">
-            Go Home
+            Go Back
           </span>
         </a>
       </button>

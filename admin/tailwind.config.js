@@ -21,6 +21,7 @@ module.exports = {
       },
       fontFamily: {
         logoFont: ['ADLaM Display', 'cursive'],
+        quicksand: ['Roboto', 'sans-serif'],
       }
     }
   },

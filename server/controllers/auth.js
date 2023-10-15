@@ -17,7 +17,7 @@ import {
   mailTransport,
   gmailTemplate,
   gmailPlainTemplate,
-} from "../utils/mail.js";
+} from "../utils/mail.js"; 
 
 const register = async (req, res, next) => {
   const { name, email, password } = req.body;
