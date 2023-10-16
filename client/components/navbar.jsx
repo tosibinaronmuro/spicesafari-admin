@@ -122,8 +122,7 @@ export default function Navbar({ fixed }) {
                     </span>
                   </summary>
 
-                  <ul className='mt-2 space-y-1 px-4 lg:absolute bg-secondary lg:z-40'>
-                  <ul className="mt-2 space-y-1 px-4 lg:absolute transition-max-h ease-in-out duration-1000 bg-secondary lg:z-40">
+                  <ul className='mt-2 space-y-1 px-4 lg:absolute transition-max-h ease-in-out duration-1000 bg-secondary lg:z-40'>
                     <li>
                       <a
                         href='/signin'
