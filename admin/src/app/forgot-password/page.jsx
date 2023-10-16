@@ -1,47 +1,55 @@
+"use client";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 const page = () => {
+  const router = useRouter();
   return (
     <section className="bg-secondary  py-20 lg:py-[120px]">
       <div className="container mx-auto">
         <div className="w-full px-4">
           <div className="relative mx-auto max-w-[525px] overflow-hidden rounded-lg bg-white py-16 px-10 text-center sm:px-12 md:px-[60px]">
-          <div className="mx-auto inline-block max-w-[160px]">
-              <p><span className="lg:text-4xl text-2xl font-logoFont text-primary">SpiceSafari</span> <span className="font-logoFont">Kitchen</span></p>
+            <div className="mx-auto inline-block max-w-[160px]">
+              <p>
+                <span className="lg:text-4xl text-2xl font-logoFont text-primary">
+                  SpiceSafari
+                </span>{" "}
+                <span className="font-logoFont">Kitchen</span>
+              </p>
 
-               
-              <p>Admin Dashboard</p>
+              <p className="text-sm">Admin Dashboard</p>
             </div>
             <form>
-              <InputBox type="email" name="email" placeholder="Email" />
+              <p className="m-2">Enter new pasword</p>
               <InputBox
                 type="password"
                 name="password"
                 placeholder="Password"
               />
+              <InputBox
+                type="password"
+                name="confirm-password"
+                placeholder="Confirm Password"
+              />
 
-              <div className="mb-10">
+              <div className="mb-10 flex space-x-2 ">
+                <button
+                  type="button"
+                  className="border-primary w-full cursor-pointer rounded-md border bg-secondary py-3 px-5 text-base text-primary transition hover:bg-opacity-90"
+                  onClick={() => router.push("/")}
+                >
+                  Back
+                </button>
+
                 <button
                   className="border-primary w-full cursor-pointer rounded-md border bg-primary py-3 px-5 text-base text-white transition hover:bg-opacity-90"
                   type="submit"
                 >
-                  Sign In
+                  Submit
                 </button>
               </div>
             </form>
-          
-            <a
-              href="/forgot-password"
-              className="mb-2 inline-block text-base text-[#adadad] hover:text-primary hover:underline"
-            >
-              Forgot Password?
-            </a>
-            <p className="text-base text-[#adadad]">
-              Not a member yet?
-              <a href="/signup" className="text-primary hover:underline">
-                Sign Up
-              </a>
-            </p>
+
             <div>
               <span className="absolute top-1 right-1">
                 <svg

@@ -19,10 +19,10 @@ const authMiddleware = async (req, res, next) => {
     }
 
     const payload = await jwt.verify(token, process.env.JWT_SECRET);
-    console.log("Payload    ", payload)
+     
     
     const user = await User.findById(payload.userId);
-    console.log("user   ",user)
+     
     if (!user) {
       throw new Unauthenticated("User not found");
     }
