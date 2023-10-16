@@ -39,7 +39,12 @@ const register = async (req, res, next) => {
     const token = user.createJWT();
 
     res.status(StatusCodes.OK).json({
-      user: { name: user.name, email: user.email, role: user.role },
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
       token: token,
     });
   } catch (error) {
@@ -94,11 +99,11 @@ const logout = async (req, res, next) => {
     if (!req.user) {
       throw new CustomError("User not authenticated", StatusCodes.UNAUTHORIZED);
     }
-console.log(req.user)
+    console.log(req.user);
     // Update the user's public key to null
     await User.updateOne(
       { _id: req.user.userId },
-      { $set: { publicKey: null } }
+      { $set: { publicKey: null } },
     );
 
     // Clear session and JWT cookie
@@ -185,7 +190,7 @@ const forgotPassword = async (req, res, next) => {
       subject: "Reset Password for I.S.E.E.A",
       html: gmailTemplate(
         `http://localhost:3000/password/reset?token=${randomBytes}&id=${user._id}`,
-        user.name
+        user.name,
       ),
     };
     mailTransport.sendMail(mail_configs);
@@ -198,7 +203,7 @@ const forgotPassword = async (req, res, next) => {
       process.env.MY_EMAIL,
       email,
       user.email,
-      user.name
+      user.name,
     );
     res.json({
       success: true,
