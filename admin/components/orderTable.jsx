@@ -18,7 +18,7 @@ const OrderIdTable = ({productOrder}) => {
         <th scope="col" className="px-2 py-3 md:px-6 lg:px-6 ">
           Quantity
         </th>
-        
+      
       </tr>
     </thead>
     <tbody>
