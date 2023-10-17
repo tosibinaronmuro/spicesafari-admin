@@ -45,9 +45,10 @@ const users = [
 const UserList = () => (
     <div className='overflow-y-scroll max-h-[100vh]'> 
     <div>
-        <Header title={"Orders"}/>
+        <Header title={"Users"}/>
     </div>
     {/* ... (dropdown button and search input) */}
+    {/* admin users */}
     <div className="relative overflow-x-auto shadow-md min-h-[100dvh] p-4 font-quicksand md:p-6">
     <table className="w-full     text-sm text-left text-gray-500 ">
     <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
