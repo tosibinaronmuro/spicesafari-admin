@@ -52,7 +52,7 @@ const TableItem = ({ name, location, price, orderID ,order, status, time }) => {
             
           });
         }}
-        className="bg-white border-b hover:bg-gray-100 font-quicksand "
+        className="bg-white border-b cursor-pointer hover:bg-gray-100 font-quicksand "
       >
         <th
           scope="row"

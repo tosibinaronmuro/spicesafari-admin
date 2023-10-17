@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Header from "../../../../../components/header";
 import OrderIdTable from "../../../../../components/orderTable";
+import Ordersummary from "../../../../../components/ordersummary";
+import Billingaddress from "../../../../../components/billingaddress";
 
 const OrderItem = ({ params }) => {
   const productOrder = [
@@ -58,15 +60,15 @@ const OrderItem = ({ params }) => {
         >
           <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 288 480 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-370.7 0 73.4-73.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-128 128z" />
         </svg>
-        <span>Orders</span>
+        <span>Back</span>
       </div>
-      <div className="w-fill  m-3 p-3 mx-44 bg-white rounded ">
+      <div className="w-fill  m-3 p-3 mx-4 md:mx-44 lg:mx-44 bg-white rounded ">
         <div className="mx-3">
           <p className="font-logoFont font-extralight  text-3xl mb-3">
             Order #jbhv2t678
           </p>
           <div className="p-3 font-quicksand  ">
-            <div className="flex justify-between ">
+            <div className="flex justify-between flex-col md:flex-row lg:flex-row ">
               <div>
                 <p>{`by {name}`}</p>
                 <p>{`created on {date}`}</p>
@@ -189,38 +191,11 @@ const OrderItem = ({ params }) => {
               </div>
             </div>
               </div>
-              <div className="text-xs">
-                <p> Billing address:</p>
-                <p>
-                    Address: 123 Main Street 
-                </p>
-                <p>City: Anytown</p>
-                <p> State:
-                  CA   </p>
-                  <p>email: johndoe@gmail.com</p>
-                  <p>phone:+123 456 7890</p>
-              </div>
+            <Billingaddress/>
             </div>
             
 
-            <div className="w-fit flex m-3 p-3 space-x-10   border-secondary border-4 rounded-xl ">
-              <div className="  p-3 m-2  ">
-                <p className="font-logoFont text-2xl ">{`$ 5,000`}</p>
-                <p> Total amount</p>
-              </div>
-              <div className="border-l p-3 m-2 pl-3   ">
-                <p className="font-logoFont text-2xl ">{`15`}</p>
-                <p> Number of items</p>
-              </div>
-              <div className="border-l p-3 m-2 pl-3   ">
-                <p className="font-logoFont text-2xl ">{`$ 1,500`}</p>
-                <p> Delivery Cost</p>
-              </div>
-              <div className="border-l p-3 m-2 pl-3 bg-slate-700 text-white   ">
-                <p className="font-logoFont text-2xl ">{`$ 6,500`}</p>
-                <p> Net Amount</p>
-              </div>
-            </div>
+            <Ordersummary/>
 
             <div className="flex flex-col space-y-5 my-14">
               <p className="font-logoFont text-2xl">Items in order</p>
