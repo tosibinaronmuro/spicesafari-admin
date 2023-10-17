@@ -1,9 +1,10 @@
 import Footer from "../../components/footer";
 import "./globals.css";
 import Navbar from "../../components/navbar";
-// import { Inter } from 'next/font/google'
+import { Montserrat } from "next/font/google";
 
-// const inter = Inter({ subsets: ['latin'] })
+import { ReduxProvider } from "@/Store/Provider";
+const Mont = Montserrat({ subsets: ["latin"] });
 
 export const metadata = {
   title: "ClemDish",
@@ -19,10 +20,12 @@ export default function RootLayout({ children }) {
       <head>
         <link rel='icon' href='/favicon.ico' />
       </head>
-      <body className=''>
-        <Navbar />
-        {children}
-        <Footer />
+      <body className={Mont.className}>
+        <ReduxProvider>
+          <Navbar />
+          {children}
+          <Footer />
+        </ReduxProvider>
       </body>
     </html>
   );
