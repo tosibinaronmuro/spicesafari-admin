@@ -1,5 +1,5 @@
-import products from "../model/productModel";
-import Orders from "../model/orderModel";
+import products from "../model/productModel.js";
+import Orders from "../model/orderModel.js";
 
 // Function to recommend products to a user based on collaborative filtering
 export const recommendProductsForUser = async (userId, limit) => {

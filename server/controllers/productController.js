@@ -1,7 +1,4 @@
-import {
-  recommendProducts,
-  recommendProductsForUser,
-} from "../middleware/collaborationFiltering.js";
+import { recommendProductsForUser } from "../middleware/collaborationFiltering.js";
 import products from "../model/productModel.js";
 import User from "../model/user.js";
 
@@ -41,10 +38,8 @@ export const viewProduct = async (req, res) => {
 export const singleProduct = async (req, res) => {
   const { id } = req.params;
   try {
-     
     const viewSingleProduct = await products.findById(id);
-    
-  
+
     res.status(200).json(viewSingleProduct);
   } catch (err) {
     res.status(500).json(err.message);
