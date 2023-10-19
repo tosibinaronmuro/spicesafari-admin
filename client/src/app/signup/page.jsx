@@ -273,13 +273,14 @@ const page = () => {
 
 export default page;
 
-const InputBox = ({ type, placeholder, name }) => {
+const InputBox = ({ type, placeholder, name, onChange }) => {
   return (
     <div className='mb-6'>
       <input
         type={type}
         placeholder={placeholder}
         name={name}
+        onChange={onChange}
         className='border-[#E9EDF4]  w-full rounded-md border bg-[#ddebfa] py-3 px-5 text-base text-body-color placeholder-[#ACB6BE] outline-none focus:border-[#ddebfa] focus-visible:shadow-none'
       />
     </div>
