@@ -87,17 +87,19 @@ export const wishlistProduct = async (req, res) => {
 
 //create new products
 export const createProduct = async (req, res) => {
-  const { title, price, image, otherImages, description, category } = req.body;
-  // Validating product details
-  if (!title || !price || !image || !otherImages || !description || !category) {
-    return res.status(401).json("Fields must not be empty");
-  }
   try {
+    const { title, price, description, category } = req.body;
+    // Validating product details
+    if (!title || !price || !description || !category) {
+      return res.status(401).json("Fields must not be empty");
+    }
+    if (!req.file) {
+      return res.status(401).json("Select Image");
+    }
     const createdProduct = new products({
       title,
       price,
-      image,
-      otherImages,
+      image: req.file.filename,
       description,
       category,
     });
@@ -130,10 +132,22 @@ export const updateProductRatings = async (req, res) => {
 export const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
+    const { title, price, otherImages, description, category } = req.body;
+    const seenProduct = {
+      title,
+      price,
+      otherImages,
+      description,
+      category,
+    };
+
+    if (req.file) {
+      seenProduct.image = req.file.filename;
+    }
     const updatedProduct = await products.findByIdAndUpdate(
       id,
       {
-        $set: req.body,
+        $set: seenProduct,
       },
       { new: true },
     );

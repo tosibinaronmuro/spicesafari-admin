@@ -37,7 +37,8 @@ const productSchema = new Schema(
         "Coffee",
         "Appetizers",
       ],
-      default: "Pending",
+      default: "Snacks",
+
       // type: Schema.Types.ObjectId,
       // ref: "category",
     },
@@ -51,7 +52,7 @@ const productSchema = new Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 const products = model("products", productSchema);

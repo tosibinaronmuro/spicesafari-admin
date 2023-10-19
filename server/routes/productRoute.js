@@ -8,13 +8,20 @@ import {
 } from "../controllers/productController.js";
 import adminauthMiddleware from "../middleware/adminauth.js";
 import authMiddleware from "../middleware/auth.js";
+import multer from "multer";
+import { storage } from "../middleware/fileUpload.js";
 const router = Router();
 
+const upload = multer({ storage: storage });
 router.get("/", viewProduct); //everyone can view products even before they create accounts
 router.get("/:id", singleProduct); //everyone can view a single product even before they create accounts
 router.get("/recommend/:UserId", viewProduct); //everyone can be recommended products even before they create accounts
-router.post("/:userId/wishlist/:productId", authMiddleware, wishlistProduct); // only users who have created an account can create a wishlist
-router.post("/create", adminauthMiddleware, createProduct); // only admins can create a new product
-router.patch("/:id", adminauthMiddleware, updateProduct); //only admins can update a product
-
+router.post("/create", upload.single("photo"), createProduct); // only admins can create a new product
+router.patch(
+  "/:id",
+  upload.single("photo"),
+  adminauthMiddleware,
+  updateProduct,
+); //only admins can update a product
+router.patch("/:userId/wishlist/:productId", wishlistProduct); // only users who have created an account can create a wishlist
 export default router;
