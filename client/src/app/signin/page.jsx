@@ -1,6 +1,32 @@
-import React from "react";
+"use client";
+import { useState } from "react";
+import { useLoginMutation } from "@/Store/Api_Slices/authSlice";
+import { isSuccess } from "@/Store/ToolkitQuery/authStore";
+import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
 
 const page = () => {
+  const dispatch = useDispatch();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [login] = useLoginMutation();
+  const body = {
+    email,
+    password,
+  };
+  console.log(body);
+  const router = useRouter();
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      dispatch(isSuccess(await login(body).unwrap()));
+      router.push("/menu");
+      console.log("");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <section className='bg-secondary  py-20 lg:py-[120px]'>
       <div className='container mx-auto'>
@@ -16,12 +42,18 @@ const page = () => {
                 </p>
               </a>
             </div>
-            <form>
-              <InputBox type='email' name='email' placeholder='Email' />
+            <form onSubmit={handleLogin}>
+              <InputBox
+                type='email'
+                name='email'
+                placeholder='Email'
+                onChange={(e) => setEmail(e.target.value)}
+              />
               <InputBox
                 type='password'
                 name='password'
                 placeholder='Password'
+                onChange={(e) => setPassword(e.target.value)}
               />
 
               <div className='mb-10'>
@@ -330,13 +362,14 @@ const page = () => {
 
 export default page;
 
-const InputBox = ({ type, placeholder, name }) => {
+const InputBox = ({ type, placeholder, name, onChange }) => {
   return (
     <div className='mb-6'>
       <input
         type={type}
         placeholder={placeholder}
         name={name}
+        onChange={onChange}
         className='border-[#E9EDF4]  w-full rounded-md border bg-[#ddebfa] py-3 px-5 text-base text-body-color placeholder-[#ACB6BE] outline-none focus:border-[#ddebfa] focus-visible:shadow-none'
       />
     </div>

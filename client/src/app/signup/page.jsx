@@ -1,6 +1,34 @@
-import React from "react";
+"use client";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { isSuccess } from "@/Store/ToolkitQuery/authStore";
+import { useRegisterMutation } from "@/Store/Api_Slices/authSlice";
+import { useRouter } from "next/navigation";
 
 const page = () => {
+  const dispatch = useDispatch();
+  const [name, setFullname] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [register] = useRegisterMutation();
+  const body = {
+    name,
+    email,
+    password,
+  };
+  console.log(body);
+  const router = useRouter();
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    try {
+      dispatch(isSuccess(await register(body).unwrap()));
+      router.push("/menu");
+      console.log("");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <section className='bg-secondary py-20 lg:py-[120px]'>
       <div className='container mx-auto'>
@@ -16,18 +44,24 @@ const page = () => {
                 </p>
               </a>
             </div>
-            <form>
-              <InputBox type='name' name='name' placeholder='Fullname' />
-              <InputBox type='email' name='email' placeholder='Email' />
+            <form onSubmit={handleRegister}>
+              <InputBox
+                type='name'
+                name='name'
+                placeholder='Fullname'
+                onChange={(e) => setFullname(e.target.value)}
+              />
+              <InputBox
+                type='email'
+                name='email'
+                placeholder='Email'
+                onChange={(e) => setEmail(e.target.value)}
+              />
               <InputBox
                 type='password'
                 name='password'
                 placeholder='Password'
-              />
-              <InputBox
-                type='password'
-                name='confirm-password'
-                placeholder='confirm-Password'
+                onChange={(e) => setPassword(e.target.value)}
               />
 
               <div className='mb-10'>

@@ -12,7 +12,13 @@ import errorHandler from "./middleware/errors-handler.js";
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    optionsSuccessStatus: 200,
+    credentials: true,
+  }),
+);
 app.use(express.json());
 app.use("/api/v1/auth", Authrouter);
 app.use("/api/v1/auth/admin", AdminAuthrouter);
