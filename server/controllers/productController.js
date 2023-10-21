@@ -1,4 +1,3 @@
-import { recommendProductsForUser } from "../middleware/collaborationFiltering.js";
 import products from "../model/productModel.js";
 import User from "../model/user.js";
 
@@ -49,8 +48,68 @@ export const singleProduct = async (req, res) => {
 export const recommendProduct = async (req, res) => {
   try {
     const { userId } = req.params;
-    const recommendation = await recommendProductsForUser(userId, 5);
-    res.status(200).json(recommendation);
+    const user = await User.findById({ _id: userId })
+      .populate("wishlist")
+      .exec();
+    console.log(user);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // find all users except the current user
+    const otherUsers = await User.find({ _id: { $ne: userId } });
+
+    const calculateUserSimilarity = (user1, user2) => {
+      const wishlist1 = new Set(
+        user1.wishlist.map((food) => food._id.toString()),
+      );
+      const wishlist2 = new Set(
+        user2.wishlist.map((food) => food._id.toString()),
+      );
+
+      const intersection = [...wishlist1].filter((foodId) =>
+        wishlist2.has(foodId),
+      );
+
+      if (intersection.length === 0) {
+        return 0; // No similarity
+      }
+
+      const union = new Set([...wishlist1, ...wishlist2]);
+
+      return intersection.length / union.size;
+    };
+
+    const userSimilarities = [];
+
+    otherUsers.forEach((otherUser) => {
+      const similarity = calculateUserSimilarity(user, otherUser);
+      userSimilarities.push({ userId: otherUser._id, similarity });
+    });
+
+    userSimilarities.sort((a, b) => b.similarity - a.similarity);
+
+    const topSimilarUser = userSimilarities[0];
+
+    if (!topSimilarUser) {
+      return res.json({ message: "No recommendations available" });
+    }
+
+    const recommendedUser = await User.findById(topSimilarUser.userId).populate(
+      "wishlist",
+    );
+
+    const recommendedFoods = recommendedUser.wishlist.map((food) => food._id);
+
+    const recommendations = recommendedFoods.filter(
+      (foodId) => !user.wishlist.map((food) => food._id).includes(foodId),
+    );
+
+    const recommendedFoodDetails = await products.find({
+      _id: { $in: recommendations },
+    });
+
+    res.status(200).json(recommendedFoodDetails);
   } catch (err) {
     res.status(500).json(err.message);
   }

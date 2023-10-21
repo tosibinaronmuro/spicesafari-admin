@@ -28,7 +28,12 @@ const userSchema = new Schema({
     type: Boolean,
     default: false,
   },
-  wishlist: [],
+  wishlist: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "products",
+    },
+  ],
   publicKey: {
     type: String,
   },

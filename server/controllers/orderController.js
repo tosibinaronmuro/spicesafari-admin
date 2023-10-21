@@ -19,7 +19,7 @@ export const viewAllOrders = async (req, res) => {
 // View users orders
 export const userOrders = async (req, res) => {
   const { userId } = req.params;
-  console.log(req.params)
+  console.log(req.params);
   try {
     const currentUser = await User.findById(userId);
     if (!currentUser) {
@@ -49,7 +49,6 @@ export const singleOrder = async (req, res) => {
 // creating new order
 export const createOrder = async (req, res) => {
   try {
-    req.body.userId = req.user.userId;
     // req.body.products = req.products;
     // console.log(req.products)
     const order = new Orders(req.body);
