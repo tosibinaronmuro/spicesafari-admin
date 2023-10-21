@@ -4,7 +4,7 @@ import User from "../model/user.js";
 //View all products
 export const viewProduct = async (req, res) => {
   try {
-    const allProducts = await products.find();
+    const allProducts = await products.find().sort({ createdAt: -1 });
     //Calculate the average rating for all products
     const refreshedProducts = allProducts.map((newProduct) => {
       const ratingLenght = newProduct.rating.length;
@@ -25,6 +25,7 @@ export const viewProduct = async (req, res) => {
         image: newProduct.image,
         otherImages: newProduct.otherImages,
         rating: averageRating,
+        createdAt: newProduct.createdAt,
       };
     });
     res.status(200).json(refreshedProducts);
