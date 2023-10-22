@@ -4,7 +4,7 @@ import Orders from "../model/orderModel.js";
 // Function to recommend products to a user based on collaborative filtering
 export const recommendProductsForUser = async (userId, limit) => {
   // Find the orders made by the user
-  const userOrders = await Orders.find({ userId }).populate("products");
+  const userOrders = await Orders.find({ userId }).populate("products").exec();
 
   // Create a user-product matrix to track user interactions
   const userProductMatrix = {};

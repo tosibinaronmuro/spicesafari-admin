@@ -1,12 +1,20 @@
 "use client";
 import React, { useState } from "react";
 
-const Card = ({ button1, button2, handleButton1, handleButton2 }) => {
+const Card = ({
+  name,
+  price,
+  tag,
+  button1,
+  button2,
+  handleButton1,
+  handleButton2,
+}) => {
   return (
     <div className='lg:max-w-[30%] md:max-w-[48%]'>
       <div className='group object-cover hover:transition-all transition duration-500 group-hover:scale-105 relative block  rounded-lg hover:shadow-md hover:shadow-black/20 bg-white m-3 pb-4  shadow-sm shadow-indigo-100'>
         <div className='absolute end-4 top-4 z-10 border border-primary rounded-full bg-white p-1 m-1 px-2 text-gray-900 transition hover:text-gray-900/75'>
-          <span className='text-primary text-xs '>Popular Meal</span>
+          <span className='text-primary text-xs font-medium'>{tag}</span>
 
           {/* <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -38,14 +46,14 @@ const Card = ({ button1, button2, handleButton1, handleButton2 }) => {
                   <dt className='sr-only'>Name</dt>
 
                   <dd className='font-medium group-hover:underline group-hover:underline-offset-4'>
-                    Chicken BBQ
+                    {name}
                   </dd>
                 </div>
               </dl>
               <div>
                 <dt className='sr-only'>Price</dt>
 
-                <dd className='text-sm text-gray-500'>$2,400 </dd>
+                <dd className='text-sm text-gray-500'>${price} </dd>
               </div>
             </div>
             {/* <div className=" px-5 mb-1 text-xs h-auto">
