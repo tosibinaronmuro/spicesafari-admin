@@ -50,7 +50,7 @@ const OrderItem = ({ params }) => {
       </div>
       <div
         onClick={() => back()}
-        className="flex space-x-3 mt-3 ml-2 lg:ml-14 md:ml-14 justify-start items-center hover:text-primary"
+        className="flex space-x-3 cursor-pointer mt-3 ml-2 lg:ml-14 md:ml-14 justify-start items-center hover:text-primary"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

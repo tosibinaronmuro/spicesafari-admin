@@ -28,7 +28,7 @@ const ProductTable = ({productID,productName,category, price,quantity}) => {
          <p className="ml-3"> {productName}</p>
         </th>
         <td className="px-6 py-4 font-medium ">{productID}</td>
-        <td className="px-6 py-4 flex,flex-col">
+        <td className="px-6 py-4  ">
             {category} 
          
         </td>
@@ -37,7 +37,7 @@ const ProductTable = ({productID,productName,category, price,quantity}) => {
           $  {price}
           
         </td>
-        <td className="px-6 py-4 flex justify-center">{quantity}</td>
+        <td className="px-6 py-4  ">{quantity}</td>
         <td className="px-6 py-4">
           <a className="font-medium text-blue-600   hover:underline">Edit</a>
         </td>
