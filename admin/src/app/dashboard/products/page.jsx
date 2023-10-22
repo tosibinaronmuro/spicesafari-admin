@@ -291,7 +291,7 @@ useEffect(() => {
           </div>
         </div>
       </div>
-      $
+      
       {modalOpen ? (
         <Modal
           modalOpen={modalOpen}

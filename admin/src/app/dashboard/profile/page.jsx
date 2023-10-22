@@ -103,7 +103,7 @@ useEffect(() => {
             </div>
         </div>
       </div> 
-      $
+      
       {modalOpen ? (
         <ProfileModal
           modalOpen={modalOpen}
