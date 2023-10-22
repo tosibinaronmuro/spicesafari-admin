@@ -109,8 +109,29 @@ export const recommendProduct = async (req, res) => {
     const recommendedFoodDetails = await products.find({
       _id: { $in: recommendations },
     });
-
-    res.status(200).json(recommendedFoodDetails);
+    const refreshedProducts = recommendedFoodDetails.map((newProduct) => {
+      const ratingLenght = newProduct.rating.length;
+      let averageRating = 0;
+      if (ratingLenght > 0) {
+        const totalRating = newProduct.rating.reduce(
+          (rating, total) => rating + total,
+          0,
+        );
+        averageRating = totalRating / ratingLenght;
+      }
+      return {
+        _id: newProduct._id,
+        title: newProduct.title,
+        price: newProduct.price,
+        description: newProduct.description,
+        category: newProduct.category,
+        image: newProduct.image,
+        otherImages: newProduct.otherImages,
+        rating: averageRating,
+        createdAt: newProduct.createdAt,
+      };
+    });
+    res.status(200).json(refreshedProducts);
   } catch (err) {
     res.status(500).json(err.message);
   }

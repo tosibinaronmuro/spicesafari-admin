@@ -14,11 +14,11 @@ import {
 const page = () => {
   const router = useRouter();
   const user = useSelector((state) => state.auth.User.user);
-  console.log(user);
+
   const { data: recommend } = useRecommendProductQuery({ id: user._id });
-  console.log("reco", recommend);
+  console.log(recommend);
   const { data: products, isLoading } = useViewAllProductQuery();
-  console.log(products);
+
   const [isOpen, setisOpen] = useState(false);
 
   const toggle = () => {
@@ -74,6 +74,7 @@ const page = () => {
                   key={recommend._id}
                   name={recommend.title}
                   price={recommend.price}
+                  rating={recommend.rating}
                   tag={"Recommended Meal"}
                   button1={"favorite"}
                   button2={"order"}
@@ -98,6 +99,7 @@ const page = () => {
                 key={product._id}
                 name={product.title}
                 price={product.price}
+                rating={product.rating}
                 tag={"Popular Meal"}
                 button1={"favorite"}
                 button2={"order"}
