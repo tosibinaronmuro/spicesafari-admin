@@ -1,11 +1,15 @@
 "use client";
+import Link from "next/link";
 import React, { useState } from "react";
+import { images } from "../../next.config";
 
 const Card = ({
+  Img,
   name,
   price,
   tag,
   rating,
+  linking,
   button1,
   button2,
   handleButton1,
@@ -33,31 +37,28 @@ const Card = ({
     </svg> */}
         </div>
 
-        <img
-          alt='Home'
-          src='https://imgs.search.brave.com/RBSR1dwq5gbFy7-m2YxTiv57cue71hm4JjPIfGUEg3M/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzAyLzQ2Lzc5LzY2/LzM2MF9GXzI0Njc5/NjY3M19DQXljNXZm/MllCdEIyTkRJSHIx/VXAwVDBPREhuOTJr/Qi5qcGc'
-          className='h-56 rounded-md w-full  '
-        />
+        <img alt='Home' src={Img} className='h-56 rounded-md w-full  ' />
 
         <div className='mt-2'>
-          <div className='flex flex-col'>
-            <div className='flex justify-between mx-4 m-3'>
-              <dl>
+          <Link href={`/menu/${linking}`}>
+            <div className='flex flex-col'>
+              <div className='flex justify-between mx-4 m-3'>
+                <dl>
+                  <div>
+                    <dt className='sr-only'>Name</dt>
+
+                    <dd className='font-medium group-hover:underline group-hover:underline-offset-4'>
+                      {name}
+                    </dd>
+                  </div>
+                </dl>
                 <div>
-                  <dt className='sr-only'>Name</dt>
+                  <dt className='sr-only'>Price</dt>
 
-                  <dd className='font-medium group-hover:underline group-hover:underline-offset-4'>
-                    {name}
-                  </dd>
+                  <dd className='text-sm text-gray-500'>${price} </dd>
                 </div>
-              </dl>
-              <div>
-                <dt className='sr-only'>Price</dt>
-
-                <dd className='text-sm text-gray-500'>${price} </dd>
               </div>
-            </div>
-            {/* <div className=" px-5 mb-1 text-xs h-auto">
+              {/* <div className=" px-5 mb-1 text-xs h-auto">
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea
                 repellat dolorem deserunt distinctio in quisquam, eos vero ipsa
@@ -65,21 +66,21 @@ const Card = ({
                 possimus eveniet. Obcaecati, distinctio.
               </p>
             </div> */}
-            <div className='flex justify-end items-center px-2 py-2'>
-              <svg
-                className='w-4 h-4 text-yellow-300 mr-1'
-                aria-hidden='true'
-                xmlns='http://www.w3.org/2000/svg'
-                fill='currentColor'
-                viewBox='0 0 22 20'>
-                <path d='M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z' />
-              </svg>
-              <p className='ml-2 text-sm font-bold text-gray-900 '>
-                {parseFloat(rating).toFixed(2)}
-              </p>
+              <div className='flex justify-end items-center px-2 py-2'>
+                <svg
+                  className='w-4 h-4 text-yellow-300 mr-1'
+                  aria-hidden='true'
+                  xmlns='http://www.w3.org/2000/svg'
+                  fill='currentColor'
+                  viewBox='0 0 22 20'>
+                  <path d='M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z' />
+                </svg>
+                <p className='ml-2 text-sm font-bold text-gray-900 '>
+                  {parseFloat(rating).toFixed(2)}
+                </p>
+              </div>
             </div>
-          </div>
-
+          </Link>
           <div className='flex space-x-2 mx-[10%] justify-between'>
             <button onClick={() => handleButton1}>
               {/* <a className="flex justify-center items-center rounded border border-primary bg-primary px-7 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-primary focus:outline-none focus:ring active:text-primary">

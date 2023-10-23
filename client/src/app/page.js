@@ -1,10 +1,12 @@
+"use client";
 import Image from "next/image";
 import Search from "../../components/search-component";
 import Categories from "../../components/categories";
 import Featured from "../../components/menu-components/featured";
 import Card from "../../components/menu-components/card";
 import Delivery from "../../components/menu-components/delivery";
-
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 export default function Home() {
   return (
     <main>
@@ -46,9 +48,12 @@ export default function Home() {
               Get the best deals at the same price
             </p>
           </div>
-          <div className='mt-3 lg:w-[40%] ml-10 '>
-            <Search />
-          </div>
+          {/* <div className='mt-3 lg:w-[40%] ml-10 '>
+            <Search
+              onSubmit={onSearch}
+              onChange={(e) => setSeaech(e.target.value)}
+            />
+          </div> */}
         </div>
       </div>
 

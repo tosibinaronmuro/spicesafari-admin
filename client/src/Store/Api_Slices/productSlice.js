@@ -9,7 +9,7 @@ export const productApi = createApi({
   tagTypes: ["product"],
   endpoints: (build) => ({
     viewAllProduct: build.query({
-      query: () => "/",
+      query: ({ key }) => `/?key=${key}`,
       providesTags: ["product"],
     }),
     viewSingleProduct: build.query({

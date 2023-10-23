@@ -4,7 +4,16 @@ import User from "../model/user.js";
 //View all products
 export const viewProduct = async (req, res) => {
   try {
-    const allProducts = await products.find().sort({ createdAt: -1 });
+    let allProducts;
+    const { key } = req.query;
+
+    !key
+      ? (allProducts = await products.find().sort({ createdAt: -1 }))
+      : (allProducts = await products
+          .find({
+            $or: [{ title: { $regex: key, $options: "i" } }],
+          })
+          .sort({ createdAt: -1 }));
     //Calculate the average rating for all products
     const refreshedProducts = allProducts.map((newProduct) => {
       const ratingLenght = newProduct.rating.length;
@@ -34,13 +43,70 @@ export const viewProduct = async (req, res) => {
   }
 };
 
+// Search for products
+// export const searchProducts = async (req, res) => {
+//   try {
+//     const { key } = req.query;
+
+//     const searchedProd = await products.find({
+//       $or: [
+//         { title: { $regex: key, $options: "i" } },
+//         // { category: { $regex: search, $options: "i" } },
+//       ],
+//     });
+
+//     const refreshedProducts = searchedProd.map((newProduct) => {
+//       const ratingLenght = newProduct.rating.length;
+//       let averageRating = 0;
+//       if (ratingLenght > 0) {
+//         const totalRating = newProduct.rating.reduce(
+//           (rating, total) => rating + total,
+//           0,
+//         );
+//         averageRating = totalRating / ratingLenght;
+//       }
+//       return {
+//         _id: newProduct._id,
+//         title: newProduct.title,
+//         price: newProduct.price,
+//         description: newProduct.description,
+//         category: newProduct.category,
+//         image: newProduct.image,
+//         otherImages: newProduct.otherImages,
+//         rating: averageRating,
+//         createdAt: newProduct.createdAt,
+//       };
+//     });
+//     res.status(200).json(refreshedProducts);
+//   } catch (err) {
+//     res.status(500).json(err.message);
+//   }
+// };
 //View single products
 export const singleProduct = async (req, res) => {
   const { id } = req.params;
   try {
     const viewSingleProduct = await products.findById(id);
-
-    res.status(200).json(viewSingleProduct);
+    const ratingLenght = viewSingleProduct?.rating?.length;
+    let averageRating = 0;
+    if (ratingLenght > 0) {
+      const totalRating = viewSingleProduct.rating.reduce(
+        (rating, total) => rating + total,
+        0,
+      );
+      averageRating = totalRating / ratingLenght;
+    }
+    res.status(200).json({
+      _id: viewSingleProduct._id,
+      title: viewSingleProduct.title,
+      price: viewSingleProduct.price,
+      description: viewSingleProduct.description,
+      category: viewSingleProduct.category,
+      image: viewSingleProduct.image,
+      otherImages: viewSingleProduct.otherImages,
+      rating: averageRating,
+      createdAt: viewSingleProduct.createdAt,
+    });
   } catch (err) {
     res.status(500).json(err.message);
   }

@@ -15,8 +15,10 @@ const router = Router();
 
 const upload = multer({ storage: storage });
 router.get("/", viewProduct); //everyone can view products even before they create accounts
+// router.get("/search", searchProducts);
 router.get("/:id", singleProduct); //everyone can view a single product even before they create accounts
 router.get("/recommend/:userId", recommendProduct); //everyone can be recommended products even before they create accounts
+
 router.post("/create", upload.single("photo"), createProduct); // only admins can create a new product
 router.patch(
   "/:id",

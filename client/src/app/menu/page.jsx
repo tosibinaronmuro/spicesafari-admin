@@ -14,10 +14,10 @@ import {
 const page = () => {
   const router = useRouter();
   const user = useSelector((state) => state.auth.User.user);
-
+  const [search, setSeaech] = useState("");
   const { data: recommend } = useRecommendProductQuery({ id: user._id });
   console.log(recommend);
-  const { data: products, isLoading } = useViewAllProductQuery();
+  const { data: products, isLoading } = useViewAllProductQuery({ key: search });
 
   const [isOpen, setisOpen] = useState(false);
 
@@ -55,7 +55,7 @@ const page = () => {
       </div>
       <div>
         <div className='  flex justify-center items-center'>
-          <Search />
+          <Search search={search} onChange={(e) => setSeaech(e.target.value)} />
         </div>
         <div className='flex justify-start pl-[10%] items-center text-xl text-primary my-5'>
           Categories
@@ -63,8 +63,34 @@ const page = () => {
         <Categories />
       </div>
       <div>
+        <div className='flex font-semibold justify-start pl-[10%] items-center text-xl text-primary my-5'>
+          Menu- {search}
+        </div>
+
+        {/* map function here */}
+        <div className='flex flex-wrap justify-start w-full h-full px-[5%]'>
+          {products && products.length > 0 ? (
+            products.map((product) => (
+              <Card
+                key={product._id}
+                linking={`${product._id}`}
+                Img={`http://localhost:4000/${product.image}`}
+                name={product.title}
+                price={product.price}
+                rating={product.rating}
+                tag={"Popular Meal"}
+                button1={"favorite"}
+                button2={"order"}
+              />
+            ))
+          ) : (
+            <>
+              <p>Food not found</p>
+            </>
+          )}
+        </div>
         <div className=''>
-          <div className='flex justify-start pl-[10%] items-center text-xl text-primary my-5'>
+          <div className='flex justify-start pl-[10%] font-semibold items-center text-xl text-primary my-5'>
             Recommended
           </div>
           <div className='flex flex-wrap justify-start  w-full px-[5%]'>
@@ -72,7 +98,9 @@ const page = () => {
               recommend.map((recommend) => (
                 <Card
                   key={recommend._id}
+                  Img={`http://localhost:4000/${recommend.image}`}
                   name={recommend.title}
+                  linking={`${recommend._id}`}
                   price={recommend.price}
                   rating={recommend.rating}
                   tag={"Recommended Meal"}
@@ -86,25 +114,6 @@ const page = () => {
               </>
             )}
           </div>
-        </div>
-        <div className='flex justify-start pl-[10%] items-center text-xl text-primary my-5'>
-          {`{Search Query}`}
-        </div>
-
-        {/* map function here */}
-        <div className='flex flex-wrap justify-start w-full h-full px-[5%]'>
-          {products &&
-            products.map((product) => (
-              <Card
-                key={product._id}
-                name={product.title}
-                price={product.price}
-                rating={product.rating}
-                tag={"Popular Meal"}
-                button1={"favorite"}
-                button2={"order"}
-              />
-            ))}
         </div>
       </div>
     </div>

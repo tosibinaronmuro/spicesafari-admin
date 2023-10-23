@@ -19,6 +19,8 @@ app.use(
     credentials: true,
   }),
 );
+
+app.use(express.static("uploads"));
 app.use(express.json());
 app.use("/api/v1/auth", Authrouter);
 app.use("/api/v1/auth/admin", AdminAuthrouter);
