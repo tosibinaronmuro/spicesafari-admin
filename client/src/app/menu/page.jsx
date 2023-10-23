@@ -14,7 +14,7 @@ import {
 const page = () => {
   const router = useRouter();
   const user = useSelector((state) => state.auth.User.user);
-  const [search, setSeaech] = useState("");
+  const [search, setSearch] = useState("");
   const { data: recommend } = useRecommendProductQuery({ id: user._id });
   console.log(recommend);
   const { data: products, isLoading } = useViewAllProductQuery({ key: search });
@@ -30,12 +30,7 @@ const page = () => {
     setSelectedOption(event.target.value);
     setisOpen(false);
   };
-  const customStyle = {
-    position: "absolute",
-    inset: "auto auto 0px 0px",
-    margin: "0px",
-    transform: "translate3d(522.5px, 3847.5px, 0px)",
-  };
+   
   return (
     <div className=' min-h-[70vh] p-3 md:p-10 lg:p-10'>
       <div
@@ -55,7 +50,7 @@ const page = () => {
       </div>
       <div>
         <div className='  flex justify-center items-center'>
-          <Search search={search} onChange={(e) => setSeaech(e.target.value)} />
+          <Search search={search} onChange={(e) => setSearch(e.target.value)} />
         </div>
         <div className='flex justify-start pl-[10%] items-center text-xl text-primary my-5'>
           Categories
@@ -85,7 +80,7 @@ const page = () => {
             ))
           ) : (
             <>
-              <p>Food not found</p>
+              <p>{search} not found</p>
             </>
           )}
         </div>

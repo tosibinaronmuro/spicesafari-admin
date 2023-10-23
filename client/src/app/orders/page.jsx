@@ -2,64 +2,29 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import HistoryItem from "../../../components/history-components/history-item";
-
+import { useSelector } from "react-redux";
+import { useUserOrderQuery } from "@/Store/Api_Slices/orderSlice.js";
+import HistorySkeleton from "../../../components/history-components/historySkeleton";
 const page = () => {
   const router = useRouter();
   const [isOpen, setisOpen] = useState(false);
+  const user = useSelector((state) => state.auth.User.user);
 
   const toggle = () => {
     setisOpen(!isOpen);
   };
   const [selectedOption, setSelectedOption] = useState("Last 30 days");
-
+  const { data: productOrder, isLoading } = useUserOrderQuery({ userId: user._id });
+  console.log(productOrder);
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
     setisOpen(false);
   };
-  const customStyle = {
-    position: "absolute",
-    inset: "auto auto 0px 0px",
-    margin: "0px",
-    transform: "translate3d(522.5px, 3847.5px, 0px)",
-  };
+  function formatDate(dateString) {
+    const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+    return new Date(dateString).toLocaleDateString("en-GB", options);
+  }
 
-  const productOrder=[
-    {
-    id:1,
-    name:'Burger',
-    price:"2,600",
-    date:"28/09/2023",
-    status:"On-Delivery"
-  },
-    {
-    id:2,
-    name:'Pizza',
-    price:"1,500",
-    date:"28/09/2023",
-    status:"Pending"
-  },
-    {
-    id:3,
-    name:'Rice',
-    price:"2,300",
-    date:"28/09/2023",
-    status:"Delivered"
-  },
-    {
-    id:4,
-    name:'Sandwich',
-    price:"4,500",
-    date:"28/09/2023",
-    status:"Cancelled"
-  },
-    {
-    id:5,
-    name:'burger',
-    price:"23",
-    date:"28/09/2023",
-    status:"Delivered"
-  },
-]
   return (
     <div className=" min-h-[70vh] p-3 md:p-10 lg:p-10">
       <div
@@ -77,7 +42,6 @@ const page = () => {
         <span>Back</span>
       </div>
       <div className="flex justify-center items-center text-2xl text-primary my-5">
-        
         Orders
       </div>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -197,7 +161,7 @@ const page = () => {
               </ul>
             </div>
           </div>
-          <label for="table-search" className="sr-only">
+          <label htmlFor="table-search" className="sr-only">
             Search
           </label>
           <div className="relative">
@@ -210,9 +174,9 @@ const page = () => {
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                  clip-rule="evenodd"
+                  clipRule="evenodd"
                 ></path>
               </svg>
             </div>
@@ -227,23 +191,11 @@ const page = () => {
         <table className="w-full text-sm text-left text-gray-500  ">
           <thead className="text-xs text-gray-700 uppercase bg-gray-200  ">
             <tr>
-              {/* <th scope="col" className="p-2 lg:p-4 md:p-4">
-                <div className="flex items-center">
-                  <input
-                    id="checkbox-all-search"
-                    type="checkbox"
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 "
-                  ></input>
-                  <label for="checkbox-all-search" className="sr-only">
-                    checkbox
-                  </label>
-                </div>
-              </th> */}
               <th scope="col" className="px-2 py-3 md:px-6 lg:px-6 ">
-                Product name
+                Products
               </th>
               <th scope="col" className="px-2 py-3 md:px-6 lg:px-6 ">
-                Price
+                Total Price
               </th>
               <th scope="col" className="px-2 py-3 md:px-6 lg:px-6 ">
                 Date
@@ -257,10 +209,20 @@ const page = () => {
             </tr>
           </thead>
           <tbody>
-           {productOrder.map((order, index)=>{
-            return  <HistoryItem name={order.name} price={order.price} date={order.date} status={order.status} />
-          
-           })}
+           {isLoading ? <HistorySkeleton/> : productOrder && productOrder.length > 0 ? (
+              productOrder.map((order, index) => (
+                <HistoryItem key={index}
+                  name={order.products}
+                  price={order.price}
+                  date={formatDate(order.createdAt)} 
+                  status={order.status}
+                />
+              ))
+            ) : (
+              <>
+                <tr>No recommended food yet, keep using the application</tr>
+              </>
+            )}
           </tbody>
         </table>
       </div>

@@ -31,7 +31,7 @@ const HistoryItem = ({ name, price, date, status, handleCancel }) => {
     if (status === 'Pending' || status === 'On-Delivery') {
       handleCancel(
         
-      ); // Call the cancel order API handler
+      ); 
     } else {
       
     }
@@ -40,7 +40,9 @@ const HistoryItem = ({ name, price, date, status, handleCancel }) => {
   return (
     <tr className="bg-white border-b text-xs md:text-sm lg:text-sm hover:bg-gray-50">
       <th scope="row" className="px-2 py-3 md:px-6 lg:px-6 font-medium text-gray-900 whitespace-nowrap">
-        {name}
+        {name?.map((name,index)=>{
+          return <p key={index}>{name.title}</p>
+        })}
       </th>
       <td className="px-2 py-3 md:px-6 lg:px-6">${price}</td>
       <th scope="row" className="px-2 py-3 md:px-6 lg:px-6 font-medium text-gray-900 whitespace-nowrap">

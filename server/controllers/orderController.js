@@ -1,5 +1,6 @@
 import Orders from "../model/orderModel.js";
 import User from "../model/user.js";
+import products from "../model/productModel.js";
 
 // View all orders (for Admin)
 
@@ -9,7 +10,6 @@ export const viewAllOrders = async (req, res) => {
       .populate("userId")
       .populate("products")
       .exec();
-
     res.status(200).json(viewOrder);
   } catch (err) {
     res.status(500).json(err.message);
@@ -25,7 +25,9 @@ export const userOrders = async (req, res) => {
     if (!currentUser) {
       return res.status(404).json("User not found");
     }
-    const viewUserOrder = await Orders.find({ userId: currentUser._id });
+    const viewUserOrder = await Orders.find({ userId: currentUser._id })
+      .populate("products")
+      .exec();
     res.status(200).json(viewUserOrder);
   } catch (err) {
     res.status(500).json(err.message);
@@ -48,12 +50,13 @@ export const singleOrder = async (req, res) => {
 
 // creating new order
 export const createOrder = async (req, res) => {
+  const { userId } = req.user;
   try {
-    // req.body.products = req.products;
-    // console.log(req.products)
-    const order = new Orders(req.body);
+    // req.body.products
+
+    const order = new Orders({ ...req.body, userId });
     const createdOrder = await order.save();
-    res.status(201).json(createdOrder);
+    res.status(201).json({ createdOrder });
   } catch (err) {
     res.status(500).json(err.message);
   }
@@ -68,7 +71,7 @@ export const updateOrderStatus = async (req, res) => {
       {
         $set: { status: req.body.status },
       },
-      { new: true },
+      { new: true }
     );
     res.status(200).json(statusUpdate);
   } catch (err) {
