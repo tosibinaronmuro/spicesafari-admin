@@ -7,7 +7,18 @@ import Card from "../../components/menu-components/card";
 import Delivery from "../../components/menu-components/delivery";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import {
+  useViewAllProductQuery,
+  useRecommendProductQuery,
+} from "@/Store/Api_Slices/productSlice";
 export default function Home() {
+  const user = useSelector((state) => state.auth.User.user);
+  const [search, setSearch] = useState("");
+  
+ 
+  const { data: products, isLoading } = useViewAllProductQuery({ key: search });
+
   return (
     <main>
       {/* hero section */}
@@ -69,12 +80,25 @@ export default function Home() {
             Our Menu
           </p>
           <div className='flex flex-wrap justify-center w-full px-[5%]'>
-            <Card button1={"favorite"} button2={"order"} />
-            <Card button1={"favorite"} button2={"order"} />
-            <Card button1={"favorite"} button2={"order"} />
-            <Card button1={"favorite"} button2={"order"} />
-            <Card button1={"favorite"} button2={"order"} />
-            <Card button1={"favorite"} button2={"order"} />
+          {products && products.length > 0 ? (
+            products.map((product) => (
+              <Card
+                key={product._id}
+                linking={`${product._id}`}
+                Img={`http://localhost:4000/${product.image}`}
+                name={product.title}
+                price={product.price}
+                rating={product.rating}
+                tag={"Popular Meal"}
+                button1={"favorite"}
+                button2={"order"}
+              />
+            ))
+          ) : (
+            <>
+              <p>{search} not found</p>
+            </>
+          )}
           </div>
           <a
             href='/menu'
