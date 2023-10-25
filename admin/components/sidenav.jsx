@@ -1,6 +1,24 @@
+"use client"
 import React from 'react'
+// import { useLogoutQuery } from "../src/app/Store/Api_Slices/authSlice";
+// import { isLogOut } from "../src/app/Store/ToolkitQuery/authStore";
+// import { useRouter } from "next/navigation";
+// import { useDispatch } from "react-redux";
+
 
 const Sidenav = () => {
+  // const router=useRouter()
+  // const dispatch = useDispatch();
+  // const {Logout} = useLogoutQuery();
+  // const handleLogout = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     dispatch(isLogOut(await Logout));
+  //     router.push("/");
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
   return (
     <div className="flex h-screen font-quicksand  flex-col justify-between border-e bg-white">
     <div className="px-4 py-6">
@@ -94,14 +112,16 @@ const Sidenav = () => {
               
   
               <li>
-                <form action="/logout">
+                <div
+                //  onClick={handleLogout}
+                  >
                   <button
-                    type="submit"
+                    
                     className="w-full rounded-lg px-4 py-2 text-sm font-medium text-gray-500 [text-align:_inherit] hover:bg-gray-100 hover:text-gray-700"
                   >
                     Logout
                   </button>
-                </form>
+                </div>
               </li>
             </ul>
           </details>

@@ -60,7 +60,7 @@ const login = async (req, res, next) => {
     const admin = await Admin.findOne({ email });
 
     if (!admin) {
-      throw new Unauthenticated("admin does not exist");
+      throw new Unauthenticated("admin account does not exist, try again");
     }
 
     const isPasswordCorrect = await admin.comparePasswords(password);

@@ -15,6 +15,6 @@ router.get("/:id", adminauthMiddleware, singleOrder); // admins can view a singl
 router.get("/users/:userId", userOrders); // users can view all their orders
 router.post("/createOrder",authMiddleware, createOrder); //users can create an order hence user auth ... question, where is the product coming from in the createOrder === cart
 router.patch("/:id", adminauthMiddleware, updateOrderStatus); // admins can change status hence the admin auth middleware
-router.patch("/:id", authMiddleware, updateOrderStatus); // admins can change status hence the admin auth middleware
+router.patch("/user/:id", authMiddleware, updateOrderStatus); // admins can change status hence the admin auth middleware
 // users can cancel orders
 export default router;

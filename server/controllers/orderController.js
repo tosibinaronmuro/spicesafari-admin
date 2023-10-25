@@ -2,6 +2,7 @@ import Orders from "../model/orderModel.js";
 import User from "../model/user.js";
 import products from "../model/productModel.js";
 
+//search/sort
 // View all orders (for Admin)
 
 export const viewAllOrders = async (req, res) => {
@@ -9,6 +10,7 @@ export const viewAllOrders = async (req, res) => {
     const viewOrder = await Orders.find()
       .populate("userId")
       .populate("products")
+      .sort({ createdAt: -1 })
       .exec();
     res.status(200).json(viewOrder);
   } catch (err) {
@@ -19,7 +21,6 @@ export const viewAllOrders = async (req, res) => {
 // View users orders
 export const userOrders = async (req, res) => {
   const { userId } = req.params;
-  console.log(req.params);
   try {
     const currentUser = await User.findById(userId);
     if (!currentUser) {
@@ -27,6 +28,7 @@ export const userOrders = async (req, res) => {
     }
     const viewUserOrder = await Orders.find({ userId: currentUser._id })
       .populate("products")
+      .sort({ createdAt: -1 })
       .exec();
     res.status(200).json(viewUserOrder);
   } catch (err) {

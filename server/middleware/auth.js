@@ -6,7 +6,6 @@ import { StatusCodes } from "http-status-codes";
 const authMiddleware = async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
-
     if (!authHeader || !authHeader.startsWith("Bearer")) {
       throw new Unauthenticated("Authentication invalid");
     }
@@ -33,7 +32,6 @@ const authMiddleware = async (req, res, next) => {
 
     // Check and verify public key
     if (payload.publicKey !== user.publicKey) {
-      console.log("payload   ", payload.publicKey,  "user    ", user.publicKey)
       throw new Unauthenticated("Invalid public key, retry login");
     }
 
