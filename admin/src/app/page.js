@@ -1,12 +1,11 @@
 "use client";
-import { useState,useEffect } from "react";
-import { useLoginMutation } from "./Store/Api_Slices/authSlice";
-import { isSuccess } from "./Store/ToolkitQuery/authStore";
+import { useState, useEffect } from "react";
+import { useLoginMutation } from "@/Store/Api_Slices/authSlice";
+import { isSuccess } from "@/Store/ToolkitQuery/authStore";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import ErrorAlert from "../../components/alert/error";
 import SuccessAlert from "../../components/alert/success";
-
 
 const page = () => {
   const dispatch = useDispatch();
@@ -27,14 +26,11 @@ const page = () => {
   // }, [errorMessage, isError]);
   useEffect(() => {
     if (isError || errorMessage) {
-     
       const timeoutId = setTimeout(() => {
-        setIsError(false); 
+        setIsError(false);
         setErrorMessage("");
-        
-      }, 5000); 
+      }, 5000);
 
-      
       return () => clearTimeout(timeoutId);
     }
   }, [isError, errorMessage]);
@@ -42,22 +38,18 @@ const page = () => {
     e.preventDefault();
     try {
       dispatch(isSuccess(await login(body).unwrap()));
-      setIsSuccessful(true)
-      setsuccessMessage("welcome back")
+      setIsSuccessful(true);
+      setsuccessMessage("welcome back");
       router.push("/dashboard");
-    }catch (error) {
+    } catch (error) {
       setIsError(true);
       if (error.data && error.data.msg) {
         setErrorMessage(error.data.msg);
-        
       } else {
         // Handle cases where 'error.data.msg' does not exist
-        setErrorMessage('An error occurred');
+        setErrorMessage("An error occurred");
       }
-     
     }
-    
-    
   };
   return (
     <section className='bg-secondary  py-20 lg:py-[120px]'>
@@ -96,8 +88,10 @@ const page = () => {
                 </button>
               </div>
             </form>
-          <div>{isError? <ErrorAlert message={errorMessage}/> : null }</div>
-          <div>{isSuccessful? <SuccessAlert message={successMessage}/> : null }</div>
+            <div>{isError ? <ErrorAlert message={errorMessage} /> : null}</div>
+            <div>
+              {isSuccessful ? <SuccessAlert message={successMessage} /> : null}
+            </div>
             <a
               href='/forgot-password'
               className='mb-2 inline-block text-base font-semibold text-[#adadad] hover:text-primary hover:underline'>

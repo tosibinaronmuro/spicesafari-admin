@@ -1,5 +1,6 @@
-import React from "react";
+"use client";
 import Header from "../../../components/header";
+
 import Chart from "../../../components/chart";
 import ActiveCharts from "../../../components/ActiveCharts";
 import OrderTable from "../../../components/table";
@@ -97,22 +98,22 @@ const Page = () => {
       time: "6 hours ago",
     },
   ];
-  
+
   data.sort((a, b) => {
     const timeA = new Date(a.time).getTime();
     const timeB = new Date(b.time).getTime();
     return timeB - timeA;
   });
   return (
-    <div className="overflow-y-scroll max-h-[100vh]">
+    <div className='overflow-y-scroll max-h-[100vh]'>
       <Header title={"Dashboard"} />
-      <div className="px-5 mt-3 space-y-3">
-        <p className=" font-logoFont">Live Activity</p>
+      <div className='px-5 mt-3 space-y-3'>
+        <p className=' font-logoFont'>Live Activity</p>
         <ActiveCharts />
       </div>
-      <div className="px-5 mt-3 space-y-3">
-        <p className=" font-logoFont">Recent Orders</p>
-        <OrderTable data={data}/>
+      <div className='px-5 mt-3 space-y-3'>
+        <p className=' font-logoFont'>Recent Orders</p>
+        <OrderTable data={data} />
       </div>
     </div>
   );
