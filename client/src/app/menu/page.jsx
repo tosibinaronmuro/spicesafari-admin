@@ -5,7 +5,8 @@ import HistoryItem from "../../../components/history-components/history-item";
 import Search from "../../../components/search-component";
 import Categories from "../../../components/categories";
 import Card from "../../../components/menu-components/card";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "@/Store/ToolkitQuery/cartStore";
 import {
   useViewAllProductQuery,
   useRecommendProductQuery,
@@ -13,7 +14,12 @@ import {
 
 const page = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
+  const cartStorage = localStorage.getItem("cart");
+  console.log("cart:", cartStorage);
   const user = useSelector((state) => state.auth.User.user);
+  const cart = useSelector((state) => state.cart);
+  console.log(cart);
   const [search, setSearch] = useState("");
   const { data: recommend } = useRecommendProductQuery({ id: user._id });
   console.log(recommend);
@@ -30,7 +36,7 @@ const page = () => {
     setSelectedOption(event.target.value);
     setisOpen(false);
   };
-   
+
   return (
     <div className=' min-h-[70vh] p-3 md:p-10 lg:p-10'>
       <div
@@ -76,6 +82,7 @@ const page = () => {
                 tag={"Popular Meal"}
                 button1={"favorite"}
                 button2={"order"}
+                handleButton2={() => dispatch(addToCart(product))}
               />
             ))
           ) : (
