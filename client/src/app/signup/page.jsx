@@ -1,12 +1,19 @@
 "use client";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { isSuccess } from "@/Store/ToolkitQuery/authStore";
 import { useRegisterMutation } from "@/Store/Api_Slices/authSlice";
 import { useRouter } from "next/navigation";
+import ErrorAlert from "../../../components/alert/error";
+import SuccessAlert from "../../../components/alert/success";
 
 const page = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
+  const [isError, setIsError] = useState(false);
+  const [isSuccessful, setIsSuccessful] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setsuccessMessage] = useState("");
   const [name, setFullname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,16 +23,35 @@ const page = () => {
     email,
     password,
   };
-  console.log(body);
-  const router = useRouter();
+  useEffect(() => {
+    if (isError || errorMessage) {
+     
+      const timeoutId = setTimeout(() => {
+        setIsError(false); 
+        setErrorMessage("");
+        
+      }, 5000); 
+
+      
+      return () => clearTimeout(timeoutId);
+    }
+  }, [isError, errorMessage]);
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
       dispatch(isSuccess(await register(body).unwrap()));
+      setIsSuccessful(true)
+      setsuccessMessage("welcome")
       router.push("/menu");
-      console.log("");
     } catch (error) {
-      console.log(error);
+      setIsError(true);
+      if (error.data && error.data.msg) {
+        setErrorMessage(error.data.msg);
+        
+      } else {
+        setErrorMessage('An error occurred');
+      }
+     
     }
   };
 
@@ -72,7 +98,8 @@ const page = () => {
                 </button>
               </div>
             </form>
-            {/* <p className="mb-6 text-base text-[#adadad]">Connect With</p> */}
+            <div>{isError? <ErrorAlert message={errorMessage}/> : null }</div>
+          <div>{isSuccessful? <SuccessAlert message={successMessage}/> : null }</div>
 
             <p className='text-base text-[#adadad] font-semibold'>
               Already a member?

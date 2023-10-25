@@ -1,15 +1,23 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import HistoryItem from "../../../components/history-components/history-item";
 import { useSelector } from "react-redux";
-import { useUserOrderQuery } from "@/Store/Api_Slices/orderSlice.js";
+import { useDispatch } from "react-redux";
+import {
+  useUserOrderQuery,
+  useUpdateOrderMutation,
+} from "@/Store/Api_Slices/orderSlice.js";
 import HistorySkeleton from "../../../components/history-components/historySkeleton";
+import SuccessAlert from "../../../components/alert/success";
 const page = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [isOpen, setisOpen] = useState(false);
+  const [isCancelled, setIsCancelled] = useState(false);
   const user = useSelector((state) => state.auth.User.user);
-  console.log(user._id);
+  const { token } = useSelector((state) => state.auth.User);
+
   const toggle = () => {
     setisOpen(!isOpen);
   };
@@ -17,7 +25,26 @@ const page = () => {
   const { data: productOrder, isLoading } = useUserOrderQuery({
     userId: user._id,
   });
-  console.log(productOrder);
+  const [updateOrder] = useUpdateOrderMutation();
+
+  const handleCancelOrder = async (id) => {
+    try {
+      dispatch(
+        await updateOrder(
+          { id: id, body: { status: "Cancelled" } },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        ).unwrap(),
+      );
+      setIsCancelled(true);
+      console.log(isCancelled);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
     setisOpen(false);
@@ -41,6 +68,9 @@ const page = () => {
         </svg>
         <span>Back</span>
       </div>
+      {isCancelled ? (
+        <SuccessAlert message={"order cancelled successfully"} />
+      ) : null}
       <div className='flex justify-center items-center text-2xl text-primary my-5'>
         Orders
       </div>
@@ -208,6 +238,8 @@ const page = () => {
                   price={order.price}
                   date={formatDate(order.createdAt)}
                   status={order.status}
+                  id={order._id}
+                  handleCancel={handleCancelOrder}
                 />
               ))
             ) : (

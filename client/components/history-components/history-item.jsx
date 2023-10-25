@@ -1,6 +1,6 @@
 import React from 'react';
 
-const HistoryItem = ({ name, price, date, status, handleCancel }) => {
+const HistoryItem = ({ name, price, date, status, handleCancel ,id}) => {
   let statusColor = '';
   let actionText = '';
 
@@ -29,9 +29,7 @@ const HistoryItem = ({ name, price, date, status, handleCancel }) => {
 
   const handleAction = () => {
     if (status === 'Pending' || status === 'On-Delivery') {
-      handleCancel(
-        
-      ); 
+      handleCancel(id); 
     } else {
       
     }
