@@ -1,14 +1,12 @@
-import React from "react";
-import Header from "../../../../components/header";
-import TableItem from "../../../../components/tableItem";
-import { useSelector } from "react-redux";
-
+import Header from "../../../components/header";
+import TableItem from "../../../components/tableItem";
 import { useAllOrdersQuery } from "@/Store/Api_Slices/orderSlice";
-
+import { useViewAllProductQuery } from "@/Store/Api_Slices/productSlice";
 const page = () => {
-  const { data: dataa, isLoading } = useAllOrdersQuery();
-  console.log(dataa);
-
+  // const { data: order } = useAllOrdersQuery();
+  const { data } = useViewAllProductQuery();
+  console.log(data);
+  // console.log(order);
   return (
     <div className='overflow-y-scroll max-h-[100vh]'>
       <div>
@@ -39,7 +37,7 @@ const page = () => {
               </th>
             </tr>
           </thead>
-          {dataa?.map((item, index) => {
+          {/* {dataa?.map((item, index) => {
             return (
               <TableItem
                 key={index}
@@ -52,7 +50,7 @@ const page = () => {
                 time={item.time}
               />
             );
-          })}
+          })} */}
         </table>
       </div>
     </div>

@@ -49,7 +49,7 @@ const register = async (req, res, next) => {
       token: token,
     });
   } catch (error) {
-    next(error);
+    next(error.message);
   }
 };
 
@@ -93,7 +93,8 @@ const login = async (req, res, next) => {
       token,
     });
   } catch (error) {
-    next(error);
+    console.log(error.message);
+    next(error.message);
   }
 };
 

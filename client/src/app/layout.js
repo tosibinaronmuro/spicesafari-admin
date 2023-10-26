@@ -16,17 +16,17 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang='en'>
-      <head>
-        <link rel='icon' href='/favicon.ico' />
-      </head>
-      <body className={Mont.className}>
-        <ReduxProvider>
+    <ReduxProvider>
+      <html lang='en'>
+        <head>
+          <link rel='icon' href='/favicon.ico' />
+        </head>
+        <body className={Mont.className}>
           <Navbar />
           {children}
           <Footer />
-        </ReduxProvider>
-      </body>
-    </html>
+        </body>
+      </html>
+    </ReduxProvider>
   );
 }
