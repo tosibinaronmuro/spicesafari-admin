@@ -1,6 +1,6 @@
 import React from "react";
 
-const ErrorAlert = ({error,message ,handleClose}) => {
+const ErrorAlert = ({error,message }) => {
   return (
     <div
       id="alert-2"
@@ -22,7 +22,7 @@ const ErrorAlert = ({error,message ,handleClose}) => {
           {error} {message}
         </div>
       </div>
-      <button
+      {/* <button
         type="button"
         onClick={()=>handleClose}
         className="ml-aNameuto -mx-1.5 -my-1.5 bg-red-50   text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8"
@@ -45,7 +45,7 @@ const ErrorAlert = ({error,message ,handleClose}) => {
             d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
           />
         </svg>
-      </button>
+      </button> */}
     </div>
   );
 };

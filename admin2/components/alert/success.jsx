@@ -1,10 +1,10 @@
 import React from "react";
 
-const ErrorAlert = ({error,message ,handleClose}) => {
+const SuccessAlert = ({name,message }) => {
   return (
     <div
       id="alert-2"
-      className=" col-span-10 flex justify-between items-center p-4 mb-4 text-red-800 rounded-lg bg-red-50  "
+      className=" col-span-10 flex justify-between items-center p-4 mb-4 text-green-800 rounded-lg bg-green-50    "
       role="alert"
     >
       <div className="flex">
@@ -19,10 +19,10 @@ const ErrorAlert = ({error,message ,handleClose}) => {
         </svg>
         <span className="sr-only">Info</span>
         <div className="ml-3 flex justify-center items-center text-sm font-medium">
-          {error} {message}
+          {message} <span className="capitalize ml-1">{name}</span>
         </div>
       </div>
-      <button
+      {/* <button
         type="button"
         onClick={()=>handleClose}
         className="ml-aNameuto -mx-1.5 -my-1.5 bg-red-50   text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8"
@@ -45,9 +45,9 @@ const ErrorAlert = ({error,message ,handleClose}) => {
             d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
           />
         </svg>
-      </button>
+      </button> */}
     </div>
   );
 };
 
-export default ErrorAlert;
+export default SuccessAlert;
