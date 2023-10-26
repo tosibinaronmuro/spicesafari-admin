@@ -46,7 +46,7 @@ const TableItem = ({ name, location, price, orderID ,order, status, time }) => {
           
       //   }}
         onClick={() => {
-          push( `/dashboard/orders/${  orderID}`,{
+          push( `/orders/${  orderID}`,{
             
               data: "encodeURIComponent(JSON.stringify({ name, location,  , status, time }))",
             

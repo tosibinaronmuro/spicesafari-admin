@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../../../components/header";
 import TableItem from "../../../components/tableItem";
+import Sidenav from "../../../components/sidenav";
 // import { useSelector } from "react-redux";
 // import { useDispatch } from "react-redux";
 // import { useAllOrdersQuery } from "@/Store/Api_Slices/orderSlice";
@@ -105,7 +106,9 @@ const data = [
   },
 ];
   return (
-    <div className="overflow-y-scroll max-h-[100vh]">
+   <div className="flex min-w-full">
+    <Sidenav/>
+     <div className="overflow-y-scroll max-h-[100vh]  w-full">
       <div>
         <Header title={"Orders"} />
       </div>
@@ -151,6 +154,7 @@ const data = [
         </table>
       </div>
     </div>
+   </div>
   );
 };
 
