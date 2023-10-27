@@ -2,7 +2,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 
-const ProductTable = ({productID,productName,category, price,quantity}) => {
+const ProductTable = ({productID,productName,category, price,quantity,image}) => {
   const { push } = useRouter();
    
 
@@ -24,7 +24,7 @@ const ProductTable = ({productID,productName,category, price,quantity}) => {
           scope="row"
           className="px-6 py-4 flex flex-row items-center  text-gray-900 whitespace-nowrap "
         >
-          <img src="https://imgs.search.brave.com/RBSR1dwq5gbFy7-m2YxTiv57cue71hm4JjPIfGUEg3M/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzAyLzQ2Lzc5LzY2/LzM2MF9GXzI0Njc5/NjY3M19DQXljNXZm/MllCdEIyTkRJSHIx/VXAwVDBPREhuOTJr/Qi5qcGc" alt="image" className=" h-9 w-9 bg-red-300" />
+          <img src={image} alt="image" className=" h-9 w-9 bg-red-300" />
          <p className="ml-3"> {productName}</p>
         </th>
         <td className="px-6 py-4 font-medium ">{productID}</td>
