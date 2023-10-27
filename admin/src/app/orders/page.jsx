@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Header from "../../../components/header";
 import TableItem from "../../../components/tableItem";
@@ -9,9 +10,6 @@ const page = () => {
   //  const dispatch=useDispatch()
   const { data: dataa, isLoading } = useAllOrdersQuery();
   //   console.log(dataa)
-  // const user = useSelector((state) => state.auth.User.user);
-
-  console.log(user);
 
   return (
     <div className='overflow-y-scroll max-h-[100vh]'>
