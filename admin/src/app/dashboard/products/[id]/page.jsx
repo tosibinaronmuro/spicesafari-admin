@@ -6,7 +6,7 @@ import Delete from "../../../../../components/buttons/delete";
 import Edit from "../../../../../components/buttons/edit";
 import ProductImage from "../../../../../components/products/productImage";
 import ProductDetails from "../../../../../components/products/productDetails";
-import Modal from "../../../../../components/modals/modal";
+import Modal from "../../../../../components/modals/productEditModal";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useViewSingleProductQuery } from "@/Store/Api_Slices/productSlice";
