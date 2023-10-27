@@ -16,27 +16,12 @@ export const productApi = createApi({
       query: ({ id }) => `/${id}`,
       providesTags: ["product"],
     }),
-    recommendProduct: build.query({
-      query: ({ id }) => `/recommend/${id}`,
-      providesTags: ["product"],
-    }),
-    wishlistProduct: build.mutation({
-      query({ userId, productId, ...body }) {
-        return {
-          url: `/${userId}/wishlist/${productId}`,
-          method: "PATCH",
-          body,
-        };
-      },
-
-      invalidatesTags: ["product"],
-    }),
+     
   }),
 });
 
 export const {
   useViewAllProductQuery,
   useViewSingleProductQuery,
-  useRecommendProductQuery,
-  useWishlistProductMutation,
+   
 } = productApi;

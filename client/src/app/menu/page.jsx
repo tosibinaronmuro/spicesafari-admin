@@ -10,7 +10,7 @@ import { addToCart } from "@/Store/ToolkitQuery/cartStore";
 import {
   useViewAllProductQuery,
   useRecommendProductQuery,
-} from "@/Store/Api_Slices/productSlice";
+} from "@/Store/Api_Slices/productSlice"; 
 
 const page = () => {
   const router = useRouter();

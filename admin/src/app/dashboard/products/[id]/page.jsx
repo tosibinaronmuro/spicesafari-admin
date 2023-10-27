@@ -1,5 +1,5 @@
 "use client";
-import React, { useState,useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Header from "../../../../../components/header";
 import Delete from "../../../../../components/buttons/delete";
@@ -7,27 +7,31 @@ import Edit from "../../../../../components/buttons/edit";
 import ProductImage from "../../../../../components/products/productImage";
 import ProductDetails from "../../../../../components/products/productDetails";
 import Modal from "../../../../../components/modals/modal";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useViewSingleProductQuery } from "@/Store/Api_Slices/productSlice";
 
-const page = () => {
+const page = ({ params }) => {
+  const { data, isLoading } = useViewSingleProductQuery({ id: params.id });
+  console.log(data);
   const [modalOpen, setModalOpen] = useState(false);
-
   const trigger = useRef(null);
   const modal = useRef(null);
-// close on click outside
-useEffect(() => {
-  const clickHandler = ({ target }) => {
-    if (!modal.current) return;
-    if (
-      !modalOpen ||
-      modal.current.contains(target) ||
-      trigger.current.contains(target)
-    )
-      return;
-    setModalOpen(false);
-  };
-  document.addEventListener("click", clickHandler);
-  return () => document.removeEventListener("click", clickHandler);
-});
+
+  useEffect(() => {
+    const clickHandler = ({ target }) => {
+      if (!modal.current) return;
+      if (
+        !modalOpen ||
+        modal.current.contains(target) ||
+        trigger.current.contains(target)
+      )
+        return;
+      setModalOpen(false);
+    };
+    document.addEventListener("click", clickHandler);
+    return () => document.removeEventListener("click", clickHandler);
+  });
   // close if the esc key is pressed
   useEffect(() => {
     const keyHandler = ({ keyCode }) => {
@@ -60,21 +64,33 @@ useEffect(() => {
       </div>
       <div className="w-fill  m-3 p-3 mx-4 md:mx-44 lg:mx-44 bg-white rounded ">
         <div className="mx-3 flex justify-between items-center">
-          <p className="font-logoFont font-extralight  text-3xl mb-3">
-            Product #A1B2c
+          <p className="font-logoFont font-extralight  text-xl mb-3">
+            Product #{data?._id}
           </p>
           <div className="flex space-x-2">
-           <div ref={trigger}> <Edit text={"Edit Product"}  handlemodal={() => setModalOpen(true)} /></div>
+            <div ref={trigger}>
+              {" "}
+              <Edit
+                text={"Edit Product"}
+                handlemodal={() => setModalOpen(true)}
+              />
+            </div>
 
             <Delete text={"Delete Product"} />
           </div>
         </div>
         <div className="flex flex-col md:flex-row lg:flex-row m-2 space-x-3 md:space-x-3 lg:space-x-10 px-2 md:px-5 lg:px-10 ">
-         <ProductImage/>
-          <ProductDetails/>
+          <ProductImage mainimg={data?.image} />
+          <ProductDetails
+            category={data?.category}
+            name={data?.title}
+            price={data?.price}
+            rating={data?.rating}
+            description={data?.description}
+          />
         </div>
       </div>
-      
+
       {modalOpen ? (
         <Modal
           modalOpen={modalOpen}

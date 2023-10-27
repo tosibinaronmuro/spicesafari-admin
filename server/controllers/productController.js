@@ -303,7 +303,7 @@ export const updateProduct = async (req, res) => {
     res.status(500).json(err.message);
   }
 };
-//Delete a  products
+//Delete a  product
 export const deleteProduct = async (req, res) => {
   try {
   } catch (err) {
