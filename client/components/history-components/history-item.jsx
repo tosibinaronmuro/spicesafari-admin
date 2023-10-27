@@ -8,25 +8,23 @@ const HistoryItem = ({ name, price, date, status, handleCancel ,id}) => {
 
   switch (status) {
     case 'Pending':
-        statusColor = 'blue-600';
+        statusColor = 'text-blue-600';
         actionText='Cancel-Order';
         break;
       case 'On-Delivery':
-        statusColor = 'purple-600';
+        statusColor = 'text-purple-600';
         actionText='Cancel-Order';
         break;
       case 'Delivered':
-        statusColor = 'green-600';
-        actionText='Remove';
+        statusColor = 'text-green-600';
+        actionText='Delivered';
         break;
       case 'Cancelled':
-        statusColor = 'red-600';
+        statusColor = 'text-red-600';
         actionText='Cancelled';
-      
-
         break;
       default:
-        statusColor = 'blue-600';
+        statusColor = 'text-blue-600';
         actionText='Remove';
         break;
   }
@@ -58,7 +56,7 @@ const HistoryItem = ({ name, price, date, status, handleCancel ,id}) => {
         {date}
       </th>
       <td className="px-2 py-3 md:px-6 lg:px-6">
-        <span className={`font-medium text-${statusColor}`}>{status}</span>
+        <span className={`font-medium  ${statusColor}`}>{status}</span>
       </td>
       <td className="px-2 py-3 md:px-6 lg:px-6">
         {updateLoading ? <div className='flex justify-center items-center' role="status">
@@ -70,7 +68,7 @@ const HistoryItem = ({ name, price, date, status, handleCancel ,id}) => {
 </div>:<button
   onClick={handleAction}
   disabled={isDisabled} // Add the disabled attribute
-  className={isDisabled ? `font-medium text-white border bg-red-600 focus:ring-4 focus:outline-none focus:ring-secondary rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center `:`font-medium text-red-600 border border-red-600 focus:ring-4 focus:outline-none focus:ring-secondary rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center  ` }
+  className={ `font-medium text-red-600 border border-red-600 focus:ring-4 focus:outline-none focus:ring-secondary rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center  ` }
 >
   {actionText}
 </button>}

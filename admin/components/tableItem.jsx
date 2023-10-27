@@ -68,12 +68,12 @@ const TableItem = ({ name, location, price, orderID ,order, status, time }) => {
             {  order?.map((order, index) => {
               return (
                 <p key={index} className="text-xs">
-                  {order},
+                  {order.title},
                 </p>
               );
             })}
           </div>
-          <p className="text-xs">${  price}</p>
+          <p className="text-xs">total: ${  price}</p>
         </td>
         <td className={`px-6 py-4 `}>
           <p

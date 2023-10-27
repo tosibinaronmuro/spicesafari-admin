@@ -2,6 +2,11 @@
 import React from 'react'
 
 const OrderIdTable = ({productOrder}) => {
+  
+  function formatDate(dateString) {
+    const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+    return new Date(dateString).toLocaleDateString("en-GB", options);
+  }
   return (
     <table className="w-full text-sm text-left text-gray-500  ">
     <thead className="text-xs text-gray-700 uppercase bg-gray-200  ">
@@ -22,8 +27,8 @@ const OrderIdTable = ({productOrder}) => {
       </tr>
     </thead>
     <tbody>
-     {productOrder.map((order, index)=>{
-      return  <OrderItem key={index} name={order.name} price={order.price} date={order.date} quantity={order.quantity} />
+     {productOrder?.map((order, index)=>{
+      return  <OrderItem key={index} name={order.title} price={order.price} date={formatDate(order.createdAt)} quantity={order.quantity} />
     
      })}
     </tbody>

@@ -4,7 +4,7 @@ import React from 'react'
 // import { isLogOut } from "../src/app/Store/ToolkitQuery/authStore";
 // import { useRouter } from "next/navigation";
 // import { useDispatch } from "react-redux";
-
+import { useSelector } from "react-redux";
 
 const Sidenav = () => {
   // const router=useRouter()
@@ -19,6 +19,8 @@ const Sidenav = () => {
   //     console.log(error);
   //   }
   // };
+  const user = useSelector((state) => state.auth.User.admin);
+ 
   return (
     <div className="flex h-screen font-quicksand  flex-col justify-between border-e bg-white">
     <div className="px-4 py-6">
@@ -139,9 +141,9 @@ const Sidenav = () => {
   
         <div>
           <p className="text-xs">
-            <strong className="block font-medium">Eric Frusciante</strong>
+            <strong className="block font-medium">{user.name}</strong>
   
-            <span> eric@frusciante.com </span>
+            <span>{ user.email}</span>
           </p>
         </div>
       </a>

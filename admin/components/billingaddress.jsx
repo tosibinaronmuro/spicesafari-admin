@@ -1,16 +1,16 @@
 import React from 'react'
 
-const Billingaddress = ({}) => {
+const Billingaddress = ({userId,lcation}) => {
   return (
     <div className="text-xs">
     <p> Billing address:</p>
     <p>
-        Address: 123 Main Street 
+       {lcation} 
     </p>
-    <p>City: Anytown</p>
+    {/* <p>City: Anytown</p>
     <p> State:
-      CA   </p>
-      <p>email: johndoe@gmail.com</p>
+      CA   </p> */}
+      <p>email:{userId?.email}</p>
       <p>phone:+123 456 7890</p>
   </div>
   )

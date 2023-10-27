@@ -17,7 +17,7 @@ export const orderApi = createApi({
   tagTypes: ["order"],
   endpoints: (build) => ({
     allOrders: build.query({
-      query: ({}) => `/`,
+      query: () => `/`,
       providesTags: ["order"],
     }),
     singleOrder: build.query({
@@ -26,7 +26,7 @@ export const orderApi = createApi({
     }),
     updateOrder: build.mutation({
       query: ({ id, body }) => ({
-        url: `/user/${id}`,
+        url: `/${id}`,
         method: "PATCH",
         body,
       }),

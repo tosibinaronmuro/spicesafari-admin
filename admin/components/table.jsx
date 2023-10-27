@@ -1,7 +1,12 @@
 import React from "react";
 import TableItem from "./tableItem";
+import OrderSkeleton from "./skeletons/orderSkeleton";
 
-const OrderTable = ({ data }) => {
+const OrderTable = ({ data,isLoading }) => {
+  function formatDate(dateString) {
+    const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+    return new Date(dateString).toLocaleDateString("en-GB", options);
+  }
   return (
     <div className="relative overflow-x-auto shadow-md p-4 font-quicksand md:p-6">
       <table className="w-full text-sm text-left text-gray-500  ">
@@ -27,21 +32,26 @@ const OrderTable = ({ data }) => {
             </th>
           </tr>
         </thead>
-        {data.map((item, index) => {
-          return (
-             
-            <TableItem
+        {isLoading ? (
+              <OrderSkeleton/>
+            ) : data && data.length > 0 ? (
+              data.map((order, index) => (
+                <TableItem
                 key={index}
-                name={item.name}
-                location={item.location}
-                order={item.order}
-                orderID={item.orderID}
-                price={item.price}
-                status={item.status}
-                time={item.time}
+                name={order.userId?.name}
+                location={order.location}
+                order={order.products}
+                orderID={order._id}
+                price={order.price}
+                status={order.status}
+                time={formatDate(order.createdAt)}
               />
-          );
-        })}
+              ))
+            ) : (
+              <>
+                <tr>No order found!</tr>
+              </>
+            )}
       </table>
     </div>
   );

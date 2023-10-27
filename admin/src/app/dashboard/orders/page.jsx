@@ -1,16 +1,20 @@
+"use client"
 import React from "react";
 import Header from "../../../../components/header";
 import TableItem from "../../../../components/tableItem";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { useAllOrdersQuery } from "../../Store/Api_Slices/orderSlice";
+import { useAllOrdersQuery } from "@/Store/Api_Slices/orderSlice";
+import OrderSkeleton from "../../../../components/skeletons/orderSkeleton";
 
 const page = () => {
  const dispatch=useDispatch()
-  const { data: dataa, isLoading } =  useAllOrdersQuery()
-  console.log(dataa)
+  const { data , isLoading } =  useAllOrdersQuery()
   
-
+  function formatDate(dateString) {
+    const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+    return new Date(dateString).toLocaleDateString("en-GB", options);
+  }
    
   return (
     <div className="overflow-y-scroll max-h-[100vh]">
@@ -42,20 +46,27 @@ const page = () => {
               </th>
             </tr>
           </thead>
-          {dataa?.map((item, index) => {
-            return (
-              <TableItem
+          {isLoading ? (
+              <OrderSkeleton/>
+            ) : data && data.length > 0 ? (
+              data.map((order, index) => (
+                <TableItem
                 key={index}
-                name={item.name}
-                location={item.location}
-                order={item.order}
-                orderID={item.orderID}
-                price={item.price}
-                status={item.status}
-                time={item.time}
+                name={order.userId?.name}
+                location={order.location}
+                order={order.products}
+                orderID={order._id}
+                price={order.price}
+                status={order.status}
+                time={formatDate(order.createdAt)}
               />
-            );
-          })}
+              ))
+            ) : (
+              <>
+                <tr>No order found!</tr>
+              </>
+            )}
+          
         </table>
       </div>
     </div>
