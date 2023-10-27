@@ -70,7 +70,7 @@ const page = ({ params }) => {
           <div className="flex space-x-2">
             <div ref={trigger}>
               {" "}
-              <Edit
+              <Edit 
                 text={"Edit Product"}
                 handlemodal={() => setModalOpen(true)}
               />
@@ -99,6 +99,7 @@ const page = ({ params }) => {
           trigger={trigger}
           modal={modal}
           text={"Edit Product"}
+          data={data}
         />
       ) : null}
     </div>
