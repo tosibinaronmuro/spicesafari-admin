@@ -32,7 +32,9 @@ const Modal = ({
     const file = e.target.files[0];
     setimage(file);
   };
-
+const handleClose=()=>{
+  setIsError(false)
+}
   const body = {
      title,price,quantity,rating,category,description,image
   };
@@ -98,7 +100,7 @@ const Modal = ({
             <span
               className={`mx-auto mb-6 inline-block h-1 w-[90px] rounded bg-primary`}
             ></span>
-            <form action="">
+            <form encType="multipart/form-data" action="">
               <div className="flex flex-col p-2 m-2 ">
                 <div className="mb-6">
                   <label
@@ -228,7 +230,7 @@ const Modal = ({
                 </div>
                  
               </div>
-              {isError ? <ErrorAlert message={errorMessage}/>:null}
+              {isError ? <ErrorAlert handleClose={handleClose} message={errorMessage}/>:null}
               <div className="flex flex-wrap -mx-3">
                 <div className="w-1/2 px-3">
                   <button

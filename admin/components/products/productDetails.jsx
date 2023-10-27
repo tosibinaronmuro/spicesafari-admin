@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ProductDetails = ({category,name,price,rating,reviewers,description}) => {
+const ProductDetails = ({category,name,price,rating,quantity,description}) => {
   return (
     <div>
     <div className="flex space-y-2 flex-col">
@@ -24,13 +24,13 @@ const ProductDetails = ({category,name,price,rating,reviewers,description}) => {
         <p className="text-gray-400 text-xs">Rating </p>
         <p className="ml-2 text-sm font-bold text-gray-900 ">{rating}</p>
       </div>
-      {/* <div className="flex flex-col">
-        <p className="text-gray-400 text-xs">Reviewers </p>
+      <div className="flex flex-col">
+        <p className="text-gray-400 text-xs">quantity </p>
 
         <p className="text-sm font-medium text-gray-900 underline hover:no-underline  ">
-          73 reviews
+          {quantity}
         </p>
-      </div> */}
+      </div>
     </div>
     <div className="flex my-4 flex-col">
       <p className="text-gray-400 text-xs">Description </p>

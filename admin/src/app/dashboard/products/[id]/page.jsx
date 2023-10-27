@@ -13,7 +13,7 @@ import { useViewSingleProductQuery } from "@/Store/Api_Slices/productSlice";
 
 const page = ({ params }) => {
   const { data, isLoading } = useViewSingleProductQuery({ id: params.id });
-  console.log(data);
+  
   const [modalOpen, setModalOpen] = useState(false);
   const trigger = useRef(null);
   const modal = useRef(null);
@@ -85,6 +85,7 @@ const page = ({ params }) => {
             category={data?.category}
             name={data?.title}
             price={data?.price}
+            quantity={data?.quantity}
             rating={data?.rating}
             description={data?.description}
           />
@@ -93,10 +94,10 @@ const page = ({ params }) => {
 
       {modalOpen ? (
         <Modal
-          modalOpen={modalOpen}
-          handleopenmodal={() => setModalOpen(true)}
+          // modalOpen={modalOpen}
+          // handleopenmodal={() => setModalOpen(true)}
           hanleclosedmodal={() => setModalOpen(false)}
-          trigger={trigger}
+          // trigger={trigger}
           modal={modal}
           text={"Edit Product"}
           data={data}

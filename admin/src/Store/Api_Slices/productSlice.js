@@ -31,6 +31,14 @@ export const productApi = createApi({
       body,
      }),
      invalidatesTags: ["product"]
+     }),
+     updateProduct:build.mutation({
+      query:({id,body})=> ({
+      url:`/${id}`,
+      method: "PATCH",
+      body,
+     }),
+     invalidatesTags: ["product"]
      })
   }),
 });
@@ -38,6 +46,7 @@ export const productApi = createApi({
 export const {
   useViewAllProductQuery,
   useViewSingleProductQuery,
-  useCreateNewProductMutation
+  useCreateNewProductMutation,
+  useUpdateProductMutation
    
 } = productApi;
