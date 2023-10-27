@@ -1,5 +1,8 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
+import { useCreateNewProductMutation } from "@/Store/Api_Slices/productSlice";
+import { useDispatch,useSelector } from "react-redux";
+import ErrorAlert from "../alert/error";
 
 const Modal = ({
   handleopenmodal,
@@ -7,10 +10,77 @@ const Modal = ({
   modal,
   trigger,
   modalOpen,
-  text,
-  data
+  text
 }) => {
-  // close on click outside
+  const dispatch = useDispatch();
+  const { token } = useSelector((state) => state.auth.User);
+  const [createNewProduct] = useCreateNewProductMutation();
+  const [isError, setIsError] = useState(false);
+  const [isSuccessful, setIsSuccessful] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setsuccessMessage] = useState("");
+  const [title, setTitle] = useState('');
+  const [price, setPrice] = useState('');
+  const [quantity, setQuantity] = useState('');
+  const [rating, setRating] = useState('');
+  const [category, setCategory] = useState('');
+  const [description, setDescription] = useState('');
+  const [image, setimage] = useState(null);
+
+  // Function to handle image file selection
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setimage(file);
+  };
+const handleClose=()=>{
+  setIsError(false)
+}
+  const body = {
+     title,price,quantity,rating,category,description,image
+  };
+
+  // Function to handle form submission
+  const handleSubmit =async (e) => {
+    e.preventDefault();
+    try {
+      dispatch(await createNewProduct({body}, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          
+        },
+      }).unwrap());
+      setIsSuccessful(true)
+      setsuccessMessage("new product created successfully")
+       
+       
+    } catch (error) {
+      console.log(error)
+      setIsError(true);
+      if (error.data && error.data ) {
+        setErrorMessage(error.data);
+        
+      } else {
+        // Handle cases where 'error.data.msg' does not exist
+        setErrorMessage('An error occurred');
+      }
+     
+    }
+  
+    // Now you can use these state variables as needed
+    console.log('Product Name:', title);
+    console.log('Product Price:', price);
+    console.log('Available Quantity:', quantity);
+    console.log('Rating:', rating);
+    console.log('image:', image);
+    console.log('Category:', category);
+    console.log('Description:', description);
+  };
+
+
+  // const body = {
+  //   email,
+  //   password,
+  // };
 
   return (
     <div>
@@ -30,7 +100,7 @@ const Modal = ({
             <span
               className={`mx-auto mb-6 inline-block h-1 w-[90px] rounded bg-primary`}
             ></span>
-            <form action="">
+            <form encType="multipart/form-data" action="">
               <div className="flex flex-col p-2 m-2 ">
                 <div className="mb-6">
                   <label
@@ -44,7 +114,7 @@ const Modal = ({
                     id="name"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                     placeholder="spaghetti"
-                    defaultValue={data?.title}
+                    onChange={(e) => setTitle(e.target.value)}
                     required
                   ></input>
                 </div>
@@ -58,10 +128,11 @@ const Modal = ({
                     </label>
                     <input
                       type="text"
-                      id="price"
+                      id="price" 
+                      onChange={(e) => setPrice(e.target.value)}
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                       placeholder="1400"
-                      defaultValue={data?.price}
+                      
                       required
                     ></input>
                   </div>
@@ -77,9 +148,26 @@ const Modal = ({
                       id="quantity"
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                       placeholder="8"
+                      onChange={(e) => setQuantity(e.target.value)}
                       required
                     ></input>
                   </div>
+                  <div className="mb-6">
+                   <label
+                     htmlFor="rating"
+                     className="flex justify-start font-logoFont mb-2 text-sm font-medium text-gray-900  "
+                   >
+                     Product Rating
+                   </label>
+                   <input
+                     type="text"
+                     id="rating"
+                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                     placeholder="maximum 5"
+                     onChange={(e) => setRating(e.target.value)}
+                     required
+                   ></input>
+                 </div>
                 </div>
                 <div className="flex flex-row justify-between space-x-2">
                   <div className="mb-6">
@@ -91,7 +179,7 @@ const Modal = ({
                     </label>
                     <select
                       id="category"
-                      defaultValue={data?.category}
+                      onChange={(e) => setCategory(e.target.value)}
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                     >
                       <option>Drinks</option>
@@ -120,6 +208,7 @@ const Modal = ({
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 "
                       id="foodimage"
                       type="file"
+                      onChange={handleImageChange}
                     ></input>
                   </div>
                 </div>
@@ -133,45 +222,15 @@ const Modal = ({
                   <textarea
                     id="message"
                     rows="4"
-                    defaultValue={data?.description}
+                    
+                    onChange={(e) => setDescription(e.target.value)}
                     className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
                     placeholder="Describe the meal..."
                   ></textarea>
                 </div>
-                {/* <div className="flex flex-row jusitfy-between space-x-2">
                  
-                 <div className="mb-6">
-                   <label
-                     htmlFor="rating"
-                     className="flex justify-start font-logoFont mb-2 text-sm font-medium text-gray-900  "
-                   >
-                     Product Rating
-                   </label>
-                   <input
-                     type="text"
-                     id="rating"
-                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                     placeholder="maximum 5"
-                     required
-                   ></input>
-                 </div>
-                 <div className="mb-6">
-                   <label
-                     htmlFor="reviewers"
-                     className="flex justify-start font-logoFont mb-2 text-sm font-medium text-gray-900  "
-                   >
-                     Product Reviewers
-                   </label>
-                   <input
-                     type="text"
-                     id="reviewers"
-                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                     placeholder="8"
-                     required
-                   ></input>
-                 </div>
-               </div> */}
               </div>
+              {isError ? <ErrorAlert handleClose={handleClose} message={errorMessage}/>:null}
               <div className="flex flex-wrap -mx-3">
                 <div className="w-1/2 px-3">
                   <button
@@ -184,6 +243,7 @@ const Modal = ({
                 <div className="w-1/2 px-3">
                   <button
                     type="submt"
+                    onClick={handleSubmit}
                     className={`block w-full p-3 text-base font-medium text-center text-white transition border rounded-lg border-primary bg-primary hover:bg-opacity-90`}
                   >
                     <p> Submit </p>

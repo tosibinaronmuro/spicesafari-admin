@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Header from "../../../../components/header";
 import ProductTable from "../../../../components/productTable";
 import Add from "../../../../components/buttons/add";
-import Modal from "../../../../components/modals/modal";
+import Modal from "../../../../components/modals/productModal";
 import { useDispatch, useSelector } from "react-redux";
  
 import {

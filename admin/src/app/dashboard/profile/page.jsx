@@ -3,7 +3,7 @@ import React, { useState,useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Header from "../../../../components/header";
 import Edit from "../../../../components/buttons/edit";
-import ProfileModal from "../../../../components/modals/prodileModal";
+import ProfileModal from "../../../../components/modals/profileModal";
 const page = () => {
 
   const router = useRouter();

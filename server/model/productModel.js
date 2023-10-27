@@ -21,6 +21,9 @@ const productSchema = new Schema(
     description: {
       type: String,
     },
+    quantity: {
+      type: String,
+    },
     category: {
       type: String,
       enum: [

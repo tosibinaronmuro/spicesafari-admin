@@ -30,6 +30,7 @@ const page = () => {
   const { data: productOrder, isLoading } = useUserOrderQuery({
     userId: user._id,
   });
+  console.log(productOrder)
   const [updateOrder, { isLoading: updateloading, isSuccess }] =
     useUpdateOrderMutation();
     useEffect(() => {
