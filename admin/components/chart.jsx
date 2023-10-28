@@ -46,7 +46,7 @@ const chartData=data
   }, []);
 
   return (
-    <div className="max-w-sm w-full bg-white rounded-lg shadow font-quicksand  my-3 mx-3 p-4 md:p-6">
+    <div className="max-w-sm w-full bg-white rounded-lg shadow font-quicksand  my-3 mx-2 p-4 md:p-6">
       <div className="flex justify-between">
         <div>
           <h5 className="leading-none text-3xl font-bold text-gray-900   pb-2">{total}</h5>

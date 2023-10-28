@@ -1,14 +1,14 @@
 "use client";
 import { useState,useEffect } from "react";
-// import { useDispatch } from "react-redux";
-// import { isSuccess } from "../Store/ToolkitQuery/authStore";
-// import { useRegisterMutation } from "../Store/Api_Slices/authSlice";
+import { useDispatch } from "react-redux";
+import { isSuccess } from "../../Store/ToolkitQuery/authStore";
+import { useRegisterMutation } from "../../Store/Api_Slices/authSlice";
 import { useRouter } from "next/navigation";
-// import ErrorAlert from "../../../../admin/components/alert/error";
-// import SuccessAlert from "../../../../admin/components/alert/success";
+import ErrorAlert from "../../../../admin/components/alert/error";
+import SuccessAlert from "../../../../admin/components/alert/success";
 
 const page = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const router = useRouter();
   const [isError, setIsError] = useState(false);
   const [isSuccessful, setIsSuccessful] = useState(false);
@@ -17,7 +17,7 @@ const page = () => {
   const [name, setFullname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [register] = useRegisterMutation();
+  const [register] = useRegisterMutation();
   const body = {
     name,
     email,
@@ -26,36 +26,36 @@ const page = () => {
 
   
 
-  // useEffect(() => {
-  //   if (isError || errorMessage) {
+  useEffect(() => {
+    if (isError || errorMessage) {
      
-  //     const timeoutId = setTimeout(() => {
-  //       setIsError(false); 
-  //       setErrorMessage("");
+      const timeoutId = setTimeout(() => {
+        setIsError(false); 
+        setErrorMessage("");
         
-  //     }, 5000); 
+      }, 5000); 
 
       
-  //     return () => clearTimeout(timeoutId);
-  //   }
-  // }, [isError, errorMessage]);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [isError, errorMessage]);
   const handleRegister = async (e) => {
     e.preventDefault();
-    // try {
-    //   dispatch(isSuccess(await register(body).unwrap()));
-    //   setIsSuccessful(true)
-    //   setsuccessMessage("welcome")
-    //   router.push("/dashboard");
-    // } catch (error) {
-    //   setIsError(true);
-    //   if (error.data && error.data.msg) {
-    //     setErrorMessage(error.data.msg);
+    try {
+      dispatch(isSuccess(await register(body).unwrap()));
+      setIsSuccessful(true)
+      setsuccessMessage("welcome")
+      router.push("/dashboard");
+    } catch (error) {
+      setIsError(true);
+      if (error.data && error.data.msg) {
+        setErrorMessage(error.data.msg);
         
-    //   } else {
-    //     setErrorMessage('An error occurred');
-    //   }
+      } else {
+        setErrorMessage('An error occurred');
+      }
      
-    // }
+    }
   };
 
   return (

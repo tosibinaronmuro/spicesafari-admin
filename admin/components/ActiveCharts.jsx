@@ -29,7 +29,7 @@ const ActiveCharts = () => {
     },
   ];
   return (
-    <div className='px-3 flex     flex-wrap my-3 justify-start items-center '>
+    <div className=' flex     flex-wrap my-3 justify-start items-center '>
       {orderData.map((data) => {
         return (
           <ChartComponent
