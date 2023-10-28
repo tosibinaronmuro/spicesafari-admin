@@ -1,48 +1,16 @@
- 
+ "use client"
 import React from "react";
 import UserListItem from "../../../../components/userItem";
 import Header from "../../../../components/header";
+import { useViewAllusersQuery } from "@/Store/Api_Slices/userSlice";
 
-const users = [
-  {
-    id: 1,
-    name: "Neil Sims",
-    email: "neil.sims@spicesafari.com",
-    position: "React Developer",
-    status: "Active",
-  },
-  {
-    id: 2,
-    name: "Bonnie Green",
-    email: "bonnie@spicesafari.com",
-    position: "Designer",
-    status: "Active",
-  },
-  {
-    id: 3,
-    name: "Michelle Ogbe",
-    email: "jese@spicesafari.com",
-    position: "Vue JS Developer",
-    status: "Active",
-  },
-  {
-    id: 4,
-    name: "Oyinlade oluwafeyikemi",
-    email: "thomes@spicesafari.com",
-    position: "UI/UX Engineer",
-    status: "Active",
-  },
-  {
-    id: 5,
-    name: "Jacob Banks",
-    email: "leslie@spicesafari.com",
-    position: "SEO Specialist",
-    status: "Suspended",
-  },
-];
+ 
 
 
-const UserList = () => (
+const UserList = () => {
+  const { data , isLoading } =  useViewAllusersQuery()
+  console.log(data?.users)
+  return (
     <div className='overflow-y-scroll max-h-[100vh]'> 
     <div>
         <Header title={"Users"}/>
@@ -69,14 +37,15 @@ const UserList = () => (
             </tr>
         </thead>
       <tbody>
-        {users.map((user) => (
-          <UserListItem key={user.id} user={user} />
+        {data?.users.map((user,index) => (
+          <UserListItem key={index} user={user} />
         ))}
       </tbody>
     </table>
     </div>
   </div>
 );
+}
 
 export default UserList;
 

@@ -251,38 +251,12 @@ const viewAllUsers = async (req, res, next) => {
   }
 };
 
-const suspendUser = async (req, res, next) => {
+const toggleSuspension = async (req, res, next) => {
   const { userId } = req.params;
 
   try {
     if (req.user.role !== "admin") {
-      console.log(req.user);
-      throw new BadRequest("Only admins can suspend users");
-    }
-
-    const user = await User.findById(userId);
-
-    if (!user) {
-      throw new BadRequest("User not found");
-    }
-    user.isSuspended = true;
- 
-    await user.updateOne({ $set: { isSuspended: true } });
-
-    res
-      .status(StatusCodes.OK)
-      .json({ success: true, msg: "User suspended successfully" });
-  } catch (error) {
-    next(error);
-  }
-};
-const unsuspendUser = async (req, res, next) => {
-  const { userId } = req.params;
-
-  try {
-    if (req.user.role !== "admin") {
-      console.log(req.user);
-      throw new BadRequest("Only admins can suspend users");
+      throw new BadRequest("Only admins can suspend/unsuspend users");
     }
 
     const user = await User.findById(userId);
@@ -291,17 +265,21 @@ const unsuspendUser = async (req, res, next) => {
       throw new BadRequest("User not found");
     }
 
-    user.isSuspended = false;
+    // Toggle the isSuspended status
+    user.isSuspended = !user.isSuspended;
  
-    await user.updateOne({ $set: { isSuspended: false } });
+    await user.updateOne({ $set: { isSuspended: user.isSuspended } });
 
-    res
-      .status(StatusCodes.OK)
-      .json({ success: true, msg: "User unsuspended successfully" });
+    const successMessage = user.isSuspended
+      ? "User suspended successfully"
+      : "User unsuspended successfully";
+
+    res.status(StatusCodes.OK).json({ success: true, msg: successMessage });
   } catch (error) {
     next(error);
   }
 };
 
-export { register, login, logout, forgotPassword, suspendUser, unsuspendUser, viewAllUsers};
+
+export { register, login, logout, forgotPassword, toggleSuspension, viewAllUsers};
 // resetPassword
