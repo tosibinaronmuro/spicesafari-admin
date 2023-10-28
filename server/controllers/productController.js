@@ -236,12 +236,22 @@ export const wishlistProduct = async (req, res) => {
 export const createProduct = async (req, res) => {
   try {
     const { title, price, description, category } = req.body;
+
     // Validating product details
-    if (!title || !price || !description || !category) {
-      return res.status(401).json("Fields must not be empty");
+    if (!title) {
+      return res.status(400).json("Title must not be empty");
+    }
+    if (!price) {
+      return res.status(400).json("PRICE must not be empty");
+    }
+    if (!description) {
+      return res.status(400).json("dscription must not be empty");
+    }
+    if (!category) {
+      return res.status(400).json("category must not be empty");
     }
     if (!req.file) {
-      return res.status(401).json("Select Image");
+      return res.status(400).json("Select Image");
     }
     const createdProduct = new products({
       title,
@@ -253,6 +263,7 @@ export const createProduct = async (req, res) => {
     const newProduct = await createdProduct.save();
     res.status(200).json(newProduct);
   } catch (err) {
+    console.log(err.message);
     res.status(500).json(err.message);
   }
 };

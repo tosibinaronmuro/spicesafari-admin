@@ -10,19 +10,15 @@ import { useAllOrdersQuery } from "@/Store/Api_Slices/orderSlice";
 import OrderSkeleton from "../../../components/skeletons/orderSkeleton";
 
 const Page = () => {
-  const dispatch=useDispatch()
-  const { data: data, isLoading } =  useAllOrdersQuery()
-  
-  
-  
+  const dispatch = useDispatch();
+  const { data: data, isLoading } = useAllOrdersQuery();
 
-   
   return (
     <div className='overflow-y-scroll max-h-[100vh]'>
       <Header title={"Dashboard"} />
       <div className='px-5 mt-3 space-y-3'>
         <p className=' font-logoFont'>Live Activity</p>
-        <ActiveCharts />
+        {/* <ActiveCharts /> */}
       </div>
       <div className='px-5 mt-3 space-y-3'>
         <p className=' font-logoFont'>Recent Orders</p>
