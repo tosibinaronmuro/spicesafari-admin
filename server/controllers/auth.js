@@ -45,6 +45,7 @@ const register = async (req, res, next) => {
         email: user.email,
         role: user.role,
         wishlist: user.wishlist,
+        isSuspended:user.isSuspended
       },
       token: token,
     });
@@ -89,6 +90,7 @@ const login = async (req, res, next) => {
         email: user.email,
         role: user.role,
         wishlist: user.wishlist,
+        isSuspended:user.isSuspended
       },
       token,
     });
