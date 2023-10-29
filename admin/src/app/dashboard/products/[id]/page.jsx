@@ -9,14 +9,18 @@ import ProductDetails from "../../../../../components/products/productDetails";
 import Modal from "../../../../../components/modals/productEditModal";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { useViewSingleProductQuery } from "@/Store/Api_Slices/productSlice";
+import { useViewSingleProductQuery,useDeleteProductMutation } from "@/Store/Api_Slices/productSlice";
 
 const page = ({ params }) => {
   const { data, isLoading } = useViewSingleProductQuery({ id: params.id });
-  
+  console.log(data)
+  const [deleteProduct, { data:deleteData, isLoading: updateloading, isSuccess }] =useDeleteProductMutation();
   const [modalOpen, setModalOpen] = useState(false);
   const trigger = useRef(null);
   const modal = useRef(null);
+  const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const { query, back } = useRouter();
 
   useEffect(() => {
     const clickHandler = ({ target }) => {
@@ -41,8 +45,34 @@ const page = ({ params }) => {
     document.addEventListener("keydown", keyHandler);
     return () => document.removeEventListener("keydown", keyHandler);
   });
+  const handleDelete= async()=>{
+    try {
+      
+        await deleteProduct(
+          { id: data._id},
+          // {
+          //   headers: {
+          //     Authorization: `Bearer ${token}`,
+          //   },
+          // }
+        ).unwrap()
+      back()
+    } catch (error) {
+      if (error.data && error.data.msg) {
+        setIsError(true);
+        console.log(error);
+        setErrorMessage(error.data.msg);
+        if (error.data.msg === "Error: Invalid public key, retry login") {
+          router.push("/signin");
+        } else {
+          console.log("error");
+        }
+      } else {
+        setErrorMessage("An error occurred");
+      }
+    }
+  }
 
-  const { query, back } = useRouter();
   return (
     <div className="overflow-y-scroll max-h-[100vh]">
       <div>
@@ -76,7 +106,7 @@ const page = ({ params }) => {
               />
             </div>
 
-            <Delete text={"Delete Product"} />
+            <Delete text={"Delete Product"} handleDelete={handleDelete} />
           </div>
         </div>
         <div className="flex flex-col md:flex-row lg:flex-row m-2 space-x-3 md:space-x-3 lg:space-x-10 px-2 md:px-5 lg:px-10 ">

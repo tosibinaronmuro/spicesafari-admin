@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   createProduct,
+  deleteProduct,
   recommendProduct,
   singleProduct,
   updateProduct,
@@ -17,6 +18,7 @@ const upload = multer({ storage: storage });
 router.get("/", viewProduct); //everyone can view products even before they create accounts
 // router.get("/search", searchProducts);
 router.get("/:id", singleProduct); //everyone can view a single product even before they create accounts
+router.delete("/:id", deleteProduct); //everyone can view a single product even before they create accounts
 router.get("/recommend/:userId", recommendProduct); //everyone can be recommended products even before they create accounts
 
 router.post(
