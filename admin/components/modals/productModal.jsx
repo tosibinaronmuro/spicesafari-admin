@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useCreateNewProductMutation } from "@/Store/Api_Slices/productSlice";
 import { useDispatch, useSelector } from "react-redux";
 import ErrorAlert from "../alert/error";
+import SuccessAlert from "../alert/success";
 
 const Modal = ({
   handleopenmodal,
@@ -25,6 +26,7 @@ const Modal = ({
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   const [photo, setImage] = useState(null);
+  const [quantity, setQuantity] = useState('');
   const [createNewProduct] = useCreateNewProductMutation();
   // Function to handle image file selection
   const handleImageChange = (e) => {
@@ -38,6 +40,7 @@ const Modal = ({
     price,
     category,
     description,
+    quantity,
     photo,
   };
 
@@ -51,6 +54,7 @@ const Modal = ({
         formData.append(key, value);
       }
       await createNewProduct(formData).unwrap();
+       
       setIsSuccessful(true);
       setsuccessMessage("new product created successfully");
       console.log("created new product");
@@ -117,6 +121,22 @@ const Modal = ({
                       placeholder='1400'
                       required></input>
                   </div>
+                  {/* <div className="mb-6">
+                    <label
+                      htmlFor="quantity"
+                      className="flex justify-start font-logoFont mb-2 text-sm font-medium text-gray-900  "
+                    >
+                      Available Quantity
+                    </label>
+                    <input
+                      type="text"
+                      id="quantity"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                      placeholder="8"
+                      onChange={(e) => setQuantity(e.target.value)}
+                      required
+                    ></input>
+                  </div> */}
                 </div>
                 <div className='flex flex-row justify-between space-x-2'>
                   <div className='mb-6'>
@@ -173,6 +193,9 @@ const Modal = ({
               </div>
               {isError ? (
                 <ErrorAlert handleClose={handleClose} message={errorMessage} />
+              ) : null}
+              {isSuccessful ? (
+                <SuccessAlert handleClose={handleClose} message={successMessage} />
               ) : null}
               <div className='flex flex-wrap -mx-3'>
                 <div className='w-1/2 px-3'>

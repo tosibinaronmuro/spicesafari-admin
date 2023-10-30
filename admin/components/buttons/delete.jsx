@@ -1,8 +1,9 @@
 import React from 'react'
 
-const Delete = ({text}) => {
+const Delete = ({text,handleDelete}) => {
   return (
     <button
+    onClick={handleDelete}
     type="button"
     className="text-white m-5 bg-primary  focus:ring-4 focus:outline-none focus:ring-secondary font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center  "
   >

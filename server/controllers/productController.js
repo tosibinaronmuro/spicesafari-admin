@@ -314,10 +314,23 @@ export const updateProduct = async (req, res) => {
     res.status(500).json(err.message);
   }
 };
-//Delete a  product
+// Delete a product
 export const deleteProduct = async (req, res) => {
   try {
+    const { id } = req.params;
+    
+    // Check if the product exists
+    const product = await products.findById(id);
+    if (!product) {
+      return res.status(404).json("Product not found");
+    }
+    
+    // Remove the product from the database
+    await products.findByIdAndRemove(id);
+
+    res.status(200).json("Product deleted successfully");
   } catch (err) {
     res.status(500).json(err.message);
   }
 };
+

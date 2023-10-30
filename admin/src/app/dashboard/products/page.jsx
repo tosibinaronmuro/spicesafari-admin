@@ -120,9 +120,9 @@ const page = () => {
                     <th scope='col' className='px-6 py-3'>
                       Price
                     </th>
-                    <th scope='col' className='px-6 py-3  '>
+                    {/* <th scope='col' className='px-6 py-3  '>
                       Quantity
-                    </th>
+                    </th> */}
                     <th scope='col' className='px-6 py-3'>
                       Action
                     </th>
@@ -138,7 +138,7 @@ const page = () => {
                       productName={item.title}
                       category={item.category}
                       price={item.price}
-                      quantity={item.quantity}
+                      // quantity={item.quantity}
                       image={`http://localhost:4000/${item.image}`}
                     />
                   ))
