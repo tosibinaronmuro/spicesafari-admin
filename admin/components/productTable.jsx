@@ -2,7 +2,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 
-const ProductTable = ({productID,productName,category, price,quantity,image}) => {
+const ProductTable = ({productID,productName,category, price, image}) => {
   const { push } = useRouter();
    
 
@@ -37,7 +37,7 @@ const ProductTable = ({productID,productName,category, price,quantity,image}) =>
           $  {price}
           
         </td>
-        <td className="px-6 py-4  ">{quantity}</td>
+        {/* <td className="px-6 py-4  ">{quantity}</td> */}
         <td className="px-6 py-4">
           <a className="font-medium text-blue-600   hover:underline">Edit</a>
         </td>

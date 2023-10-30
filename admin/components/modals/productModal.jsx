@@ -121,7 +121,7 @@ const Modal = ({
                       placeholder='1400'
                       required></input>
                   </div>
-                  <div className="mb-6">
+                  {/* <div className="mb-6">
                     <label
                       htmlFor="quantity"
                       className="flex justify-start font-logoFont mb-2 text-sm font-medium text-gray-900  "
@@ -136,7 +136,7 @@ const Modal = ({
                       onChange={(e) => setQuantity(e.target.value)}
                       required
                     ></input>
-                  </div>
+                  </div> */}
                 </div>
                 <div className='flex flex-row justify-between space-x-2'>
                   <div className='mb-6'>

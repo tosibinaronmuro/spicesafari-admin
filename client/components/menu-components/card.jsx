@@ -16,7 +16,7 @@ const Card = ({
   handleButton2,
 }) => {
   return (
-    <div className='lg:max-w-[30%] md:max-w-[48%]'>
+    <div className='  w-96'>
       <div className='group object-cover hover:transition-all transition duration-500 group-hover:scale-105 relative block  rounded-lg hover:shadow-md hover:shadow-black/20 bg-white m-3 pb-4  shadow-sm shadow-indigo-100'>
         <div className='absolute end-4 top-4 z-10 border border-primary rounded-full bg-white p-1 m-1 px-2 text-gray-900 transition hover:text-gray-900/75'>
           <span className='text-primary text-xs font-medium'>{tag}</span>

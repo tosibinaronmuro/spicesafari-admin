@@ -115,7 +115,7 @@ const page = ({ params }) => {
             category={data?.category}
             name={data?.title}
             price={data?.price}
-            quantity={data?.quantity}
+            // quantity={data?.quantity}
             rating={data?.rating}
             description={data?.description}
           />

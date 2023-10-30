@@ -235,7 +235,7 @@ export const wishlistProduct = async (req, res) => {
 //create new products
 export const createProduct = async (req, res) => {
   try {
-    const { title, price, description, category,quantity } = req.body;
+    const { title, price, description, category } = req.body;
 
     // Validating product details
     if (!title) {
@@ -258,7 +258,6 @@ export const createProduct = async (req, res) => {
       price,
       image: req.file.filename,
       description,
-      quantity,
       category,
     });
     const newProduct = await createdProduct.save();
