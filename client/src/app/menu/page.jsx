@@ -76,7 +76,7 @@ const page = () => {
         </div>
 
         {/* map function here */}
-        <div className="flex flex-wrap justify-start w-full h-full px-[5%]">
+        <div className="flex flex-wrap justify-center w-full h-full  ">
           {products && products.length > 0 ? (
             products.map((product) => (
               <Card
