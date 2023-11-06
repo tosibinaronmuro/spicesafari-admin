@@ -7,6 +7,7 @@ import Authrouter from "./routes/auth.js";
 import AdminAuthrouter from "./routes/adminAuth.js";
 import productRouter from "./routes/productRoute.js";
 import orderRouter from "./routes/order.js";
+import cartRouter from "./routes/cartRoutes.js";
 import notFoundHandler from "./middleware/not-found.js";
 import errorHandler from "./middleware/errors-handler.js";
 
@@ -26,6 +27,7 @@ app.use("/api/v1/auth", Authrouter);
 app.use("/api/v1/auth/admin", AdminAuthrouter);
 app.use("/api/v1/product", productRouter);
 app.use("/api/v1/order", orderRouter);
+app.use("/api/v1/cart", cartRouter);
 
 app.get("/", (req, res) => {
   res.send("Welcome to clemDish ");

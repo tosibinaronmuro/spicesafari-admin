@@ -3,15 +3,17 @@ import { Schema, model } from "mongoose";
 const cartSchema = new Schema(
   {
     user: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "User",
     },
     items: [
       {
         product: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "Product",
+          type: Schema.Types.ObjectId,
+          ref: "products",
         },
+        image: String,
+        price: Number,
         quantity: Number,
       },
     ],

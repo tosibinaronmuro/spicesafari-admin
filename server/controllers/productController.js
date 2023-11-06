@@ -122,10 +122,8 @@ export const recommendProduct = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-
     // find all users except the current user
     const otherUsers = await User.find({ _id: { $ne: userId } });
-
     const calculateUserSimilarity = (user1, user2) => {
       const wishlist1 = new Set(
         user1.wishlist.map((food) => food._id.toString()),
@@ -133,17 +131,13 @@ export const recommendProduct = async (req, res) => {
       const wishlist2 = new Set(
         user2.wishlist.map((food) => food._id.toString()),
       );
-
       const intersection = [...wishlist1].filter((foodId) =>
         wishlist2.has(foodId),
       );
-
       if (intersection.length === 0) {
         return 0; // No similarity
       }
-
       const union = new Set([...wishlist1, ...wishlist2]);
-
       return intersection.length / union.size;
     };
 
@@ -318,13 +312,13 @@ export const updateProduct = async (req, res) => {
 export const deleteProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    
+
     // Check if the product exists
     const product = await products.findById(id);
     if (!product) {
       return res.status(404).json("Product not found");
     }
-    
+
     // Remove the product from the database
     await products.findByIdAndRemove(id);
 
@@ -333,4 +327,3 @@ export const deleteProduct = async (req, res) => {
     res.status(500).json(err.message);
   }
 };
-

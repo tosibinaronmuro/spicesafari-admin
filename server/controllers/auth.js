@@ -19,6 +19,7 @@ import {
   gmailPlainTemplate,
 } from "../utils/mail.js";
 
+// Create new user
 const register = async (req, res, next) => {
   const { name, email, password } = req.body;
 
@@ -26,6 +27,7 @@ const register = async (req, res, next) => {
     if (!name || !email || !password) {
       throw new BadRequest("Please provide name, email, and password");
     }
+    // Check for exsiting users
     const emailAlreadyExists = await User.findOne({ email });
     if (emailAlreadyExists) {
       throw new BadRequest("Email already exists");
@@ -45,7 +47,7 @@ const register = async (req, res, next) => {
         email: user.email,
         role: user.role,
         wishlist: user.wishlist,
-        isSuspended:user.isSuspended
+        isSuspended: user.isSuspended,
       },
       token: token,
     });
@@ -90,7 +92,7 @@ const login = async (req, res, next) => {
         email: user.email,
         role: user.role,
         wishlist: user.wishlist,
-        isSuspended:user.isSuspended
+        isSuspended: user.isSuspended,
       },
       token,
     });
