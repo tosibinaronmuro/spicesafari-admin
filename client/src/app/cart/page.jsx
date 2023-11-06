@@ -100,10 +100,10 @@ const page = () => {
                           cart.items.map((item, key) => (
                             <CartItem
                               key={key}
-                              image={`http://localhost:4000/${item.product.image}`}
+                              image={`http://localhost:4000/${item.image}`}
                               name={item.product.title}
                               price={parseFloat(
-                                item.product.price * item.quantity,
+                                item.price * item.quantity,
                               ).toFixed(2)}
                               quantity={item.quantity}
                               increaseQuantity={() =>
@@ -167,11 +167,9 @@ const page = () => {
                     </div>
 
                     <div className='flex justify-end'>
-                      <a
-                        href='#'
-                        className='block rounded bg-primary px-5 py-3 text-sm text-gray-100 transition hover:bg-gray-600'>
+                      <button className='block rounded bg-primary px-5 py-3 text-sm text-gray-100 transition hover:bg-gray-600'>
                         Checkout
-                      </a>
+                      </button>
                     </div>
                   </div>
                 </div>

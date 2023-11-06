@@ -14,7 +14,7 @@ export const cartApi = createApi({
     }),
 
     addToCart: build.mutation({
-      query({ productId }) {
+      query({ body, productId }) {
         return {
           url: `/create/${productId}`,
           method: "POST",

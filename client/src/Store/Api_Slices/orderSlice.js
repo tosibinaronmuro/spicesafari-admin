@@ -4,10 +4,10 @@ export const orderApi = createApi({
   reducerPath: "orderApi",
   baseQuery: fetchBaseQuery({
     baseUrl: `http://localhost:4000/api/v1/order`,
-    prepareHeaders(headers,{ getState }) {
+    prepareHeaders(headers, { getState }) {
       const token = getState().auth.User.token;
       if (token) {
-        headers.set('authorization', `Bearer ${token}`);
+        headers.set("authorization", `Bearer ${token}`);
       }
       return headers;
     },
@@ -24,6 +24,14 @@ export const orderApi = createApi({
       query: ({ id }) => `/${id}`,
       providesTags: ["order"],
     }),
+    createOrder: build.mutation({
+      query: () => ({
+        url: `/createOrder`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["order"],
+    }),
     updateOrder: build.mutation({
       query: ({ id, body }) => ({
         url: `/user/${id}`,
@@ -35,4 +43,9 @@ export const orderApi = createApi({
   }),
 });
 
-export const { useUserOrderQuery, useSingleOrderQuery, useUpdateOrderMutation } = orderApi;
+export const {
+  useUserOrderQuery,
+  useSingleOrderQuery,
+  useCreateOrderMutation,
+  useUpdateOrderMutation,
+} = orderApi;

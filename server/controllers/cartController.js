@@ -61,7 +61,6 @@ export const addToCart = async (req, res) => {
         product: productId,
         image: product.image,
         price: product.price,
-        quantity,
       });
     }
 
