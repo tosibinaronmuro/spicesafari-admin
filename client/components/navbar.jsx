@@ -2,9 +2,12 @@
 import React from "react";
 // import useState from 'react'
 import Image from "next/image";
+import { useSelector } from "react-redux";
 
 export default function Navbar({ fixed }) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
+  const User = useSelector((state) => state.auth.User);
+
   return (
     <>
       <nav
@@ -131,23 +134,27 @@ export default function Navbar({ fixed }) {
                       </a>
                     </li>
                     {/* teneary operator for the sign in and logout i.e, if user is signed in,  sign in link shouldnt show and if user is logged out,logout shouldnt show */}
-                    <li>
-                      <a
-                        href='/profile'
-                        className='block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700'>
-                        Profile
-                      </a>
-                    </li>
+                    {User && (
+                      <>
+                        <li>
+                          <a
+                            href='/profile'
+                            className='block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700'>
+                            Profile
+                          </a>
+                        </li>
 
-                    <li>
-                      <form action='/logout'>
-                        <button
-                          type='submit'
-                          className='w-full rounded-lg px-4 py-2 text-sm font-medium text-gray-500 [text-align:_inherit] hover:bg-gray-100 hover:text-gray-700'>
-                          Log out
-                        </button>
-                      </form>
-                    </li>
+                        <li>
+                          <form action='/logout'>
+                            <button
+                              type='submit'
+                              className='w-full rounded-lg px-4 py-2 text-sm font-medium text-gray-500 [text-align:_inherit] hover:bg-gray-100 hover:text-gray-700'>
+                              Log out
+                            </button>
+                          </form>
+                        </li>
+                      </>
+                    )}
                   </ul>
                 </details>
               </li>

@@ -15,13 +15,15 @@ import {
 const page = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const [user, setUser] = useState("");
+  const User = useSelector((state) => state.auth.User);
+  const [user, setUser] = useState(User.user._id);
   const [price, setPrice] = useState("");
   const [quantity, setQuant] = useState("");
-  const User = useSelector((state) => state.auth.User.user);
 
   const [search, setSearch] = useState("");
-  const { data: recommend } = useRecommendProductQuery({ id: User._id });
+  const { data: recommend } = useRecommendProductQuery({
+    id: User ? User.user._id : null,
+  });
   console.log(recommend);
   const { data: products, isLoading } = useViewAllProductQuery({ key: search });
 
@@ -38,8 +40,9 @@ const page = () => {
   };
   const [addToCart] = useAddToCartMutation();
   const body = {
-    user: User._id,
+    user: User.user._id,
   };
+  console.log(body);
   const addCart = async ({ product }) => {
     try {
       const cart = await addToCart({
