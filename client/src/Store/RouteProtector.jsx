@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useLayoutEffect } from "react";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 
 // Higher order components for protecting routed
@@ -11,6 +11,7 @@ function RouteProctector({ children }) {
     // if (!User) {
     //   redirect("/");
     // }
+
     !User && redirect("/");
   }, [User]);
 

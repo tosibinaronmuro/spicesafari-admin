@@ -25,7 +25,7 @@ export const orderApi = createApi({
       providesTags: ["order"],
     }),
     createOrder: build.mutation({
-      query: () => ({
+      query: (body) => ({
         url: `/createOrder`,
         method: "POST",
         body,

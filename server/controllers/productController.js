@@ -1,6 +1,7 @@
 import products from "../model/productModel.js";
 import User from "../model/user.js";
-
+import Orders from "../model/orderModel.js";
+import cart from "../model/cartModel.js";
 //View all products
 export const viewProduct = async (req, res) => {
   try {
@@ -112,72 +113,135 @@ export const singleProduct = async (req, res) => {
   }
 };
 //View recommended products
+// export const recommendProduct = async (req, res) => {
+//   try {
+//     const { userId } = req.params;
+//     const user = await User.findById({ _id: userId })
+//       .populate("wishlist")
+//       .exec();
+//     console.log(user);
+//     if (!user) {
+//       return res.status(404).json({ message: "User not found" });
+//     }
+//     // find all users except the current user
+//     const otherUsers = await User.find({ _id: { $ne: userId } });
+//     const calculateUserSimilarity = (user1, user2) => {
+//       const wishlist1 = new Set(
+//         user1.wishlist.map((food) => food._id.toString()),
+//       );
+//       const wishlist2 = new Set(
+//         user2.wishlist.map((food) => food._id.toString()),
+//       );
+//       const intersection = [...wishlist1].filter((foodId) =>
+//         wishlist2.has(foodId),
+//       );
+//       if (intersection.length === 0) {
+//         return 0; // No similarity
+//       }
+//       const union = new Set([...wishlist1, ...wishlist2]);
+//       return intersection.length / union.size;
+//     };
+
+//     const userSimilarities = [];
+
+//     otherUsers.forEach((otherUser) => {
+//       const similarity = calculateUserSimilarity(user, otherUser);
+//       userSimilarities.push({ userId: otherUser._id, similarity });
+//     });
+
+//     userSimilarities.sort((a, b) => b.similarity - a.similarity);
+
+//     const topSimilarUser = userSimilarities[0];
+
+//     if (!topSimilarUser) {
+//       return res.json({ message: "No recommendations available" });
+//     }
+
+//     const recommendedUser = await User.findById(topSimilarUser.userId).populate(
+//       "wishlist",
+//     );
+
+//     const recommendedFoods = recommendedUser.wishlist.map((food) => food._id);
+
+//     const recommendations = recommendedFoods.filter(
+//       (foodId) => !user.wishlist.map((food) => food._id).includes(foodId),
+//     );
+
+//     const recommendedFoodDetails = await products.find({
+//       _id: { $in: recommendations },
+//     });
+
+//     const refreshedProducts = recommendedFoodDetails.map((newProduct) => {
+//       const ratingLenght = newProduct.rating.length;
+//       let averageRating = 0;
+//       if (ratingLenght > 0) {
+//         const totalRating = newProduct.rating.reduce(
+//           (rating, total) => rating + total,
+//           0,
+//         );
+//         averageRating = totalRating / ratingLenght;
+//       }
+//       return {
+//         _id: newProduct._id,
+//         title: newProduct.title,
+//         price: newProduct.price,
+//         description: newProduct.description,
+//         category: newProduct.category,
+//         image: newProduct.image,
+//         otherImages: newProduct.otherImages,
+//         rating: averageRating,
+//         createdAt: newProduct.createdAt,
+//       };
+//     });
+//     res.status(200).json(refreshedProducts);
+//   } catch (err) {
+//     res.status(500).json(err.message);
+//   }
+// };
+
 export const recommendProduct = async (req, res) => {
   try {
     const { userId } = req.params;
-    const user = await User.findById({ _id: userId })
-      .populate("wishlist")
-      .exec();
-    console.log(user);
+
+    const user = await User.findById(userId).populate("wishlist");
+
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    // find all users except the current user
-    const otherUsers = await User.find({ _id: { $ne: userId } });
-    const calculateUserSimilarity = (user1, user2) => {
-      const wishlist1 = new Set(
-        user1.wishlist.map((food) => food._id.toString()),
-      );
-      const wishlist2 = new Set(
-        user2.wishlist.map((food) => food._id.toString()),
-      );
-      const intersection = [...wishlist1].filter((foodId) =>
-        wishlist2.has(foodId),
-      );
-      if (intersection.length === 0) {
-        return 0; // No similarity
-      }
-      const union = new Set([...wishlist1, ...wishlist2]);
-      return intersection.length / union.size;
-    };
 
-    const userSimilarities = [];
+    // Find users with similar wishlists
+    const usersWithSimilarWishlists = await User.find({
+      _id: { $ne: userId },
+      wishlist: { $in: user.wishlist.map((food) => food._id) },
+    }).populate("wishlist");
 
-    otherUsers.forEach((otherUser) => {
-      const similarity = calculateUserSimilarity(user, otherUser);
-      userSimilarities.push({ userId: otherUser._id, similarity });
-    });
-
-    userSimilarities.sort((a, b) => b.similarity - a.similarity);
-
-    const topSimilarUser = userSimilarities[0];
-
-    if (!topSimilarUser) {
-      return res.json({ message: "No recommendations available" });
-    }
-
-    const recommendedUser = await User.findById(topSimilarUser.userId).populate(
-      "wishlist",
+    // Extract unique product IDs from similar users' wishlists
+    const similarUserProducts = usersWithSimilarWishlists.flatMap((u) =>
+      u.wishlist.map((food) => food._id.toString()),
+    );
+    const uniqueSimilarProducts = Array.from(
+      new Set(
+        similarUserProducts.filter(
+          (prodId) =>
+            !user.wishlist.map((food) => food._id.toString()).includes(prodId),
+        ),
+      ),
     );
 
-    const recommendedFoods = recommendedUser.wishlist.map((food) => food._id);
-
-    const recommendations = recommendedFoods.filter(
-      (foodId) => !user.wishlist.map((food) => food._id).includes(foodId),
-    );
-
-    const recommendedFoodDetails = await products.find({
-      _id: { $in: recommendations },
+    // Retrieve recommended products based on similar users' wishlists
+    const recommendedProducts = await products.find({
+      _id: { $in: uniqueSimilarProducts },
     });
-    const refreshedProducts = recommendedFoodDetails.map((newProduct) => {
-      const ratingLenght = newProduct.rating.length;
+
+    const refreshedProducts = recommendedProducts.map((newProduct) => {
+      const ratingLength = newProduct.rating.length;
       let averageRating = 0;
-      if (ratingLenght > 0) {
+      if (ratingLength > 0) {
         const totalRating = newProduct.rating.reduce(
           (rating, total) => rating + total,
           0,
         );
-        averageRating = totalRating / ratingLenght;
+        averageRating = totalRating / ratingLength;
       }
       return {
         _id: newProduct._id,
@@ -191,11 +255,202 @@ export const recommendProduct = async (req, res) => {
         createdAt: newProduct.createdAt,
       };
     });
+
     res.status(200).json(refreshedProducts);
   } catch (err) {
-    res.status(500).json(err.message);
+    res.status(500).json({ message: err.message });
   }
 };
+// export const recommendProduct = async (req, res) => {
+//   // try {
+//   //   const { userId } = req.params;
+//   //   const currentUserOrders = await Orders.find({ use }).populate(
+//   //     "products",
+//   //   );
+
+//   //   if (!currentUserOrders || currentUserOrders.length === 0) {
+//   //     console.log("User has no order data.");
+//   //     return res.json("User has no order data.");
+//   //   }
+
+//   //   const usersWithSimilarProducts = await User.find({
+//   //     _id: { $ne: userId },
+//   //     "orders.products": {
+//   //       $in: currentUserOrders.flatMap((order) =>
+//   //         order.products.map((product) => product._id),
+//   //       ),
+//   //     },
+//   //   }).populate("orders.products");
+
+//   //   const recommendedProducts = [];
+
+//   //   usersWithSimilarProducts.forEach((user) => {
+//   //     user.orders.forEach((order) => {
+//   //       order.products.forEach((product) => {
+//   //         if (
+//   //           !currentUserOrders.some((o) =>
+//   //             o.products.some((p) => p._id.equals(product._id)),
+//   //           )
+//   //         ) {
+//   //           recommendedProducts.push(product);
+//   //         }
+//   //       });
+//   //     });
+//   //   });
+
+//   //   const uniqueRecommendedProducts = Array.from(
+//   //     new Set(recommendedProducts.map((p) => p._id.toString())),
+//   //   );
+
+//   //   console.log("Recommended Products:", uniqueRecommendedProducts);
+//   //   res.status(200).json(uniqueRecommendedProducts);
+//   // } catch (error) {
+//   //   console.error(error);
+//   //   res.status9(500).json(error.message);
+//   // }
+
+//   try {
+//     const { userId } = req.params;
+
+//     const currentUser = await User.findById(userId);
+
+//     if (!currentUser) {
+//       return res.status(404).json({ message: "User not found" });
+//     }
+
+//     const currentUserCart = await cart
+//       .findOne({ user: userId })
+//       .populate("items.product");
+//     const currentUserOrders = await Orders.find({ userId }).populate(
+//       "products",
+//     );
+
+//     // if (
+//     //   !currentUserCart ||
+//     //   !currentUserOrders ||
+//     //   !currentUserCart.items ||
+//     //   currentUserCart.items.length === 0 ||
+//     //   currentUserOrders.length === 0
+//     // ) {
+//     //   return res
+//     //     .status(404)
+//     //     .json({ message: "User has no cart or order data" });
+//     // }
+
+//     const usersWithSimilarCartItems = await User.find({
+//       _id: { $ne: userId },
+//       "cart.items.product": {
+//         $in: currentUserCart.items.map((item) => item.product._id),
+//       },
+//     }).populate("cart.items.product");
+
+//     const usersWithSimilarOrderProducts = await User.find({
+//       _id: { $ne: userId },
+//       "orders.products": {
+//         $in: currentUserOrders.flatMap((order) =>
+//           order.products.map((product) => product._id),
+//         ),
+//       },
+//     }).populate("orders.products");
+
+//     const recommendedProducts = [];
+
+//     usersWithSimilarCartItems.forEach((user) => {
+//       if (user.cart && user.cart.items) {
+//         user.cart.items.forEach((cartItem) => {
+//           if (
+//             !currentUserCart.items.find((item) =>
+//               item.product._id.equals(cartItem.product._id),
+//             )
+//           ) {
+//             recommendedProducts.push(cartItem.product);
+//           }
+//         });
+//       }
+//     });
+
+//     usersWithSimilarOrderProducts.forEach((user) => {
+//       user.orders.forEach((order) => {
+//         order.products.forEach((product) => {
+//           if (
+//             !currentUserOrders.some((o) =>
+//               o.products.some((p) => p._id.equals(product._id)),
+//             )
+//           ) {
+//             recommendedProducts.push(product);
+//           }
+//         });
+//       });
+//     });
+
+//     const uniqueRecommendedProducts = Array.from(
+//       new Set(recommendedProducts.map((p) => p._id.toString())),
+//     );
+
+//     console.log("Recommended Products:", uniqueRecommendedProducts);
+
+//     res.status(200).json(uniqueRecommendedProducts);
+//   } catch (error) {
+//     console.error("Recommendation generation error:", error);
+//     res.status(500).json({ message: "Error generating recommendations" });
+//   }
+// };
+
+// export const recommendProduct = async (req, res) => {
+//   try {
+//     const { userId } = req.params;
+
+//     const currentUser = await User.findById(userId);
+
+//     if (!currentUser) {
+//       return res.status(404).json({ message: "User not found" });
+//     }
+
+//     const currentUserOrders = await Orders.find({ userId }).populate(
+//       "products",
+//     );
+
+//     if (!currentUserOrders || currentUserOrders.length === 0) {
+//       return res.status(404).json({ message: "User has no order data" });
+//     }
+
+//     const usersWithSimilarOrders = await User.find({
+//       _id: { $ne: userId },
+//       "orders.products": {
+//         $in: currentUserOrders.flatMap((order) =>
+//           order.products.map((product) => product._id),
+//         ),
+//       },
+//     }).populate("orders.products");
+
+//     const recommendedProducts = [];
+
+//     usersWithSimilarOrders.forEach((user) => {
+//       user.orders.forEach((order) => {
+//         order.products.forEach((product) => {
+//           if (
+//             !currentUserOrders.some((o) =>
+//               o.products.some((p) => p._id.equals(product._id)),
+//             )
+//           ) {
+//             recommendedProducts.push(product);
+//           }
+//         });
+//       });
+//     });
+
+//     const uniqueRecommendedProducts = Array.from(
+//       new Set(recommendedProducts.map((p) => p._id.toString())),
+//     );
+
+//     console.log("Recommended Products:", uniqueRecommendedProducts);
+
+//     res.status(200).json({ recommendations: uniqueRecommendedProducts });
+//   } catch (error) {
+//     console.error("Recommendation generation error:", error);
+//     res.status(500).json({ message: "Error generating recommendations" });
+//   }
+// };
 
 //Adding products to wishlist
 export const wishlistProduct = async (req, res) => {

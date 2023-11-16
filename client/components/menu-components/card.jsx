@@ -82,7 +82,7 @@ const Card = ({
             </div>
           </Link>
           <div className='flex space-x-2 mx-[10%] justify-between'>
-            <button onClick={() => handleButton1}>
+            <button onClick={handleButton1}>
               {/* <a className="flex justify-center items-center rounded border border-primary bg-primary px-7 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-primary focus:outline-none focus:ring active:text-primary">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -96,9 +96,7 @@ const Card = ({
               </a> */}
 
               {button1 == "favorite" ? (
-                <a
-                  className='group relative inline-flex items-center overflow-hidden rounded border border-current px-8 py-3 text-primary hover:bg-primary hover:text-white focus:outline-none focus:ring active:bg-secondary'
-                  href='/download'>
+                <a className='group relative inline-flex items-center overflow-hidden rounded border border-current px-8 py-3 text-primary hover:bg-primary hover:text-white focus:outline-none focus:ring active:bg-secondary'>
                   {/* <span className="absolute -start-full transition-all duration-500 group-hover:start-4"> */}
                   <span className=' '>
                     <svg

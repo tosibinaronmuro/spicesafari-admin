@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import CartItem from "../../../components/cart-components/cartItem";
 import { useRouter } from "next/navigation";
 import {
@@ -10,24 +10,37 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { increaseQuantt } from "@/Store/Api_Slices/cartFucntion";
 import RouteProctector from "@/Store/RouteProtector";
-
+import { useCreateOrderMutation } from "@/Store/Api_Slices/orderSlice";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
 const page = () => {
   const router = useRouter();
-  const user = useSelector((state) => state.auth.User.user);
-  const { data: cartList } = useViewCartQuery({ userId: user._id });
+  const user = useSelector((state) => state.auth.User);
+  const { data: cartList } = useViewCartQuery({ userId: user.user._id });
   const dispatch = useDispatch();
   const prod =
     cartList &&
-    cartList.map((cart) => cart.items.map((item) => item.product._id));
+    cartList.flatMap((cart) => cart.items.map((item) => item.product._id));
   const [increaseCart] = useIncreaseCartMutation();
   const [decreaseCart] = useDecreaseCartMutation();
 
   const inCreaseQuant = async (prod) => {
     try {
       await increaseCart({
-        userId: user._id,
+        userId: user.user._id,
         productId: prod,
       }).unwrap();
+      toast("Increase Quantity", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        type: "success",
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
       console.log("Increased Quantity");
     } catch (error) {
       console.log(error);
@@ -36,18 +49,62 @@ const page = () => {
   const deCreaseQuant = async (prod) => {
     try {
       await decreaseCart({
-        userId: user._id,
+        userId: user.user._id,
         productId: prod,
       }).unwrap();
+      toast("Decreased Quantity", {
+        position: "top-right",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        type: "success",
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
       console.log("Increased Quantity");
     } catch (error) {
       console.log(error);
     }
   };
-  console.log("userId", user._id);
-  console.log("product", prod);
 
-  console.log(cartList);
+  console.log(cartList && cartList);
+  const [createOrder] = useCreateOrderMutation();
+
+  const orderPrice =
+    cartList &&
+    cartList
+      .map((cart) => cart.total)
+      .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+
+  const set = {
+    userId: user.user._id,
+    products: prod,
+    price: parseFloat(orderPrice).toFixed(2),
+  };
+  console.log("set", set);
+  const handleOrder = async (e) => {
+    e.preventDefault();
+    try {
+      await createOrder(set).unwrap();
+      toast("Ordered Successfully", {
+        position: "top-right",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        type: "success",
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+
+      console.log("Order created successfully");
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <RouteProctector>
       <div className=' min-h-[70vh] p-3 md:p-10 lg:p-10'>
@@ -169,7 +226,9 @@ const page = () => {
                       </div>
 
                       <div className='flex justify-end'>
-                        <button className='block rounded bg-primary px-5 py-3 text-sm text-gray-100 transition hover:bg-gray-600'>
+                        <button
+                          onClick={handleOrder}
+                          className='block rounded bg-primary px-5 py-3 text-sm text-gray-100 transition hover:bg-gray-600'>
                           Checkout
                         </button>
                       </div>
@@ -180,6 +239,7 @@ const page = () => {
             </div>
           </section>
         </div>
+        <ToastContainer />
       </div>
     </RouteProctector>
   );

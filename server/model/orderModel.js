@@ -14,14 +14,13 @@ const orderSchema = new Schema(
     ],
     quantity: {
       type: Number,
-      required: true,
     },
     price: {
       type: Number,
       required: true,
     },
     location: {
-      type: String
+      type: String,
     },
     status: {
       type: String,

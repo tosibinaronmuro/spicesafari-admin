@@ -2,12 +2,22 @@
 import React from "react";
 // import useState from 'react'
 import Image from "next/image";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { isLogOut } from "@/Store/ToolkitQuery/authStore";
+import { useRouter } from "next/navigation";
 
 export default function Navbar({ fixed }) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
   const User = useSelector((state) => state.auth.User);
+  console.log("Navbar", User);
+  const dispatch = useDispatch();
+  const router = useRouter();
 
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    await dispatch(isLogOut());
+    router.push("/signin");
+  };
   return (
     <>
       <nav
@@ -126,15 +136,7 @@ export default function Navbar({ fixed }) {
                   </summary>
 
                   <ul className='mt-2 space-y-1 px-4 lg:absolute transition-max-h ease-in-out duration-1000 bg-secondary lg:z-40'>
-                    <li>
-                      <a
-                        href='/signin'
-                        className='block rounded-lg  px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700'>
-                        Sign in
-                      </a>
-                    </li>
-                    {/* teneary operator for the sign in and logout i.e, if user is signed in,  sign in link shouldnt show and if user is logged out,logout shouldnt show */}
-                    {User && (
+                    {User ? (
                       <>
                         <li>
                           <a
@@ -145,13 +147,22 @@ export default function Navbar({ fixed }) {
                         </li>
 
                         <li>
-                          <form action='/logout'>
-                            <button
-                              type='submit'
-                              className='w-full rounded-lg px-4 py-2 text-sm font-medium text-gray-500 [text-align:_inherit] hover:bg-gray-100 hover:text-gray-700'>
-                              Log out
-                            </button>
-                          </form>
+                          <button
+                            onClick={handleLogout}
+                            type='submit'
+                            className='w-full rounded-lg px-4 py-2 text-sm font-medium text-gray-500 [text-align:_inherit] hover:bg-gray-100 hover:text-gray-700'>
+                            Log out
+                          </button>
+                        </li>
+                      </>
+                    ) : (
+                      <>
+                        <li>
+                          <a
+                            href='/signin'
+                            className='block rounded-lg  px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700'>
+                            Sign in
+                          </a>
                         </li>
                       </>
                     )}
