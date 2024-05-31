@@ -74,35 +74,36 @@ export default function Navbar({ fixed }) {
                   Home
                 </a>
               </li>
+              {User ? (
               <li className=' w-full lg:w-auto transition ease-in-out delay-150 text-tertiary hover:-translate-y-1 hover:scale-105 hover:text-tertiary  duration-300'>
                 <a
                   className=' lg:inline-flex lg:w-auto w-full   rounded items-center   text-tertiary transition hover:text-tertiary/75 px-7 text-sm md:text-sm lg:text-base py-2 md:px-2 md:py-2 lg:px-5 flex'
                   href='/menu'>
                   Menu
                 </a>
-              </li>
-              {/* logic with teneary operator to check isloggedin before displaying favorites */}
-              <li className=' w-full lg:w-auto transition ease-in-out delay-150 text-tertiary hover:-translate-y-1 hover:scale-105 hover:text-tertiary  duration-300'>
+              </li>):""}
+             
+              {User ? ( <li className=' w-full lg:w-auto transition ease-in-out delay-150 text-tertiary hover:-translate-y-1 hover:scale-105 hover:text-tertiary  duration-300'>
                 <a
                   className=' lg:inline-flex lg:w-auto w-full   rounded items-center   text-tertiary transition hover:text-tertiary/75 px-7 text-sm md:text-sm lg:text-base py-2 md:px-2 md:py-2 lg:px-5 flex'
                   href='/favorites'>
                   Favorites
                 </a>
-              </li>
-              <li className=' w-full lg:w-auto transition ease-in-out delay-150 text-tertiary hover:-translate-y-1 hover:scale-105 hover:text-tertiary  duration-300'>
+              </li>):""}
+              {User ? ( <li className=' w-full lg:w-auto transition ease-in-out delay-150 text-tertiary hover:-translate-y-1 hover:scale-105 hover:text-tertiary  duration-300'>
                 <a
                   className=' lg:inline-flex lg:w-auto w-full   rounded items-center   text-tertiary transition hover:text-tertiary/75 px-7 text-sm md:text-sm lg:text-base py-2 md:px-2 md:py-2 lg:px-5 flex'
                   href='/cart'>
                   Cart
                 </a>
-              </li>
-              <li className=' w-full lg:w-auto transition ease-in-out delay-150 text-tertiary hover:-translate-y-1 hover:scale-105 hover:text-tertiary  duration-300'>
+              </li>):""}
+              {User ? (  <li className=' w-full lg:w-auto transition ease-in-out delay-150 text-tertiary hover:-translate-y-1 hover:scale-105 hover:text-tertiary  duration-300'>
                 <a
                   className=' lg:inline-flex lg:w-auto w-full   rounded items-center   text-tertiary transition hover:text-tertiary/75 px-7 text-sm md:text-sm lg:text-base py-2 md:px-2 md:py-2 lg:px-5 flex'
                   href='/orders'>
                   Orders
                 </a>
-              </li>
+              </li>):""}
               {/* <li className=" w-full lg:w-auto transition ease-in-out delay-150 text-tertiary hover:-translate-y-1 hover:scale-105 hover:text-tertiary  duration-300">
                 <a
                   className=" lg:inline-flex lg:w-auto w-full   rounded items-center   text-tertiary transition hover:text-tertiary/75 px-7 text-sm md:text-sm lg:text-base py-2 md:px-2 md:py-2 lg:px-5 flex"

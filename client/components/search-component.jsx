@@ -6,7 +6,7 @@ const Search = ({ search, onChange, onSubmit }) => {
     <div className='relative'>
       <form className='mt-6' onSubmit={onSubmit}>
         <div className='relative max-w-lg'>
-          <label className='sr-only' for='food'>
+          <label className='sr-only' htmlFor='food'>
             search
           </label>
 

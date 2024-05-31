@@ -1,16 +1,17 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
+import { useSelector, useDispatch } from "react-redux";
 
 import ProductImage from "../../../../components/products/productImage";
 import ProductDetails from "../../../../components/products/productDetails";
 import { useViewSingleProductQuery } from "@/Store/Api_Slices/productSlice";
 const page = ({ button1, button2, handleButton1, handleButton2, params }) => {
   const { data } = useViewSingleProductQuery({ id: params.id });
-  console.log(data);
   const { back } = useRouter();
+  const User = useSelector((state) => state.auth.User);
   return (
-    <div className='overflow-y-scroll max-h-[100vh]'>
+    <div className='overflow-y-scroll  min-h-[70vh]'>
       <div
         onClick={() => back()}
         className='flex space-x-3 cursor-pointer mt-3 ml-2 lg:ml-14 md:ml-14 justify-start items-center hover:text-primary'>
@@ -23,12 +24,12 @@ const page = ({ button1, button2, handleButton1, handleButton2, params }) => {
         </svg>
         <span>Back</span>
       </div>
-      <div className='w-fill  m-3 p-3 mx-4 md:mx-44 lg:mx-44 bg-white rounded '>
+      <div className='w-fill mt-[5%] m-3 p-3 mx-4 md:mx-44 lg:mx-44 bg-white rounded '>
         <div className='mx-3 flex justify-between items-center'>
           <p className='font-logoFont font-extralight  text-3xl mb-3'>
-            Product {params.id}
+             {data && data.title}
           </p>
-          <div className='flex space-x-2 mx-[10%] justify-between'>
+         {User?( <div className='flex space-x-2 mx-[10%] justify-between'>
             <button onClick={() => handleButton1}>
               {/* <a className="flex justify-center items-center rounded border border-primary bg-primary px-7 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-primary focus:outline-none focus:ring active:text-primary">
                 <svg
@@ -92,7 +93,7 @@ const page = ({ button1, button2, handleButton1, handleButton2, params }) => {
                 <span className='text-sm font-medium '>{button2}</span>
               </a>
             </button>
-          </div>
+          </div>):<span className='text-xs border border-red-500 rounded p-2  font-medium '>log in to place an order or view favorites</span>}
         </div>
         <div className='flex flex-col md:flex-row lg:flex-row m-2 space-x-3 md:space-x-3 lg:space-x-10 px-2 md:px-5 lg:px-10 '>
           <ProductImage

@@ -20,7 +20,7 @@ const Footer = () => {
 
           <form className="mt-6">
             <div className="relative max-w-lg">
-              <label className="sr-only" for="email">
+              <label className="sr-only" htmlFor="email">
                 {" "}
                 Email{" "}
               </label>

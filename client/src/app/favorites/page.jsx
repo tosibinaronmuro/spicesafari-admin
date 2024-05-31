@@ -26,18 +26,7 @@ const page = () => {
         </p>
         <div className="flex flex-wrap justify-center w-full  ">
           <Card button1={'remove'} button2={'order'} />
-          <Card button1={'remove'} button2={'order'} />
-          <Card button1={'remove'} button2={'order'} />
-          <Card button1={'remove'} button2={'order'} />
-          <Card button1={'remove'} button2={'order'} />
-          <Card button1={'remove'} button2={'order'} />
-          <Card button1={'remove'} button2={'order'} />
-          <Card button1={'remove'} button2={'order'} />
-          <Card button1={'remove'} button2={'order'} />
-          <Card button1={'remove'} button2={'order'} />
-          <Card button1={'remove'} button2={'order'} />
-          <Card button1={'remove'} button2={'order'} />
-          <Card button1={'remove'} button2={'order'} />
+          
         </div>
       </div>
     </div>

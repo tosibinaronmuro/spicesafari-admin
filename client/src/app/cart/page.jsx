@@ -132,23 +132,24 @@ const page = () => {
                   <CartItem name={"name"} price={30} id={1} />
                 </ul> */}
 
-                  <div class='relative overflow-x-auto p-3   sm:rounded-lg'>
-                    <table class='w-full text-sm text-left text-gray-500 dark:text-gray-400'>
-                      <thead class='text-xs text-gray-700 uppercase bg-gray-50 '>
+
+                  <div className='relative overflow-x-auto p-3   sm:rounded-lg'>
+                    <table className='w-full text-sm text-left text-gray-500 dark:text-gray-400'>
+                      <thead className='text-xs text-gray-700 uppercase bg-gray-50 '>
                         <tr>
-                          <th scope='col' class='px-2 py-3 md:px-6 lg:px-6 '>
+                          <th scope='col' className='px-2 py-3 md:px-6 lg:px-6 '>
                             Image
                           </th>
-                          <th scope='col' class='px-2 py-3 md:px-6 lg:px-6 '>
+                          <th scope='col' className='px-2 py-3 md:px-6 lg:px-6 '>
                             Food Item
                           </th>
-                          <th scope='col' class='px-2 py-3 md:px-6 lg:px-6 '>
+                          <th scope='col' className='px-2 py-3 md:px-6 lg:px-6 '>
                             Qty
                           </th>
-                          <th scope='col' class='px-2 py-3 md:px-6 lg:px-6 '>
+                          <th scope='col' className='px-2 py-3 md:px-6 lg:px-6 '>
                             Price
                           </th>
-                          <th scope='col' class='px-2 py-3 md:px-6 lg:px-6 '>
+                          <th scope='col' className='px-2 py-3 md:px-6 lg:px-6 '>
                             Action
                           </th>
                         </tr>
