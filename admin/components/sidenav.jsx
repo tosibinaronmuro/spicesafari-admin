@@ -19,7 +19,7 @@ const Sidenav = () => {
   //     console.log(error);
   //   }
   // };
-  const user = useSelector((state) => state.auth.User.admin);
+  const user = useSelector((state) => state.auth.User?.admin||"");
  
   return (
     <div className="flex h-screen font-quicksand  flex-col justify-between border-e bg-white">
@@ -141,9 +141,9 @@ const Sidenav = () => {
   
         <div>
           <p className="text-xs">
-            <strong className="block font-medium">{user.name}</strong>
+            <strong className="block font-medium">{user?.name||"default"}</strong>
   
-            <span>{ user.email}</span>
+            <span>{ user?.email||"default@default.com"}</span>
           </p>
         </div>
       </a>

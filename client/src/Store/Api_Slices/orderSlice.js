@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 export const orderApi = createApi({
   reducerPath: "orderApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `http://localhost:4000/api/v1/order`,
+    baseUrl: `https://spice-safari-backend.onrender.com/api/v1/order`,
     prepareHeaders(headers, { getState }) {
       const token = getState().auth.User.token;
       if (token) {

@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const registerApi = createApi({
   reducerPath: "registerApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `http://localhost:4000/api/v1`,
+    baseUrl: `https://spice-safari-backend.onrender.com/api/v1`,
     prepareHeaders(headers ) {
     
       // const token = getState().auth.User.token;

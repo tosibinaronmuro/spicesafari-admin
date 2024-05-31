@@ -160,7 +160,7 @@ const page = () => {
                             cart.items.map((item, key) => (
                               <CartItem
                                 key={key}
-                                image={`http://localhost:4000/${item.image}`}
+                                image={`https://spice-safari-backend.onrender.com/${item.image}`}
                                 name={item.product.title}
                                 price={parseFloat(
                                   item.price * item.quantity,

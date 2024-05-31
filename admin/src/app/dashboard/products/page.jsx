@@ -139,7 +139,7 @@ const page = () => {
                       category={item.category}
                       price={item.price}
                       // quantity={item.quantity}
-                      image={`http://localhost:4000/${item.image}`}
+                      image={`https://spice-safari-backend.onrender.com/${item.image}`}
                     />
                   ))
                 ) : (

@@ -97,7 +97,7 @@ const page = ({ button1, button2, handleButton1, handleButton2, params }) => {
         </div>
         <div className='flex flex-col md:flex-row lg:flex-row m-2 space-x-3 md:space-x-3 lg:space-x-10 px-2 md:px-5 lg:px-10 '>
           <ProductImage
-            mainimg={data && `http://localhost:4000/${data.image}`}
+            mainimg={data && `https://spice-safari-backend.onrender.com/${data.image}`}
           />
           <ProductDetails
             name={data && data.title}

@@ -44,7 +44,7 @@ const page = () => {
   const [addToCart] = useAddToCartMutation();
   const [addWishlist] = useWishlistProductMutation();
   const body = {
-    user: User.user._id,
+    user: User?.user._id || "",
   };
   console.log(body);
   const addCart = async ({ product }) => {
@@ -137,7 +137,7 @@ const page = () => {
                 <Card
                   key={product._id}
                   linking={`${product._id}`}
-                  Img={`http://localhost:4000/${product.image}`}
+                  Img={`https://spice-safari-backend.onrender.com/${product.image}`}
                   name={product.title}
                   price={product.price}
                   rating={product.rating}
@@ -163,7 +163,7 @@ const page = () => {
                 recommend.map((recommend) => (
                   <Card
                     key={recommend._id}
-                    Img={`http://localhost:4000/${recommend.image}`}
+                    Img={`https://spice-safari-backend.onrender.com/${recommend.image}`}
                     name={recommend.title}
                     linking={`${recommend._id}`}
                     price={recommend.price}

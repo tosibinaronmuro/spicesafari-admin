@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const productApi = createApi({
   reducerPath: "productApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:4000/api/v1/product",
+    baseUrl: "https://spice-safari-backend.onrender.com/api/v1/product",
     prepareHeaders(headers, { getState }) {
       const token = getState().auth.User.token;
       if (token) {

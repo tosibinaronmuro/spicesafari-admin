@@ -84,7 +84,7 @@ export default function Home() {
                 <Card
                   key={product._id}
                   linking={`${product._id}`}
-                  Img={`http://localhost:4000/${product.image}`}
+                  Img={`https://spice-safari-backend.onrender.com/${product.image}`}
                   name={product.title}
                   price={product.price}
                   rating={product.rating}

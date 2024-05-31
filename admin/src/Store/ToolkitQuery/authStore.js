@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-const user = localStorage.getItem("adminAuthFood");
+const user = typeof window !== 'undefined' && localStorage.getItem("adminAuthFood");
 const initialState = {
   User: user ? JSON.parse(user) : null,
 };
